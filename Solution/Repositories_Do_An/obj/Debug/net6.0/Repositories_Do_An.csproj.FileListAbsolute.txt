@@ -1,0 +1,14 @@
+C:\Users\HOANG\source\repos\Repositories_Do_An\bin\Debug\net6.0\Repositories_Do_An.deps.json
+C:\Users\HOANG\source\repos\Repositories_Do_An\bin\Debug\net6.0\Repositories_Do_An.runtimeconfig.json
+C:\Users\HOANG\source\repos\Repositories_Do_An\bin\Debug\net6.0\Repositories_Do_An.dll
+C:\Users\HOANG\source\repos\Repositories_Do_An\bin\Debug\net6.0\Repositories_Do_An.pdb
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.csproj.AssemblyReference.cache
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.AssemblyInfoInputs.cache
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.AssemblyInfo.cs
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.csproj.CoreCompileInputs.cache
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.dll
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\refint\Repositories_Do_An.dll
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.pdb
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\Repositories_Do_An.genruntimeconfig.cache
+C:\Users\HOANG\source\repos\Repositories_Do_An\obj\Debug\net6.0\ref\Repositories_Do_An.dll
