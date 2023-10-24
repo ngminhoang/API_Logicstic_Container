@@ -18,7 +18,7 @@ namespace Repositories_Do_An.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.23")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -147,6 +147,11 @@ namespace Repositories_Do_An.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("BussinessPassword")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("ContactEmail")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -166,10 +171,15 @@ namespace Repositories_Do_An.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
-                    b.Property<int>("Status")
+                    b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
                     b.HasKey("BussinessId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Bussiness");
                 });
@@ -222,13 +232,17 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContractTypeId"));
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("text")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("ContractTypeId");
 
-                    b.ToTable("ContractTypes");
+                    b.ToTable("ContractType");
                 });
 
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Counting", b =>
@@ -375,8 +389,8 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<double>("Status")
-                        .HasColumnType("double precision");
+                    b.Property<bool>("Status")
+                        .HasColumnType("boolean");
 
                     b.HasKey("UserId");
 
@@ -963,6 +977,17 @@ namespace Repositories_Do_An.Migrations
                 });
 
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.AppRate", b =>
+                {
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Role", "role")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("role");
+                });
+
+            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Bussiness", b =>
                 {
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Role", "role")
                         .WithMany()

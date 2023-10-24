@@ -18,6 +18,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string BusinessName { get; set; }
         [StringLength(20),Required]
         public string BusinessLicenseNumber {  get; set; }
+        [StringLength(50), Required]
+        public string BussinessPassword { get; set; }
         [StringLength(50),Required]
         public string Address { get; set; }
         [StringLength(30), Required]
@@ -28,6 +30,9 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public bool CoopStatus { get; set; }
         public DateTime DateCreatedAccount { get; set; }
         public DateTime DateUpdatedAccount { get; set; }
-        public int Status { get; set; }
+        public bool Status { get; set; }
+        [ForeignKey("Role")]
+        public int RoleId { get; set; }
+        public virtual Role role { get; set; }
     }
 }

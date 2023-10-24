@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("Bussiness")]
+
     public class BussinessModel
     {
         public int BussinessId { get; set; }
         public string BusinessName { get; set; }
         public string BusinessLicenseNumber {  get; set; }
+        public string BussinessPassword { get; set; }
         public string Address { get; set; }
         public string ContactEmail { get; set; }
         public string PhoneNumber { get; set; }
@@ -22,6 +23,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public bool CoopStatus { get; set; }
         public DateTime DateCreatedAccount { get; set; }
         public DateTime DateUpdatedAccount { get; set; }
-        public int Status { get; set; }
+        public bool Status { get; set; }
+        public int RoleId { get; set; }
     }
 }

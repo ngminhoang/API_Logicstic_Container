@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("Order")]
+
     public class OrderModel
     {
         public int OrderId { get; set; }

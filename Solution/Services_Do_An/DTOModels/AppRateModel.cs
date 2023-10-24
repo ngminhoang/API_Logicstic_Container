@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("AppRate")]
+
     public class AppRateModel
     {
        

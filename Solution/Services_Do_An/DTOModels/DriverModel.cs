@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("Driver")]
+ 
     public class DriverModel : UserModel
     {
         public String FrontIdentifyImageLink {  get; set; }
         public String BackIdentifyImageLink { get; set; }
-        public double Status {  get; set; }
     }
 }

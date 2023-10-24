@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("Admin")]
+
     public  class AdminModel: UserModel 
     {
 

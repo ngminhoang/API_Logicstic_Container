@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("Vihcle")]
+    
     public class VihcleModel
     { 
         public int VihcleId { get; set; }
