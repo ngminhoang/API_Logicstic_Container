@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "hXEOhnpTcu+IEkBjaM5heVWG1+k+nA9vmCJa+521HQAJIwzuTVVNcmvRxNx1EBZzYUvKDu1ayR4BVEkRcuY9mA==",
+  "dgSpecHash": "L1gR0w3gO7/f+Q7FZOgax9W25p1fKtq8IJcPayN6D1IJ97gDo8Z4BGp/G4rgg5FF3/U+awd408vUAJR/AVOrhg==",
   "success": true,
   "projectFilePath": "C:\\Users\\HOANG\\Documents\\GitHub\\API_Do_An\\Solution\\API_Do_An\\API_Do_An.csproj",
   "expectedPackageFiles": [
@@ -43,8 +43,8 @@
     "C:\\Users\\HOANG\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\HOANG\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\HOANG\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
-    "C:\\Users\\HOANG\\.nuget\\packages\\npgsql\\6.0.2\\npgsql.6.0.2.nupkg.sha512",
-    "C:\\Users\\HOANG\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.2\\npgsql.entityframeworkcore.postgresql.6.0.2.nupkg.sha512",
+    "C:\\Users\\HOANG\\.nuget\\packages\\npgsql\\6.0.10\\npgsql.6.0.10.nupkg.sha512",
+    "C:\\Users\\HOANG\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\6.0.22\\npgsql.entityframeworkcore.postgresql.6.0.22.nupkg.sha512",
     "C:\\Users\\HOANG\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\HOANG\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\HOANG\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
