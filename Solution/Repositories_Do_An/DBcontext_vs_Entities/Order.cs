@@ -19,13 +19,13 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public virtual Customer customer { get; set; }
 
 
-        [ForeignKey("Staff")]
-        public int? StaffId { get; set; }
-        public virtual Staff staff { get; set; }
+        //[ForeignKey("Staff")]
+        //public int? StaffId { get; set; }
+        //public virtual Staff staff { get; set; }
 
 
         [ForeignKey(" Owner")]
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
         public virtual Owner owner { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime ArrivedDate { get; set; }
@@ -39,7 +39,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int PostionGoId { get; set; }
 
 
-        public string paymentMethod { get; set; } = "Tài xế và khách hàng tự làm việc với nhau";
+        //public string paymentMethod { get; set; } = "Tài xế và khách hàng tự làm việc với nhau";
         public bool Status { get; set; }
     }
 }

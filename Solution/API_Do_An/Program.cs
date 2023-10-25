@@ -95,6 +95,9 @@ builder.Services.AddAuthorization(options =>
 
 
 
+builder.Services.AddCors();
+
+
 
 //builder.Services.AddControllers();
 builder.Services.AddControllers()
@@ -139,6 +142,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder =>
+{
+    builder.WithOrigins("https://localhost:3000") // Replace with your client's origin
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
 
 app.UseHttpsRedirection();
 

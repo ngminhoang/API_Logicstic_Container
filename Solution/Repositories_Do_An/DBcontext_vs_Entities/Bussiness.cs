@@ -26,7 +26,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string ContactEmail { get; set; }
         [StringLength(10), Required, RegularExpression(@"\d")]
         public string PhoneNumber { get; set; }
-        public string BusinessWebsite {  get; set; }
+        public string? BusinessWebsite {  get; set; }
         public bool CoopStatus { get; set; }
         public DateTime DateCreatedAccount { get; set; }
         public DateTime DateUpdatedAccount { get; set; }

@@ -16,7 +16,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int CustomerId { get; set; }
         public int DriverId { get; set; }
         public int ContractTypeId { get; set; }
-        public int StaffId { get; set; }
         public bool Status { get; set; }
     }
 }

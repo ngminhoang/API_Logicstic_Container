@@ -20,10 +20,12 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string ItemName { get; set; }
         public int Quantity { get; set; }
         public double MassPerUnit { get; set; }
-        public double weightPerUnit { get; set; }
+        public double WeightPerUnit { get; set; }
         public double PricePerUnit { get; set; }
-        public int ItemDescription { get; set; }
-        public int ItemImage { get; set; }
+        [StringLength(250)]
+        public string ItemDescription { get; set; }
+        [StringLength(50)]
+        public string ItemImage { get; set; }
         public bool Status { get; set; }
     }
 }

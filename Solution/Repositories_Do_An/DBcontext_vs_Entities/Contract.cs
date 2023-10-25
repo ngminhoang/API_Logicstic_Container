@@ -23,9 +23,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("ContractType")]
         public int ContractTypeId { get; set; }
         public virtual ContractType contractType { get; set; }
-        [ForeignKey("Staff")]
-        public int StaffId { get; set; }
-        public virtual Staff staff { get; set; }
         public bool Status { get; set; }
     }
 }
