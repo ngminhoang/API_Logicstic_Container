@@ -30,12 +30,19 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateTime OrderedDate { get; set; }
         public DateTime ArrivedDate { get; set; }
         public BigInteger TotalAmount { get; set; }
+
+
+
         [ForeignKey("Postion")]
         public int PostionComeId { get; set; }
         public virtual Position positionCome { get; set; }
+
+
         [ForeignKey("Postion")]
         public int PostionGoId { get; set; }
         public virtual Position positionGo { get; set; }
+
+
         public string paymentMethod { get; set; } = "Tài xế và khách hàng tự làm việc với nhau";
         public bool Status { get; set; }
     }
