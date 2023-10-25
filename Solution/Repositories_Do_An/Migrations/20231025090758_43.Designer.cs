@@ -3,6 +3,7 @@ using System;
 using System.Numerics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repositories_Do_An.DBcontext_vs_Entities;
@@ -12,9 +13,10 @@ using Repositories_Do_An.DBcontext_vs_Entities;
 namespace Repositories_Do_An.Migrations
 {
     [DbContext(typeof(CFcontext))]
-    partial class CFcontextModelSnapshot : ModelSnapshot
+    [Migration("20231025090758_43")]
+    partial class _43
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
