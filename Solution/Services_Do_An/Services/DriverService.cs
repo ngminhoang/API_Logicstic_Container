@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Repositories_Do_An.DBcontext_vs_Entities;
+using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Users;
 using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
@@ -15,12 +16,40 @@ namespace Services_Do_An.Services
     {
         private readonly IMapper mapper;
         private readonly IDriverRepository driverDB;
-        public DriverService(IMapper _mapper, IDriverRepository _driver)
+        private readonly IOrderRepository orderDB;
+        private readonly IOrderStatusRepository orderStatusDB;
+        public DriverService(IMapper mapper, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB)
         {
-            this.mapper = _mapper;
-            this.driverDB = _driver;
+            this.mapper = mapper;
+            this.driverDB = driverDB;
+            this.orderDB = orderDB;
+            this.orderStatusDB = orderStatusDB;
         }
 
+        public List<OrderModel> getAllInitializedOrders()
+        {
+            try 
+            {
+                List<OrderModel> rs = new List<OrderModel>();
+                List<Order> list = orderDB.getAll();
+                foreach (var order in list)
+                {
+                    rs.Add(mapper.Map<OrderModel>(order));
+                }
+                    //foreach (var order in list)
+                    //{
+                    //    if (orderStatusDB.readByOrderId(order.OrderId).StatusId == 1)
+                    //    {
+                    //        rs.Add(mapper.Map<OrderModel>(order));
+                    //    }
+                    //}
+                    return rs;
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
+        }
 
         public bool check(string mail)
         {

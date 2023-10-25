@@ -18,7 +18,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int OVIId { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime ArrivedDate { get; set; }
-        public BigInteger TotalAmount { get; set; }
+        public Double TotalAmount { get; set; }
         public int PostionComeId { get; set; }
         public int PostionGoId { get; set; }
         //public string paymentMethod { get; set; } = "Tài xế và khách hàng tự làm việc với nhau";

@@ -27,8 +27,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
 
 
         public DateTime OrderedDate { get; set; }
-        public DateTime ArrivedDate { get; set; }
-        public BigInteger? TotalAmount { get; set; }
+        public DateTime? ArrivedDate { get; set; }
+        public Double? TotalAmount { get; set; }
 
 
 
