@@ -23,10 +23,9 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         //public int? StaffId { get; set; }
         //public virtual Staff staff { get; set; }
 
-
-        [ForeignKey("OwnedVehicleInfor")]
         public int? OVIId { get; set; }
-        public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
+
+
         public DateTime OrderedDate { get; set; }
         public DateTime ArrivedDate { get; set; }
         public BigInteger? TotalAmount { get; set; }

@@ -17,9 +17,10 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("Cusustomer")]
         public int CustomerId { get; set; }
         public virtual Customer customer { get; set; }
-        [ForeignKey("DriverId")]
-        public int DriverId { get; set; }
-        public virtual Driver driver { get; set; }
+        public int DeliveryId { get; set; }
+        [ForeignKey("Role")]
+        public int RoleId { get; set; }
+        public virtual Role role { get; set; }
         [ForeignKey("ContractType")]
         public int ContractTypeId { get; set; }
         public virtual ContractType contractType { get; set; }
