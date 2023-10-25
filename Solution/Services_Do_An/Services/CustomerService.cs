@@ -2,6 +2,7 @@
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Users;
+using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Services_Do_An.Services
 {
-    internal class CustomerService : ICustomerService
+    public class CustomerService : ICustomerService
     { 
         private readonly IMapper mapper;
     private readonly ICustomerRepository customerDB;
@@ -20,13 +21,26 @@ namespace Services_Do_An.Services
         this.mapper = _mapper;
         this.customerDB = _customer;
     }
-    public CustomerModel read(int id)
+
+        public bool check(string mail)
+        {
+            try
+            {
+                return (customerDB.check(mail));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public CustomerModel read(int id)
     {
         try
         {
-            Customer Customer = customerDB.read(id);
-            CustomerModel CustomerModel = mapper.Map<CustomerModel>(Customer);
-            return CustomerModel;
+            Customer customer = customerDB.read(id);
+            CustomerModel customerModel = mapper.Map<CustomerModel>(customer);
+            return customerModel;
         }
         catch (Exception ex)
         {
@@ -37,9 +51,9 @@ namespace Services_Do_An.Services
     {
         try
         {
-            Customer Customer = customerDB.read(name);
-            CustomerModel CustomerModel = mapper.Map<CustomerModel>(Customer);
-            return CustomerModel;
+            Customer customer = customerDB.read(name);
+            CustomerModel customerModel = mapper.Map<CustomerModel>(customer);
+            return customerModel;
         }
         catch (Exception ex)
         {
@@ -50,9 +64,21 @@ namespace Services_Do_An.Services
     {
         try
         {
-            Customer Customer = mapper.Map<Customer>(entity);
-            return true;
-        }
+            Customer customer = mapper.Map<Customer>(entity);
+                string pass_md5 = MD5Functions.GenerateMD5(customer.Password);
+                customer.Password = pass_md5;
+                customer.RoleId = 4;
+                bool test = check(customer.Email);
+                if (test == false)
+                {
+                    customerDB.create(customer);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         catch (Exception ex)
         {
             throw ex;

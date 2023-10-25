@@ -12,5 +12,6 @@ namespace Repositories_Do_An.IRepositories
     {
         Bussiness read(string name);
         Bussiness read(string mail, string password, int roleId);
+        bool check(string mail);
     }
 }

@@ -10,5 +10,6 @@ namespace Services_Do_An.IServices
     public interface IAdminService : IServices<AdminModel>
     {
         int checkAccount(string mail, string password, int roleId);
+        bool check(string mail);
     }
 }

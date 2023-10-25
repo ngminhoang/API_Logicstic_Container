@@ -11,6 +11,7 @@ namespace Repositories_Do_An.IRepositories.Users
     public interface IAdminRepository : IRepository<Admin>
     {
         Admin read(string name);
+        bool check(string mail);
         Admin read(string mail, string password, int roleId);
     }
 }

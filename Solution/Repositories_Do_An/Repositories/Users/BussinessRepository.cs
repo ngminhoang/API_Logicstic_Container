@@ -16,7 +16,26 @@ namespace Repositories_Do_An.Repositories
             _dbcontext = dbcontext;
         }
 
+        public bool check(string mail)
+        {
+            try
+            {
+                    var rs = _dbcontext.Bussinesss.FirstOrDefault(t => t.ContactEmail == mail);
+                    if (rs != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
+                }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public Bussiness read(string mail, string password, int roleId)
         {
             try

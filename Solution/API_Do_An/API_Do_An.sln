@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_Do_An", "API_Do_An.csproj", "{4B998CF7-53E5-4C04-92C8-B87E6D1F6D79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_Do_An", "API_Do_An.csproj", "{4B998CF7-53E5-4C04-92C8-B87E6D1F6D79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories_Do_An", "..\Repositories_Do_An\Repositories_Do_An.csproj", "{EE108673-60FC-41A9-92EA-1BC6506E94D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories_Do_An", "..\Repositories_Do_An\Repositories_Do_An.csproj", "{EE108673-60FC-41A9-92EA-1BC6506E94D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services_Do_An", "..\Services_Do_An\Services_Do_An.csproj", "{1D76139C-3BC1-4126-8560-1D5806C4817C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services_Do_An", "..\Services_Do_An\Services_Do_An.csproj", "{1D76139C-3BC1-4126-8560-1D5806C4817C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -12,5 +12,6 @@ namespace Repositories_Do_An.IRepositories
     {
         Staff read(string name);
         Staff read(string mail, string password, int roleId);
+        bool check(string mail);
     }
 }

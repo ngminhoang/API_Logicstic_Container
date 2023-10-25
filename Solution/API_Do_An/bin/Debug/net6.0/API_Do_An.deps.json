@@ -640,7 +640,8 @@
       "Services_Do_An/1.0.0": {
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
-          "Repositories_Do_An": "1.0.0"
+          "Repositories_Do_An": "1.0.0",
+          "XAct.Core.PCL": "0.0.5014"
         },
         "runtime": {
           "Services_Do_An.dll": {}

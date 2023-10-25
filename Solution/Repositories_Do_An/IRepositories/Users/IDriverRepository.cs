@@ -12,5 +12,6 @@ namespace Repositories_Do_An.IRepositories.Users
     {
         Driver read(string name);
         Driver read(string mail, string password, int roleId);
+        bool check(string mail);
     }
 }

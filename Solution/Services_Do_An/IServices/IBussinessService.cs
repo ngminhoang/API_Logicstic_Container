@@ -10,6 +10,7 @@ namespace Services_Do_An.IServices
     public interface IBussinessService : IServices<BussinessModel>
     {
         int checkAccount(string mail, string password, int roleId);
+        bool check(string mail);
     }
 }
 

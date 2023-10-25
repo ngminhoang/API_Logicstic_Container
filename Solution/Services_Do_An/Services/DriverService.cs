@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories.Users;
+using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,21 @@ namespace Services_Do_An.Services
             this.mapper = _mapper;
             this.driverDB = _driver;
         }
+
+
+        public bool check(string mail)
+        {
+            try
+            {
+                return (driverDB.check(mail));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public DriverModel read(int id)
         {
             try
@@ -50,7 +66,19 @@ namespace Services_Do_An.Services
             try
             {
                 Driver driver = mapper.Map<Driver>(entity);
-                return true;
+                string pass_md5 = MD5Functions.GenerateMD5(driver.Password);
+                driver.Password = pass_md5;
+                driver.RoleId = 3;
+                bool test = check(driver.Email);
+                if (test == false)
+                {
+                    driverDB.create(driver);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {

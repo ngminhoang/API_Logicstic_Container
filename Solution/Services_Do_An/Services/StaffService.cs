@@ -2,6 +2,7 @@
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Users;
+using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,36 @@ using System.Threading.Tasks;
 
 namespace Services_Do_An.Services
 {
-    internal class StaffService : IStaffService
+    public class StaffService : IStaffService
     {
         private readonly IMapper mapper;
-        private readonly IStaffRepository StaffDB;
-        public StaffService(IMapper _mapper, IStaffRepository _Staff)
+        private readonly IStaffRepository staffDB;
+        public StaffService(IMapper _mapper, IStaffRepository _staff)
         {
             this.mapper = _mapper;
-            this.StaffDB = _Staff;
+            this.staffDB = _staff;
         }
+
+
+        public bool check(string mail)
+        {
+            try
+            {
+                return (staffDB.check(mail));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public StaffModel read(int id)
         {
             try
             {
-                Staff Staff = StaffDB.read(id);
-                StaffModel StaffModel = mapper.Map<StaffModel>(Staff);
-                return StaffModel;
+                Staff staff = staffDB.read(id);
+                StaffModel staffModel = mapper.Map<StaffModel>(staff);
+                return staffModel;
             }
             catch (Exception ex)
             {
@@ -37,9 +52,9 @@ namespace Services_Do_An.Services
         {
             try
             {
-                Staff Staff = StaffDB.read(name);
-                StaffModel StaffModel = mapper.Map<StaffModel>(Staff);
-                return StaffModel;
+                Staff staff = staffDB.read(name);
+                StaffModel staffModel = mapper.Map<StaffModel>(staff);
+                return staffModel;
             }
             catch (Exception ex)
             {
@@ -50,8 +65,20 @@ namespace Services_Do_An.Services
         {
             try
             {
-                Staff Staff = mapper.Map<Staff>(entity);
-                return true;
+                Staff staff = mapper.Map<Staff>(entity);
+                string pass_md5 = MD5Functions.GenerateMD5(staff.Password);
+                staff.Password = pass_md5;
+                staff.RoleId = 2;
+                bool test = check(staff.Email);
+                if (test == false)
+                {
+                    staffDB.create(staff);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -71,7 +98,7 @@ namespace Services_Do_An.Services
         {
             try
             {
-                var check = StaffDB.read(mail, password, roleId);
+                var check = staffDB.read(mail, password, roleId);
                 if (check != null)
                 {
                     return check.UserId;

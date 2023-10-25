@@ -2,6 +2,7 @@
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Users;
+using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Services_Do_An.Services
 {
-    internal class BussinessService : IBussinessService
+    public class BussinessService : IBussinessService
     {
         private readonly IMapper mapper;
         private readonly IBussinessRepository bussinessDB;
@@ -20,6 +21,19 @@ namespace Services_Do_An.Services
             this.mapper = _mapper;
             this.bussinessDB = _Bussiness;
         }
+
+        public bool check(string mail)
+        {
+            try
+            {
+                return (bussinessDB.check(mail));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public BussinessModel read(int id)
         {
             try
@@ -50,8 +64,20 @@ namespace Services_Do_An.Services
         {
             try
             {
-                Bussiness Bussiness = mapper.Map<Bussiness>(entity);
-                return true;
+                Bussiness bussiness = mapper.Map<Bussiness>(entity);
+                string pass_md5 = MD5Functions.GenerateMD5(bussiness.BussinessPassword);
+                bussiness.BussinessPassword = pass_md5;
+                bussiness.RoleId = 5;
+                bool test = check(bussiness.ContactEmail);
+                if (test == false)
+                {
+                    bussinessDB.create(bussiness);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {

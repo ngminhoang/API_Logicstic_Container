@@ -15,6 +15,30 @@ namespace Repositories_Do_An.Repositories
         {
             _dbcontext = dbcontext;
         }
+
+        public bool check(string mail)
+        {
+            try
+            {
+                
+                    var rs = _dbcontext.Customers.FirstOrDefault(t => t.Email == mail);
+                    if (rs != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public bool create(Customer  entity)
         {
             try

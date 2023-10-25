@@ -1,4 +1,5 @@
-﻿using API_Do_An.APIModels;
+﻿using Services_Do_An.APIFunctions;
+using API_Do_An.APIModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Repositories_Do_An.DBcontext_vs_Entities;
@@ -35,9 +36,11 @@ namespace API_Do_An.Controllers
                 this.roleSV = roleSV;
                 this.adminSV = adminSV;
                 this.driverSV = driverSV;
-                this.customerSV = customerSV;
+                
                 this.bussinessSV = bussinessSV;
+                this.staffSV = staffSV;
                 this.configuration = configuration;
+                this.customerSV = customerSV;
             }
             catch (Exception ex) { throw ex; }
         }
@@ -52,7 +55,7 @@ namespace API_Do_An.Controllers
             var roleId = account.roleId;
 
             //var roleName = roleSV.read(roleId).RoleName;
-            var pass_md5 = GenerateMD5(password);
+            var pass_md5 = MD5Functions.GenerateMD5(password);
 
             var driverCheck = driverSV.checkAccount(email, pass_md5, roleId);
             var adminCheck = adminSV.checkAccount(email, pass_md5, roleId);
@@ -129,18 +132,7 @@ namespace API_Do_An.Controllers
                 return new JsonResult(new { username = name, id = id, token = usingToken });
             
         }
-        private string GenerateMD5(string password)
-        {
-            StringBuilder hash = new StringBuilder();
-            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
-            byte[] bytes = md5provider.ComputeHash(new UTF8Encoding().GetBytes(password));
-
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                hash.Append(bytes[i].ToString("x2"));
-            }
-            return hash.ToString();
-        }
+        
 
 
 

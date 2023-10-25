@@ -17,6 +17,29 @@ namespace Repositories_Do_An.Repositories
             _dbcontext = dbcontext;
         }
 
+        public bool check(string mail)
+        {
+            try
+            {
+                    var rs = _dbcontext.Admins.FirstOrDefault(t => t.Email == mail);
+                    if (rs != null)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         public Admin read(string mail, string password, int roleId)
         {
             try

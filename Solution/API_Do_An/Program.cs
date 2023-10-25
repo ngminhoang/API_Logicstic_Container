@@ -24,9 +24,10 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 // Add DI container
 builder.Services.AddTransient<IAdminService,AdminService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
-//builder.Services.AddTransient<IStaffService, StaffService>();
-//builder.Services.AddTransient<ICustomerService, CustomerService>();
+builder.Services.AddTransient<IStaffService, StaffService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<IDriverService, DriverService>();
+builder.Services.AddTransient<IBussinessService, BussinessService>();
 
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddTransient<IAppRateRepository, AppRateRepository>();
