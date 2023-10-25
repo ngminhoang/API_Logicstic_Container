@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,5 +13,6 @@ namespace Services_Do_An.IServices
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
         List<OrderModel> getAllInitializedOrders();
+        List<OrderItemModel> getOrder(int orderId);
     }
 }

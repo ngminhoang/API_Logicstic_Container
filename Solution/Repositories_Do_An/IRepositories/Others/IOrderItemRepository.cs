@@ -10,6 +10,6 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IOrderItemRepository : IRepository<OrderItem>
     {
-        
+        List<OrderItem> getAll(int orderId);
     }
 }

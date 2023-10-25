@@ -47,7 +47,7 @@ namespace API_Do_An.Controllers
 
 
 
-        [HttpPost("Login")]
+        [HttpPost]
         public IActionResult Login([FromBody] Account account)
         {
             var email = account.email;

@@ -1,4 +1,5 @@
-﻿using Repositories_Do_An.DBcontext_vs_Entities;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -50,6 +51,20 @@ namespace Repositories_Do_An.Repositories
                 {
                     return false;
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public List<OrderItem> getAll(int orderId)
+        {
+            try
+            {
+                List<OrderItem> rs = _dbcontext.OrderItems.Where(entity => entity.OrderId == orderId).ToList();
+                return rs;
             }
             catch (Exception ex)
             {

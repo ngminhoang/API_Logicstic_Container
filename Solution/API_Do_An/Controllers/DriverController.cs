@@ -16,7 +16,7 @@ namespace API_Do_An.Controllers
             this.driverSV = driverSV;
         }
         // GET: api/<DriverController>
-        [HttpGet("OrderList")]
+        [HttpGet("OrdersList")]
         public IActionResult GetOrderList()
         {
             try 
@@ -28,6 +28,20 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("OrdersList/{orderId}")]
+        public IActionResult GetOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.getOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
     }
 }

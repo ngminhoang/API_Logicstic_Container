@@ -7,6 +7,7 @@ using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,12 +19,33 @@ namespace Services_Do_An.Services
         private readonly IDriverRepository driverDB;
         private readonly IOrderRepository orderDB;
         private readonly IOrderStatusRepository orderStatusDB;
-        public DriverService(IMapper mapper, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB)
+        private readonly IOrderItemRepository orderItemDB;
+        public DriverService(IMapper mapper, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
             this.orderDB = orderDB;
             this.orderStatusDB = orderStatusDB;
+            this.orderItemDB = orderItemDB;
+        }
+
+        public List<OrderItemModel> getOrder(int orderId) 
+        {
+            try 
+            {
+                Order order = orderDB.read(orderId);
+                List<OrderItem> orderItemList  = orderItemDB.getAll(orderId);
+                List<OrderItemModel> orderItemModelList =new List<OrderItemModel>();
+                foreach (OrderItem item in orderItemList)
+                {
+                    orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
+                }
+                return orderItemModelList;
+            }
+            catch (Exception ex) 
+            {
+                throw ex;
+            }
         }
 
         public List<OrderModel> getAllInitializedOrders()
