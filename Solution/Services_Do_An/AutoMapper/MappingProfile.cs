@@ -28,7 +28,7 @@ namespace Services_Do_An.AutoMapper
             CreateMap<Role, RoleModel>();
             CreateMap<Staff, StaffModel>();
             CreateMap<Status, StatusModel>();
-            CreateMap<Vihcle, VihcleModel>();
+            CreateMap<Vehicle, VehicleModel>();
             CreateMap<Warehouse, WarehouseModel>();
 
             CreateMap<AdminModel, Admin>();
@@ -52,7 +52,7 @@ namespace Services_Do_An.AutoMapper
             CreateMap<RoleModel, Role>();
             CreateMap<StaffModel, Staff>();
             CreateMap<StatusModel, Status>();
-            CreateMap<VihcleModel, Vihcle>();
+            CreateMap<VehicleModel, Vehicle>();
             CreateMap<WarehouseModel, Warehouse>();
         }
     }

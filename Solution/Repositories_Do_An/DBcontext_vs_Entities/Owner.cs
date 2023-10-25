@@ -18,8 +18,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int DriverId { get; set; }
         public virtual Driver driver{ get; set; }
         [ForeignKey("Vihcle")]
-        public int VihcleId { get; set; }
-        public virtual Vihcle vihcle { get; set; }
+        public int VehicleId { get; set; }
+        public virtual Vehicle vehicle { get; set; }
         public string LicenceImageLink { get; set; }
         [StringLength(250)]
         public string Description { get; set; }

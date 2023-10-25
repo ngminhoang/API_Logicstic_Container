@@ -592,13 +592,13 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("PostionGoId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StaffId")
+                    b.Property<int?>("StaffId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<BigInteger>("TotalAmount")
+                    b.Property<BigInteger?>("TotalAmount")
                         .HasColumnType("numeric");
 
                     b.Property<string>("paymentMethod")
@@ -610,6 +610,8 @@ namespace Repositories_Do_An.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("StaffId");
 
                     b.ToTable("Order");
                 });
@@ -719,14 +721,14 @@ namespace Repositories_Do_An.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("VihcleId")
+                    b.Property<int>("VehicleId")
                         .HasColumnType("integer");
 
                     b.HasKey("OwnerId");
 
                     b.HasIndex("DriverId");
 
-                    b.HasIndex("VihcleId");
+                    b.HasIndex("VehicleId");
 
                     b.ToTable("Owner");
                 });
@@ -873,26 +875,26 @@ namespace Repositories_Do_An.Migrations
                     b.ToTable("Status");
                 });
 
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Vihcle", b =>
+            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Vehicle", b =>
                 {
-                    b.Property<int>("VihcleId")
+                    b.Property<int>("VehicleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VihcleId"));
-
-                    b.Property<int>("Cicle")
-                        .HasColumnType("integer");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VehicleId"));
 
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("VihcleName")
+                    b.Property<string>("VehicleName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("VihcleId");
+                    b.Property<int>("Wheel")
+                        .HasColumnType("integer");
+
+                    b.HasKey("VehicleId");
 
                     b.ToTable("Vihcle");
                 });
@@ -1122,9 +1124,15 @@ namespace Repositories_Do_An.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Staff", "staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId");
+
                     b.Navigation("customer");
 
                     b.Navigation("owner");
+
+                    b.Navigation("staff");
                 });
 
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.OrderStatus", b =>
@@ -1154,15 +1162,15 @@ namespace Repositories_Do_An.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Vihcle", "vihcle")
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Vehicle", "vehicle")
                         .WithMany()
-                        .HasForeignKey("VihcleId")
+                        .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("driver");
 
-                    b.Navigation("vihcle");
+                    b.Navigation("vehicle");
                 });
 
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Staff", b =>

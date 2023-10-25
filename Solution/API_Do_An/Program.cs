@@ -50,7 +50,7 @@ builder.Services.AddTransient<IPositionRepository, PositionRepository>();
 builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<IStatusRepository, StatusRepository>();
-builder.Services.AddTransient<IVihcleRepository, VihcleRepository>();
+builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
 builder.Services.AddTransient<IWarehouseRepository, WarehouseRepository>();
 
 
