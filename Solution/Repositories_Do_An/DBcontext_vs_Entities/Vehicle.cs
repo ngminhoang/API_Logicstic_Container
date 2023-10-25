@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Repositories_Do_An.DBcontext_vs_Entities
 {
-    [Table("Vihcle")]
+    [Table("Vehicle")]
     public class Vehicle
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
