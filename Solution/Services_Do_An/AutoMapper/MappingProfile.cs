@@ -23,7 +23,7 @@ namespace Services_Do_An.AutoMapper
             CreateMap<OrderItem, OrderItemModel>();
             CreateMap<Order, OrderModel>();
             CreateMap<OrderStatus, OrderStatusModel>();
-            CreateMap<Owner, OwnerModel>();
+            CreateMap<OwnedVehicleInfor, OwnedVehicleInforModel>();
             CreateMap<Position, PositionModel>();
             CreateMap<Role, RoleModel>();
             CreateMap<Staff, StaffModel>();
@@ -47,7 +47,7 @@ namespace Services_Do_An.AutoMapper
             CreateMap<OrderItemModel, OrderItem>();
             CreateMap<OrderModel, Order>();
             CreateMap<OrderStatusModel, OrderStatus>();
-            CreateMap<OwnerModel, Owner>();
+            CreateMap<OwnedVehicleInforModel, OwnedVehicleInfor>();
             CreateMap<PositionModel, Position>();
             CreateMap<RoleModel, Role>();
             CreateMap<StaffModel, Staff>();

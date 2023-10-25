@@ -14,7 +14,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int OrderStatusId { get; set; }
         public int OrderId { get; set; }
         public DateTime Date { get; set; }
-        public string Content { get; set; }
         public int StatusId { get; set;}
         public bool Status { get; set; }
     }

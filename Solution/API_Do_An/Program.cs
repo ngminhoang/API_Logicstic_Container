@@ -45,7 +45,7 @@ builder.Services.AddTransient<INotifTypeRepository, NotifTypeRepository>();
 builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddTransient<IOrderStatusRepository, OrderStatusRepository>();
-builder.Services.AddTransient<IOwnerRepository, OwnerRepository>();
+builder.Services.AddTransient<IOwnedVehicleInforRepository, OwnedVehicleInforRepository>();
 builder.Services.AddTransient<IPositionRepository, PositionRepository>();
 builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();

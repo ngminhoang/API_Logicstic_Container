@@ -21,7 +21,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Bussiness> Bussinesss { get; set; }
-        public DbSet<Owner> Owners { get; set; }
+        public DbSet<OwnedVehicleInfor> OwnedVehicleInfors { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<DriverRate> DriverRates { get; set; }

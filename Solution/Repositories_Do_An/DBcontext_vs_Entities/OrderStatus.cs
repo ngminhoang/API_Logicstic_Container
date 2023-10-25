@@ -17,8 +17,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int OrderId { get; set; }
         public virtual Order order { get; set; }
         public DateTime Date { get; set; }
-        [StringLength(100)]
-        public string Content { get; set; }
         [ForeignKey("Status")]
         public int StatusId { get; set;}
         public virtual Status status { get; set; }

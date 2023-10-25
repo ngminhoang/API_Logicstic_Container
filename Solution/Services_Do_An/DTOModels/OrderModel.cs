@@ -15,7 +15,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int OrderId { get; set; }
         public int CustomerId { get; set; }
         //public int StaffIdId { get; set; }
-        public int OwnerId { get; set; }
+        public int OVIId { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime ArrivedDate { get; set; }
         public BigInteger TotalAmount { get; set; }
