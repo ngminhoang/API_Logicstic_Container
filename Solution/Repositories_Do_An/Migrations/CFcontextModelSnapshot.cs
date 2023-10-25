@@ -592,7 +592,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("PostionGoId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("StaffIdId")
+                    b.Property<int>("StaffId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("Status")
@@ -611,20 +611,17 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("positionGoPositionId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("staffUserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("OrderId");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("OwnerId");
 
+                    b.HasIndex("StaffId");
+
                     b.HasIndex("positionComePositionId");
 
                     b.HasIndex("positionGoPositionId");
-
-                    b.HasIndex("staffUserId");
 
                     b.ToTable("Order");
                 });
@@ -1137,6 +1134,12 @@ namespace Repositories_Do_An.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Staff", "staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Position", "positionCome")
                         .WithMany()
                         .HasForeignKey("positionComePositionId")
@@ -1146,12 +1149,6 @@ namespace Repositories_Do_An.Migrations
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Position", "positionGo")
                         .WithMany()
                         .HasForeignKey("positionGoPositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Staff", "staff")
-                        .WithMany()
-                        .HasForeignKey("staffUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

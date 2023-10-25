@@ -17,9 +17,13 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public virtual Customer customer { get; set; }
+
+
         [ForeignKey("Staff")]
-        public int StaffIdId { get; set; }
+        public int StaffId { get; set; }
         public virtual Staff staff { get; set; }
+
+
         [ForeignKey(" Owner")]
         public int OwnerId { get; set; }
         public virtual Owner owner { get; set; }
