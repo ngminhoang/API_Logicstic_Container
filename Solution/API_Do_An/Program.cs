@@ -1,5 +1,6 @@
 ﻿using API_Do_An;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -94,8 +95,16 @@ builder.Services.AddAuthorization(options =>
 });
 
 
-
-builder.Services.AddCors();
+var x = "MyAllowSpecificOrigins";
+builder.Services.AddCors(
+    options => options.AddPolicy(name: x, builder =>
+    {
+        builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    }
+    ));
 
 
 
@@ -143,12 +152,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(builder =>
-{
-    builder.WithOrigins("https://localhost:3000") // Replace with your client's origin
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
+app.UseCors (x);
 
 app.UseHttpsRedirection();
 

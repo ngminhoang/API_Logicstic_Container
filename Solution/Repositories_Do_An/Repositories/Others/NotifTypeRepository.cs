@@ -89,7 +89,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.NotifTypes.Add(entity);
+                _dbcontext.NotifTypes.Update(entity);
                 _dbcontext.SaveChanges();
                 try
                 {

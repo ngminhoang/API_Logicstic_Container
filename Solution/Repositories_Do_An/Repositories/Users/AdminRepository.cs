@@ -138,7 +138,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.Admins.Add(entity);
+                _dbcontext.Admins.Update(entity);
                 _dbcontext.SaveChanges();
                 try
                 {

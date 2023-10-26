@@ -42,5 +42,124 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpPost("ContractedByCustomerOrder/{orderId}")]
+        public IActionResult contractedByCustomerOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.contractedByCustomerOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("ContractedByDriverOrder/{orderId}")]
+        public IActionResult contractedByDriverOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.contractedByDriverOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("DeliveringOrder/{orderId}")]
+        public IActionResult deliveringOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.deliveringOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("DeliveredOrder/{orderId}")]
+        public IActionResult deliveredOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.deliveredOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("TakenOrder/{orderId}")]
+        public IActionResult takenOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.takenOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("UnTakenOrder/{orderId}")]
+        public IActionResult unTakenOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.unTakenOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPost("AlteredOrder/{orderId}")]
+        public IActionResult alteredOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.alteredOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("PayedOrder/{orderId}")]
+        public IActionResult payedOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.payedOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("AccidentlOrder/{orderId}")]
+        public IActionResult accidentlOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.accidentlOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

@@ -89,7 +89,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.DriverRates.Add(entity);
+                _dbcontext.DriverRates.Update(entity);
                 _dbcontext.SaveChanges();
                 try
                 {

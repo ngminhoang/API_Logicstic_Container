@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;

@@ -7,6 +7,7 @@ using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 namespace Services_Do_An.Services
 {
     public class CustomerService : ICustomerService
-    { 
+    {
         private readonly IMapper mapper;
         private readonly ICustomerRepository customerDB;
         private readonly IOrderRepository orderDB;
@@ -26,7 +27,7 @@ namespace Services_Do_An.Services
             this.customerDB = _customer;
             this.orderDB = _order;
             this.orderItemDB = _orderItem;
-            this.orderStatusDB = _orderStatus;  
+            this.orderStatusDB = _orderStatus;
         }
 
         //public bool tryy(OrderStatusModel x)
@@ -50,19 +51,19 @@ namespace Services_Do_An.Services
         //}
 
 
-            public bool check(string mail)
+        public bool check(string mail)
+        {
+            try
             {
-                try
-                {
-                    return (customerDB.check(mail));
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                return (customerDB.check(mail));
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-            public CustomerModel read(int id)
+        public CustomerModel read(int id)
         {
             try
             {
@@ -93,20 +94,20 @@ namespace Services_Do_An.Services
             try
             {
                 Customer customer = mapper.Map<Customer>(entity);
-                    string pass_md5 = MD5Functions.GenerateMD5(customer.Password);
-                    customer.Password = pass_md5;
-                    customer.RoleId = 4;
-                    bool test = check(customer.Email);
-                    if (test == false)
-                    {
-                        customerDB.create(customer);
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                string pass_md5 = MD5Functions.GenerateMD5(customer.Password);
+                customer.Password = pass_md5;
+                customer.RoleId = 4;
+                bool test = check(customer.Email);
+                if (test == false)
+                {
+                    customerDB.create(customer);
+                    return true;
                 }
+                else
+                {
+                    return false;
+                }
+            }
             catch (Exception ex)
             {
                 throw ex;
@@ -120,7 +121,7 @@ namespace Services_Do_An.Services
         {
             return true;
         }
-
+    
         public int checkAccount(string mail, string password, int roleId)
         {
             try
@@ -139,10 +140,11 @@ namespace Services_Do_An.Services
 
 
         }
+    
 
-        bool ICustomerService.initOrder(OrderModel orderModel)
+        public bool initOrder(OrderModel orderModel)
         {
-            try 
+            try
             {
                 Order order = mapper.Map<Order>(orderModel);
                 try
@@ -153,7 +155,7 @@ namespace Services_Do_An.Services
                     return true;
 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
@@ -163,7 +165,7 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-        bool ICustomerService.acceptedOrder(int orderId, int oVIId)
+        public bool acceptedOrder(int orderId, int oVIId)
         {
             try
             {
@@ -171,9 +173,16 @@ namespace Services_Do_An.Services
                 order.OVIId = oVIId;
                 try
                 {
-                    orderDB.update(order);
-                    orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date= DateTime.UtcNow, StatusId=2, Status=true}); 
-                    return true;
+                    if (orderStatusDB.checkInitOrder(orderId) == true && orderStatusDB.checkAcceptedOrder(orderId) == false)
+                    {
+                        orderDB.update(order);
+                        orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 2, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
                 }
                 catch (Exception ex)
@@ -187,6 +196,326 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
+        public bool contractedByDriverOrder(int orderId)
+        {
+            try
+            {
+                Order order = orderDB.read(orderId);
+                try
+                {
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == true && orderStatusDB.checkContractedByDriverOrder(orderId) == false)
+                    {
+                        orderDB.update(order);
+                        orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 3, Status = true });
+                        if (orderStatusDB.checkContractedByCustomerOrder(orderId) == true)
+                        {
+                            ///LenhUpDate
+                            orderDB.update(order);
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool contractedByCustomerOrder(int orderId)
+        {
+            try
+            {
+                Order order = orderDB.read(orderId);
+                try
+                {
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == true && orderStatusDB.checkContractedByCustomerOrder(orderId) == false)
+                    {
+                        orderDB.update(order);
+                        orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 4, Status = true });
+                        if (orderStatusDB.checkContractedByDriverOrder(orderId) == true)
+                        {
+                            ///LenhUpDate
+                            orderDB.update(order);
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool deliveringOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkContractedByDriverOrder(orderId) == true && orderStatusDB.checkContractedByCustomerOrder(orderId) == true && ((orderStatusDB.checkDeliveringOrder(orderId) == false  || orderStatusDB.checkAlteringOrder(orderId) == true)))
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 5, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool deliveredOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkDeliveringOrder(orderId) == true && (orderStatusDB.checkDeliveredOrder(orderId) == false || orderStatusDB.checkAlteringOrder(orderId) == true))
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 6, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public bool takenOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkDeliveredOrder(orderId) == true && orderStatusDB.checkTakenOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 7, Status = true });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 10, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool unTakenOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkDeliveredOrder(orderId) == true &&( orderStatusDB.checkTakenOrder(orderId) == false ))
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 8, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool alteringOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if ((orderStatusDB.checkUnTakenOrder(orderId) == true|| orderStatusDB.checkTakenOrder(orderId) == false) )//&& orderStatusDB.checkAlteringOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 9, Status = true });
+                        //cap nhat lai gia tien
+                        //tao mot order khac
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public bool alteredOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkAlteringOrder(orderId) == true || orderStatusDB.checkTakenOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 14, Status = true });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                        //cap nhat lai gia tien
+                        //tao mot order khac
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        public bool payedOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkFinishedOrder(orderId) == true && (orderStatusDB.checkTakenOrder(orderId) == true/* || orderStatusDB.checkAlteredOrder(orderId) == true*/) && orderStatusDB.checkPayedOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                        //cap nhat lai gia tien
+                        //tao mot order khac
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public bool accidentlOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkTakenOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 13, Status = true });
+                        //cap nhat lai trang thai, gia tien,....
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
     }
 }

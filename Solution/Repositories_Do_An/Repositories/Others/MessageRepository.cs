@@ -89,7 +89,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.Messages.Add(entity);
+                _dbcontext.Messages.Update(entity);
                 _dbcontext.SaveChanges();
                 try
                 {

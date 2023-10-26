@@ -140,7 +140,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.Drivers.Add(entity);
+                _dbcontext.Drivers.Update(entity);
                 _dbcontext.SaveChanges();
                 try
                 {
