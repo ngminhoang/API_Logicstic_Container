@@ -140,7 +140,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.Staffs.Add(entity);
+                _dbcontext.Staffs.Update(entity);
                 _dbcontext.SaveChanges();
                 try
                 {

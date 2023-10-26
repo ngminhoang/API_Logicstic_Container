@@ -13,6 +13,7 @@ namespace Services_Do_An.IServices
         bool check(string mail);
         bool initOrder(OrderModel orderModel);
         bool acceptedOrder(int driverId, int orderId);
+        //bool tryy(OrderStatusModel f);
     }
 }
 

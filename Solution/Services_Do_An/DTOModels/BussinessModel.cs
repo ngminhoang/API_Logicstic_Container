@@ -12,7 +12,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
 
     public class BussinessModel
     {
-        public int BussinessId { get; set; }
+        public int? BussinessId { get; set; }
         public string? BusinessName { get; set; }
         public string? BusinessLicenseNumber {  get; set; }
         public string? BussinessPassword { get; set; }
@@ -24,6 +24,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateTime? DateCreatedAccount { get; set; }
         public DateTime? DateUpdatedAccount { get; set; }
         public bool? Status { get; set; }
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
     }
 }

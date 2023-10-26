@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NodaTime;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Users;
@@ -27,6 +28,27 @@ namespace Services_Do_An.Services
             this.orderItemDB = _orderItem;
             this.orderStatusDB = _orderStatus;  
         }
+
+        //public bool tryy(OrderStatusModel x)
+        //{
+        //    try
+        //    {
+        //        OrderStatus xx = new OrderStatus()
+        //        {
+        //            OrderId = x.OrderId,
+        //            Date = x.Date,
+        //            Status = x.Status,
+        //            StatusId = x.StatusId,
+        //        };
+        //        return(orderStatusDB.create(xx));
+
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
 
             public bool check(string mail)
             {
@@ -126,13 +148,14 @@ namespace Services_Do_An.Services
                 try
                 {
                     orderDB.create(order);
-                    orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.Now, StatusId = 1, Status = true});
+                    OrderStatus orderStatus = new OrderStatus { OrderStatusId = 0, OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true };
+                    orderStatusDB.create(orderStatus);
                     return true;
 
                 }
-                catch
+                catch(Exception ex)
                 {
-                    return false;
+                    throw ex;
                 }
             }
             catch (Exception ex)
@@ -149,15 +172,15 @@ namespace Services_Do_An.Services
                 try
                 {
                     orderDB.update(order);
-                    orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date= DateTime.Now, StatusId=2, Status=true}); 
+                    orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date= DateTime.UtcNow, StatusId=2, Status=true}); 
                     return true;
 
                 }
-                catch 
+                catch (Exception ex)
                 {
-                    return false;
+                    throw ex;
                 }
-                
+
             }
             catch (Exception ex)
             {

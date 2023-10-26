@@ -16,10 +16,10 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("Order")]
         public int OrderId { get; set; }
         public virtual Order order { get; set; }
-        public DateTime? Date { get; set; }
+        public DateTime Date { get; set; }
         [ForeignKey("Status")]
         public int StatusId { get; set;}
         public virtual Status status { get; set; }
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

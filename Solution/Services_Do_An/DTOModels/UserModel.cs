@@ -12,7 +12,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class UserModel
     {
         public String? AvatarImageLink { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string? Password { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
@@ -22,7 +22,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string? FullName { get; set; }
         public DateTime? DateCreatedAccount { get; set; }
         public DateTime? DateUpdatedAccount { get; set; }
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public bool? Status { get; set; }
     }
 }

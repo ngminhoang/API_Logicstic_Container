@@ -117,6 +117,29 @@ namespace Services_Do_An.Services
             try
             {
                 Driver driver = mapper.Map<Driver>(entity);
+
+
+                //Driver driver = new Driver()
+                //{
+                //    Address = entity.Address,
+                //    Status = entity.Status,
+                //    AvatarImageLink = entity.AvatarImageLink,
+                //    DateCreatedAccount = entity.DateCreatedAccount,
+                //    DateUpdatedAccount = entity.DateUpdatedAccount,
+                //    BackIdentifyImageLink = entity.BackIdentifyImageLink,
+                //    Password = entity.Password,
+                //    Email = entity.Email,
+                //    PhoneNumber = entity.PhoneNumber,
+                //    Birthday = entity.Birthday,
+                //    Gender = entity.Gender,
+                //    FullName = entity.FullName,
+                //    RoleId = entity.RoleId,
+                    
+                
+                //}
+                //    ;
+
+
                 string pass_md5 = MD5Functions.GenerateMD5(driver.Password);
                 driver.Password = pass_md5;
                 driver.RoleId = 3;

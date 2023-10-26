@@ -13,10 +13,9 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RateId { get; set; }
-        [Required]
         public int? Rate { get; set; }
         [StringLength(250)]
-        public String Commnent { get; set; }
+        public String? Commnent { get; set; }
         public int? UserId { get; set; }
         public DateTime? CommentDate { get; set; }
         [ForeignKey("Role")]

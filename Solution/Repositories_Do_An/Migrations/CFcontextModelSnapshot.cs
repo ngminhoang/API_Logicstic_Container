@@ -62,7 +62,6 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
@@ -91,12 +90,10 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Commnent")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
                     b.Property<int?>("Rate")
-                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("RoleId")
@@ -161,7 +158,6 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
@@ -297,7 +293,6 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
@@ -360,7 +355,6 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 
@@ -632,13 +626,13 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderStatusId"));
 
-                    b.Property<DateTime?>("Date")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<bool?>("Status")
+                    b.Property<bool>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<int>("StatusId")
@@ -788,7 +782,6 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("character varying(10)");
 

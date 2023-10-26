@@ -20,7 +20,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string? Email { get; set; }
         [StringLength(50)]
         public string? Address { get; set; }
-        [StringLength(10), Required, RegularExpression(@"\d")]
+        [StringLength(10), RegularExpression(@"\d")]
         public string? PhoneNumber { get; set; }
         public DateOnly? Birthday { get; set; }
         public bool? Gender { get; set; }
