@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.IServices;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,36 @@ namespace API_Do_An.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        // GET: api/<CustomerController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly ICustomerService customerSV;
+        public CustomerController(ICustomerService customerSV)
         {
-            return new string[] { "value1", "value2" };
+            this.customerSV = customerSV;
+        }
+        // GET: api/<DriverController>
+        [HttpPost("initOrder")]
+        public IActionResult initOrder(OrderModel orderModel)
+        {
+            try
+            {
+                return Ok(customerSV.initOrder(orderModel));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        // GET api/<CustomerController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPut("AcceptedOrder/{orderId}/{oVIId}")]
+        public IActionResult AcceptedOrder(int orderId, int oVIId)
         {
-            return "value";
-        }
-
-        // POST api/<CustomerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<CustomerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<CustomerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                return Ok(customerSV.acceptedOrder(orderId, oVIId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

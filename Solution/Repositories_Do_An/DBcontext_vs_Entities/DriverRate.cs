@@ -13,16 +13,16 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RateId { get; set; }
-        public int Rate {  get; set; }
+        public int? Rate {  get; set; }
         [StringLength(250)]
-        public String Commnent { get; set; }
+        public String? Commnent { get; set; }
         [ForeignKey("Driver")]
         public int DriverId { get; set; }
         public virtual Driver driver { get; set; }
-        public DateTime CommentDate { get; set; }
+        public DateTime? CommentDate { get; set; }
         [ForeignKey("Customer")]
         public int CustomerId { get; set; }
         public virtual Customer customer { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
     }
 }

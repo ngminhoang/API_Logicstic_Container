@@ -14,21 +14,22 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WarehouseId { get; set; }
         [StringLength(50)]
-        public string WarehouseName { get; set; }
+        public string? WarehouseName { get; set; }
         [StringLength(250)]
-        public string WarehouseDescription { get; set; }
+        public string? WarehouseDescription { get; set; }
         [ForeignKey("Bussiness")]
         public int BussinessId { get; set; }
         public virtual Bussiness bussiness { get; set; }
         [StringLength(50)]
-        public string Province {  get; set; }
+        public string? Province {  get; set; }
         [StringLength(50)]
-        public string District { get; set; }
+        public string? District { get; set; }
         [StringLength(50)]
-        public string Ward { get; set; }
+        public string? Ward { get; set; }
         [StringLength(50)]
-        public string Street { get; set; }
+        public string? Street { get; set; }
         [StringLength(50)]
-        public string Number { get; set; }
+        public string? Number { get; set; }
+        public bool? Status { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public  class RoleModel
     {
         public int RoleId {  get; set; }
-        public string RoleName { get; set; }
-        public bool Status { get; set; }
+        public string? RoleName { get; set; }
+        public bool? Status { get; set; }
     }
 }

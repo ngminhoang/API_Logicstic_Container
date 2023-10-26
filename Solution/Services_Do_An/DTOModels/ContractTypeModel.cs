@@ -11,6 +11,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class ContractTypeModel
     {
         public int ContractTypeId { get; set; }
-        public string text { get; set; }
+        public string? text { get; set; }
+        public bool? Status { get; set; }
     }
 }

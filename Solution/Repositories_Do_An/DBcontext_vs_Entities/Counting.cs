@@ -13,8 +13,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CountingId { get; set; }
-        public DateTime Date {  get; set; }
-        public Double Values { get; set; }
-        public bool Status { get; set; }
+        public DateTime? Date {  get; set; }
+        public Double? Values { get; set; }
+        public bool? Status { get; set; }
     }
 }

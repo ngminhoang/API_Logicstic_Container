@@ -11,18 +11,18 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     
     public class UserModel
     {
-        public String AvatarImageLink { get; set; }
+        public String? AvatarImageLink { get; set; }
         public int UserId { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateOnly Birthday { get; set; }
-        public bool Gender { get; set; }
-        public string FullName { get; set; }
-        public DateTime DateCreatedAccount { get; set; }
-        public DateTime DateUpdatedAccount { get; set; }
+        public string? Password { get; set; }
+        public string? Email { get; set; }
+        public string? Address { get; set; }
+        public string? PhoneNumber { get; set; }
+        public DateOnly? Birthday { get; set; }
+        public bool? Gender { get; set; }
+        public string? FullName { get; set; }
+        public DateTime? DateCreatedAccount { get; set; }
+        public DateTime? DateUpdatedAccount { get; set; }
         public int RoleId { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
     }
 }

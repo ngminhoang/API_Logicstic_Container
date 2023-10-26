@@ -10,7 +10,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
  
     public class DriverModel : UserModel
     {
-        public String FrontIdentifyImageLink {  get; set; }
-        public String BackIdentifyImageLink { get; set; }
+        public String? FrontIdentifyImageLink {  get; set; }
+        public String? BackIdentifyImageLink { get; set; }
     }
 }

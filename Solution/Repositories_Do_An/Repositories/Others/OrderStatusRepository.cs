@@ -105,5 +105,23 @@ namespace Repositories_Do_An.Repositories
                 throw ex;
             }
         }
+
+
+        public bool checkInitOrder(int orderId)
+        {
+            try
+            {
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId).ToList();
+                if(rs.Count == 1 && rs[0].StatusId==1) 
+                {
+                    return true;
+                }
+                else { return false; }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

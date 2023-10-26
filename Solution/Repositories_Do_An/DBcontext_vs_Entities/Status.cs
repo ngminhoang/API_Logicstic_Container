@@ -14,7 +14,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StatusId { get; set; }
         [StringLength(50)]
-        public string StatusName { get; set; }
+        public string? StatusName { get; set; }
     }
 
 }

@@ -20,12 +20,12 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("Vihcle")]
         public int VehicleId { get; set; }
         public virtual Vehicle vehicle { get; set; }
-        public string LicenceImageLink { get; set; }
+        public string? LicenceImageLink { get; set; }
         [StringLength(250)]
-        public string Description { get; set; }
-        public bool Status { get; set; }
-        public double Cargo {  get; set; }
-        public double FuelEfficiency { get; set; }
+        public string? Description { get; set; }
+        public bool? Status { get; set; }
+        public double? Cargo {  get; set; }
+        public double? FuelEfficiency { get; set; }
 
     }
 }

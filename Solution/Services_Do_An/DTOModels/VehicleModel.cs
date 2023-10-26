@@ -12,9 +12,9 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class VehicleModel
     { 
         public int VehicleId { get; set; }
-        public String VehicleName { get; set; }
-        public int Wheel {  get; set; }
-        public bool Status { get; set; }
+        public String? VehicleName { get; set; }
+        public int? Wheel {  get; set; }
+        public bool? Status { get; set; }
 
     }
 }

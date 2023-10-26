@@ -54,18 +54,18 @@ namespace Services_Do_An.Services
             {
                 List<OrderModel> rs = new List<OrderModel>();
                 List<Order> list = orderDB.getAll();
+                //foreach (var order in list)
+                //{
+                //    rs.Add(mapper.Map<OrderModel>(order));
+                //}
                 foreach (var order in list)
                 {
-                    rs.Add(mapper.Map<OrderModel>(order));
+                    if (orderStatusDB.checkInitOrder(order.OrderId)==true)
+                    {
+                        rs.Add(mapper.Map<OrderModel>(order));
+                    }
                 }
-                    //foreach (var order in list)
-                    //{
-                    //    if (orderStatusDB.readByOrderId(order.OrderId).StatusId == 1)
-                    //    {
-                    //        rs.Add(mapper.Map<OrderModel>(order));
-                    //    }
-                    //}
-                    return rs;
+                return rs;
             }
             catch (Exception ex) 
             {

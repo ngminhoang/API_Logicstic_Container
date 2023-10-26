@@ -12,8 +12,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class CountingModel
     { 
         public int CountingId { get; set; }
-        public DateTime Date {  get; set; }
-        public Double Values { get; set; }
-        public bool Status { get; set; }
+        public DateTime? Date {  get; set; }
+        public Double? Values { get; set; }
+        public bool? Status { get; set; }
     }
 }

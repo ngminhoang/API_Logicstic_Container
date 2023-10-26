@@ -31,38 +31,33 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("AvatarImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("Birthday")
+                    b.Property<DateOnly?>("Birthday")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("DateCreatedAccount")
+                    b.Property<DateTime?>("DateCreatedAccount")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateUpdatedAccount")
+                    b.Property<DateTime?>("DateUpdatedAccount")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -74,7 +69,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("UserId");
@@ -92,7 +87,7 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RateId"));
 
-                    b.Property<DateTime>("CommentDate")
+                    b.Property<DateTime?>("CommentDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Commnent")
@@ -100,16 +95,17 @@ namespace Repositories_Do_An.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<int>("Rate")
+                    b.Property<int?>("Rate")
+                        .IsRequired()
                         .HasColumnType("integer");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("RateId");
@@ -155,13 +151,13 @@ namespace Repositories_Do_An.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
-                    b.Property<bool>("CoopStatus")
+                    b.Property<bool?>("CoopStatus")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime>("DateCreatedAccount")
+                    b.Property<DateTime?>("DateCreatedAccount")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateUpdatedAccount")
+                    b.Property<DateTime?>("DateUpdatedAccount")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("PhoneNumber")
@@ -172,7 +168,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("BussinessId");
@@ -191,7 +187,6 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContractId"));
 
                     b.Property<string>("ContractFileLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("ContractTypeId")
@@ -206,7 +201,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("ContractId");
@@ -228,11 +223,10 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContractTypeId"));
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<string>("text")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -249,13 +243,13 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CountingId"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<double>("Values")
+                    b.Property<double?>("Values")
                         .HasColumnType("double precision");
 
                     b.HasKey("CountingId");
@@ -272,38 +266,33 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("AvatarImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("Birthday")
+                    b.Property<DateOnly?>("Birthday")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("DateCreatedAccount")
+                    b.Property<DateTime?>("DateCreatedAccount")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateUpdatedAccount")
+                    b.Property<DateTime?>("DateUpdatedAccount")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -315,7 +304,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("UserId");
@@ -334,46 +323,39 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("AvatarImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("BackIdentifyImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("Birthday")
+                    b.Property<DateOnly?>("Birthday")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("DateCreatedAccount")
+                    b.Property<DateTime?>("DateCreatedAccount")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateUpdatedAccount")
+                    b.Property<DateTime?>("DateUpdatedAccount")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("FrontIdentifyImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -385,7 +367,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("UserId");
@@ -403,11 +385,10 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RateId"));
 
-                    b.Property<DateTime>("CommentDate")
+                    b.Property<DateTime?>("CommentDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Commnent")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
@@ -417,10 +398,10 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("DriverId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Rate")
+                    b.Property<int?>("Rate")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("RateId");
@@ -440,18 +421,17 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("InvoiceId"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("InvoiceId");
@@ -470,10 +450,9 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MessId"));
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("RoleId")
@@ -482,10 +461,10 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("StaffId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("MessId");
@@ -506,11 +485,10 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotificationId"));
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("NotifTypeId")
@@ -519,10 +497,10 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("NotificationId");
@@ -543,17 +521,17 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotifTypeId"));
 
                     b.Property<string>("NotifDescription")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
                     b.Property<string>("NotifName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<bool?>("Status")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
@@ -579,16 +557,16 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int?>("OVIId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("OrderedDate")
+                    b.Property<DateTime?>("OrderedDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("PostionComeId")
+                    b.Property<int?>("PostionComeId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PostionGoId")
+                    b.Property<int?>("PostionGoId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<double?>("TotalAmount")
@@ -610,39 +588,38 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderItemId"));
 
                     b.Property<string>("ItemDescription")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
                     b.Property<string>("ItemImage")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("ItemName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<double>("MassPerUnit")
+                    b.Property<double?>("MassPerUnit")
                         .HasColumnType("double precision");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<double>("PricePerUnit")
+                    b.Property<double?>("PricePerUnit")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<double>("WeightPerUnit")
+                    b.Property<double?>("WeightPerUnit")
                         .HasColumnType("double precision");
 
                     b.HasKey("OrderItemId");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItem");
                 });
@@ -655,13 +632,13 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderStatusId"));
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<int>("StatusId")
@@ -684,25 +661,23 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OVIId"));
 
-                    b.Property<double>("Cargo")
+                    b.Property<double?>("Cargo")
                         .HasColumnType("double precision");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
                     b.Property<int>("DriverId")
                         .HasColumnType("integer");
 
-                    b.Property<double>("FuelEfficiency")
+                    b.Property<double?>("FuelEfficiency")
                         .HasColumnType("double precision");
 
                     b.Property<string>("LicenceImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<int>("VehicleId")
@@ -726,30 +701,25 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PositionId"));
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Number")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Province")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Ward")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -767,11 +737,10 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("RoleName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("RoleId");
@@ -788,38 +757,33 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("AvatarImageLink")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("Birthday")
+                    b.Property<DateOnly?>("Birthday")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("DateCreatedAccount")
+                    b.Property<DateTime?>("DateCreatedAccount")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateUpdatedAccount")
+                    b.Property<DateTime?>("DateUpdatedAccount")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("FullName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<bool>("Gender")
+                    b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -831,7 +795,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("integer");
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.HasKey("UserId");
@@ -850,7 +814,6 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("StatusId"));
 
                     b.Property<string>("StatusName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -867,15 +830,14 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VehicleId"));
 
-                    b.Property<bool>("Status")
+                    b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<string>("VehicleName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("Wheel")
+                    b.Property<int?>("Wheel")
                         .HasColumnType("integer");
 
                     b.HasKey("VehicleId");
@@ -895,37 +857,33 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("District")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Number")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Province")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<bool?>("Status")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Street")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("Ward")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("WarehouseDescription")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
                     b.Property<string>("WarehouseName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -1095,6 +1053,17 @@ namespace Repositories_Do_An.Migrations
                         .IsRequired();
 
                     b.Navigation("customer");
+                });
+
+            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.OrderItem", b =>
+                {
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Order", "order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("order");
                 });
 
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.OrderStatus", b =>

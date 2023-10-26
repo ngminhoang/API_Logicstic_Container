@@ -12,7 +12,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class StatusModel
     {
         public int StatusId { get; set; }
-        public string StatusName { get; set; }
+        public string? StatusName { get; set; }
     }
 
 }

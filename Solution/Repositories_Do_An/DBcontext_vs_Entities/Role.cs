@@ -14,7 +14,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoleId {  get; set; }
         [StringLength(50)]
-        public string RoleName { get; set; }
-        public bool Status { get; set; }
+        public string? RoleName { get; set; }
+        public bool? Status { get; set; }
     }
 }

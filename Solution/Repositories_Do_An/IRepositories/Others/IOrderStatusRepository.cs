@@ -10,6 +10,6 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IOrderStatusRepository : IRepository<OrderStatus>
     {
-        
+        bool checkInitOrder(int id);
     }
 }

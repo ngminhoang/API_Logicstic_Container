@@ -12,11 +12,11 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class NotificationModel
     {
         public int NotificationId { get; set; }
-        public string Content { get; set; }
+        public string? Content { get; set; }
         public int NotifTypeId { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         public int UserId { get; set; }
         public int RoleId { get; set; }
-        public bool Status {  get; set; }
+        public bool? Status {  get; set; }
     }
 }

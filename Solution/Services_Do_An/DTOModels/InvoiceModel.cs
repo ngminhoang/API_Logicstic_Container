@@ -13,8 +13,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         public int InvoiceId { get; set; }
         public int OrderId { get; set; }
-        public bool Status { get; set; }
-        public string Description { get; set; }
-        public DateTime Date {  get; set; }
+        public bool? Status { get; set; }
+        public string? Description { get; set; }
+        public DateTime? Date {  get; set; }
     }
 }

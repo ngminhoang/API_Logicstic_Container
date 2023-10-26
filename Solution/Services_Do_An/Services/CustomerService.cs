@@ -118,7 +118,7 @@ namespace Services_Do_An.Services
 
         }
 
-        bool ICustomerService.createOrder(OrderModel orderModel)
+        bool ICustomerService.initOrder(OrderModel orderModel)
         {
             try 
             {
@@ -140,7 +140,7 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-        bool ICustomerService.updateOrder(int oVIId,int orderId)
+        bool ICustomerService.acceptedOrder(int orderId, int oVIId)
         {
             try
             {

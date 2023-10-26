@@ -14,10 +14,11 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int NotifTypeId { get; set; }
         [StringLength(50)]
-        public string NotifName { get; set;}
+        public string? NotifName { get; set;}
         [StringLength(250)]
-        public string NotifDescription { get; set;}
+        public string? NotifDescription { get; set;}
         [StringLength(100)]
-        public string Title { get; set;}
+        public string? Title { get; set;}
+        public bool? Status { get; set; }
     }
 }

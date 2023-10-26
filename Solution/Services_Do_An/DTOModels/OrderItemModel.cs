@@ -14,13 +14,13 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }
-        public string ItemName { get; set; }
-        public int Quantity { get; set; }
-        public double MassPerUnit { get; set; }
-        public double WeightPerUnit { get; set; }
-        public double PricePerUnit { get; set; }
-        public string ItemDescription { get; set; }
-        public string ItemImage { get; set; }
-        public bool Status { get; set; }
+        public string? ItemName { get; set; }
+        public int? Quantity { get; set; }
+        public double? MassPerUnit { get; set; }
+        public double? WeightPerUnit { get; set; }
+        public double? PricePerUnit { get; set; }
+        public string? ItemDescription { get; set; }
+        public string? ItemImage { get; set; }
+        public bool? Status { get; set; }
     }
 }

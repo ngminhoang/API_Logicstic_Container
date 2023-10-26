@@ -13,7 +13,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ContractId { get; set; }
-        public string ContractFileLink {  get; set; }
+        public string? ContractFileLink {  get; set; }
         [ForeignKey("Cusustomer")]
         public int CustomerId { get; set; }
         public virtual Customer customer { get; set; }
@@ -24,6 +24,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("ContractType")]
         public int ContractTypeId { get; set; }
         public virtual ContractType contractType { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
     }
 }

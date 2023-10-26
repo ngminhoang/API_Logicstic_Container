@@ -12,8 +12,9 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class NotifTypeModel
     {
         public int NotifTypeId { get; set; }
-        public string NotifName { get; set;}
-        public string NotifDescription { get; set;}
-        public string Title { get; set;}
+        public string? NotifName { get; set;}
+        public string? NotifDescription { get; set;}
+        public string? Title { get; set;}
+        public bool? Status { get; set; }   
     }
 }

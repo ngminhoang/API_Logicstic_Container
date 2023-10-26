@@ -14,14 +14,14 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RateId { get; set; }
         [Required]
-        public int Rate { get; set; }
+        public int? Rate { get; set; }
         [StringLength(250)]
         public String Commnent { get; set; }
-        public int UserId { get; set; }
-        public DateTime CommentDate { get; set; }
+        public int? UserId { get; set; }
+        public DateTime? CommentDate { get; set; }
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public virtual Role role { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
     }
 }

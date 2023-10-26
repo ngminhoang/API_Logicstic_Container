@@ -12,11 +12,11 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class DriverRateModel
     {
         public int RateId { get; set; }
-        public int Rate {  get; set; }
-        public String Commnent { get; set; }
+        public int? Rate {  get; set; }
+        public String? Commnent { get; set; }
         public int DriverId { get; set; }
-        public DateTime CommentDate { get; set; }
+        public DateTime? CommentDate { get; set; }
         public int CustomerId { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
     }
 }
