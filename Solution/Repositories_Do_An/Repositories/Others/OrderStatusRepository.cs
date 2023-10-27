@@ -111,7 +111,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true).ToList();
                 if(rs.Count == 1 && rs[0].StatusId==1) 
                 {
                     return true;
@@ -128,7 +128,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId==2).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId==2 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -146,7 +146,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 4).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 4 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -164,7 +164,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 3).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 3 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -182,7 +182,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 5).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 5 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -199,7 +199,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 6).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 6 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -217,7 +217,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 7).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 7 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -234,7 +234,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 8).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 8 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -252,7 +252,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 14).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 14 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -269,7 +269,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 10).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 10 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -286,7 +286,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 11).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 11 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -303,7 +303,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 12).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 12 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -320,7 +320,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 13).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 13 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -338,7 +338,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 9).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -355,7 +355,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                var rs = _dbcontext.OrderStatuss.OrderByDescending(e => e.Date).Where(entity => entity.OrderId == orderId).FirstOrDefault();
+                var rs = _dbcontext.OrderStatuss.OrderByDescending(e => e.Date).Where(entity => entity.OrderId == orderId && entity.Status == true).FirstOrDefault();
                 return rs.StatusId; 
             }
             catch (Exception ex)

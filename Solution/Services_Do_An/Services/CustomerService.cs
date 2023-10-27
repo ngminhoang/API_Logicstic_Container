@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NodaTime;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
+using Repositories_Do_An.IRepositories.Others;
 using Repositories_Do_An.IRepositories.Users;
 using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
@@ -21,13 +23,36 @@ namespace Services_Do_An.Services
         private readonly IOrderRepository orderDB;
         private readonly IOrderItemRepository orderItemDB;
         private readonly IOrderStatusRepository orderStatusDB;
-        public CustomerService(IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
+        private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
+        public CustomerService(IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
         {
             this.mapper = _mapper;
             this.customerDB = _customer;
             this.orderDB = _order;
             this.orderItemDB = _orderItem;
             this.orderStatusDB = _orderStatus;
+            this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
+        }
+
+
+        public bool addOrderItem(OrderItemModel item)
+        {
+            try
+            {
+                OrderItem orderItem = mapper.Map<OrderItem>(item);
+                if (orderStatusDB.checkInitOrder(orderItem.OrderId) == true && orderStatusDB.checkAcceptedOrder(orderItem.OrderId) == false)
+                {
+                    return orderItemDB.create(orderItem);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool check(string mail)
@@ -155,6 +180,7 @@ namespace Services_Do_An.Services
                     if (orderStatusDB.checkInitOrder(orderId) == true && orderStatusDB.checkAcceptedOrder(orderId) == false)
                     {
                         orderDB.update(order);
+                        wishedAcceptedDriverListDB.choosenDriver(oVIId, orderId);
                         orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 2, Status = true });
                         return true;
                     }
@@ -274,10 +300,6 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-
-
-        
-
 
 
         public bool payedOrder(int orderId)

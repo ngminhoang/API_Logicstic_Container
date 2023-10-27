@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;
+using System.Diagnostics.Eventing.Reader;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,7 +22,14 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.initOrder(orderModel));
+                if (customerSV.initOrder(orderModel))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
             }
             catch (Exception ex)
             {
@@ -34,7 +42,14 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.acceptedOrder(orderId, oVIId));
+                if (customerSV.acceptedOrder(orderId, oVIId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
             }
             catch (Exception ex)
             {
@@ -47,7 +62,14 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.contractedByCustomerOrder(orderId));
+                if (customerSV.contractedByCustomerOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
             }
             catch (Exception ex)
             {
@@ -62,7 +84,14 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.takenOrder(orderId));
+                if (customerSV.takenOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
             }
             catch (Exception ex)
             {
@@ -75,7 +104,14 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.unTakenOrder(orderId));
+                if (customerSV.unTakenOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
             }
             catch (Exception ex)
             {
@@ -91,7 +127,14 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.payedOrder(orderId));
+                if (customerSV.payedOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
             }
             catch (Exception ex)
             {
@@ -99,7 +142,25 @@ namespace API_Do_An.Controllers
             }
         }
 
-        
+        [HttpPost("AddOrderItem")]
+        public IActionResult addOrderItem(OrderItemModel orderItem)
+        {
+            try
+            {
+                if (customerSV.addOrderItem(orderItem))
+                {
+                    return Ok(true); 
+                }
+                else 
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }

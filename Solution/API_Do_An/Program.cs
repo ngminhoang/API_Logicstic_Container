@@ -6,8 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
+using Repositories_Do_An.IRepositories.Others;
 using Repositories_Do_An.IRepositories.Users;
 using Repositories_Do_An.Repositories;
+using Repositories_Do_An.Repositories.Others;
 using Services_Do_An.AutoMapper;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
@@ -23,37 +25,37 @@ builder.Services.AddDbContext<Repositories_Do_An.DBcontext_vs_Entities.CFcontext
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Add DI container
-builder.Services.AddTransient<IAdminService,AdminService>();
-builder.Services.AddTransient<IRoleService, RoleService>();
-builder.Services.AddTransient<IStaffService, StaffService>();
-builder.Services.AddTransient<ICustomerService, CustomerService>();
-builder.Services.AddTransient<IDriverService, DriverService>();
-builder.Services.AddTransient<IBussinessService, BussinessService>();
+builder.Services.AddScoped<IAdminService,AdminService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IDriverService, DriverService>();
+builder.Services.AddScoped<IBussinessService, BussinessService>();
 
-builder.Services.AddTransient<IAdminRepository, AdminRepository>();
-builder.Services.AddTransient<IAppRateRepository, AppRateRepository>();
-builder.Services.AddTransient<IBussinessRepository, BussinessRepository>();
-builder.Services.AddTransient<IContractRepository, ContractRepository>();
-builder.Services.AddTransient<IContractTypeRepository, ContractTypeRepository>();
-builder.Services.AddTransient<ICountingRepository, CountingRepository>();
-builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
-builder.Services.AddTransient<IDriverRepository, DriverRepository>();
-builder.Services.AddTransient<IDriverRateRepository, DriverRateRepository>();
-builder.Services.AddTransient<IInvoiceRepository, InvoiceRepository>();
-builder.Services.AddTransient<IMessageRepository, MessageRepository>();
-builder.Services.AddTransient<INotificationRepository, NotificationRepository>();
-builder.Services.AddTransient<INotifTypeRepository, NotifTypeRepository>();
-builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-builder.Services.AddTransient<IOrderItemRepository, OrderItemRepository>();
-builder.Services.AddTransient<IOrderStatusRepository, OrderStatusRepository>();
-builder.Services.AddTransient<IOwnedVehicleInforRepository, OwnedVehicleInforRepository>();
-builder.Services.AddTransient<IPositionRepository, PositionRepository>();
-builder.Services.AddTransient<IRoleRepository, RoleRepository>();
-builder.Services.AddTransient<IStaffRepository, StaffRepository>();
-builder.Services.AddTransient<IStatusRepository, StatusRepository>();
-builder.Services.AddTransient<IVehicleRepository, VehicleRepository>();
-builder.Services.AddTransient<IWarehouseRepository, WarehouseRepository>();
-
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+builder.Services.AddScoped<IAppRateRepository, AppRateRepository>();
+builder.Services.AddScoped<IBussinessRepository, BussinessRepository>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IContractTypeRepository, ContractTypeRepository>();
+builder.Services.AddScoped<ICountingRepository, CountingRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IDriverRepository, DriverRepository>();
+builder.Services.AddScoped<IDriverRateRepository, DriverRateRepository>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotifTypeRepository, NotifTypeRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<IOrderStatusRepository, OrderStatusRepository>();
+builder.Services.AddScoped<IOwnedVehicleInforRepository, OwnedVehicleInforRepository>();
+builder.Services.AddScoped<IPositionRepository, PositionRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
+builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+builder.Services.AddScoped<IWishedAcceptedDriverListRepository, WishedAcceptedDriverListRepository>();
 
 
 //authen vs author

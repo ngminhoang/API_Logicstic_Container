@@ -20,5 +20,6 @@ namespace Services_Do_An.IServices
         bool alteringOrder(int orderId);
         bool accidentlOrder(int orderId);
         bool alteredOrder(int orderId);
+        bool applyOrder(int OVIId, int orderId);
     }
 }

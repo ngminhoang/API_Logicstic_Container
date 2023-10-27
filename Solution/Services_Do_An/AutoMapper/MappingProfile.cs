@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.DTOModels;
 
 namespace Services_Do_An.AutoMapper
 {
@@ -30,6 +31,7 @@ namespace Services_Do_An.AutoMapper
             CreateMap<Status, StatusModel>();
             CreateMap<Vehicle, VehicleModel>();
             CreateMap<Warehouse, WarehouseModel>();
+            CreateMap<WishedAcceptedDriverList, WishedAcceptedDriverListModel>();
 
             CreateMap<AdminModel, Admin>();
             CreateMap<AppRateModel, AppRate>();
@@ -54,6 +56,7 @@ namespace Services_Do_An.AutoMapper
             CreateMap<StatusModel, Status>();
             CreateMap<VehicleModel, Vehicle>();
             CreateMap<WarehouseModel, Warehouse>();
+            CreateMap<WishedAcceptedDriverListModel, WishedAcceptedDriverList>();
         }
     }
 }

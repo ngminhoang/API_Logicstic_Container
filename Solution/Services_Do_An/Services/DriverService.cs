@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
+using Repositories_Do_An.IRepositories.Others;
 using Repositories_Do_An.IRepositories.Users;
 using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
@@ -20,16 +21,33 @@ namespace Services_Do_An.Services
         private readonly IOrderRepository orderDB;
         private readonly IOrderStatusRepository orderStatusDB;
         private readonly IOrderItemRepository orderItemDB;
-        public DriverService(IMapper mapper, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
+        private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
+        public DriverService(IMapper mapper, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
             this.orderDB = orderDB;
             this.orderStatusDB = orderStatusDB;
             this.orderItemDB = orderItemDB;
+            this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
         }
 
-
+        public bool applyOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                WishedAcceptedDriverList data = new WishedAcceptedDriverList() { OrderId = orderId, OVIId = oVIId, Status = true };
+                if (wishedAcceptedDriverListDB.checkDupplicate(oVIId, orderId) == false)
+                {
+                    return wishedAcceptedDriverListDB.create(data);
+                }
+                else return false;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
         public bool contractedByDriverOrder(int orderId)
         {
             try
