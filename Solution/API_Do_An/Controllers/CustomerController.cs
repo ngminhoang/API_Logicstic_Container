@@ -29,7 +29,7 @@ namespace API_Do_An.Controllers
             }
         }
 
-        [HttpPut("AcceptedOrder/{orderId}/{oVIId}")]
+        [HttpPost("AcceptedOrder/{orderId}/{oVIId}")]
         public IActionResult AcceptedOrder(int orderId, int oVIId)
         {
             try
@@ -55,44 +55,7 @@ namespace API_Do_An.Controllers
             }
         }
 
-        [HttpPost("ContractedByDriverOrder/{orderId}")]
-        public IActionResult contractedByDriverOrder(int orderId)
-        {
-            try
-            {
-                return Ok(customerSV.contractedByDriverOrder(orderId));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        [HttpPost("DeliveringOrder/{orderId}")]
-        public IActionResult deliveringOrder(int orderId)
-        {
-            try
-            {
-                return Ok(customerSV.deliveringOrder(orderId));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        [HttpPost("DeliveredOrder/{orderId}")]
-        public IActionResult deliveredOrder(int orderId)
-        {
-            try
-            {
-                return Ok(customerSV.deliveredOrder(orderId));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         [HttpPost("TakenOrder/{orderId}")]
         public IActionResult takenOrder(int orderId)
@@ -121,18 +84,7 @@ namespace API_Do_An.Controllers
         }
 
 
-        [HttpPost("AlteredOrder/{orderId}")]
-        public IActionResult alteredOrder(int orderId)
-        {
-            try
-            {
-                return Ok(customerSV.alteredOrder(orderId));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
         [HttpPost("PayedOrder/{orderId}")]
         public IActionResult payedOrder(int orderId)
@@ -147,18 +99,7 @@ namespace API_Do_An.Controllers
             }
         }
 
-        [HttpPost("AccidentlOrder/{orderId}")]
-        public IActionResult accidentlOrder(int orderId)
-        {
-            try
-            {
-                return Ok(customerSV.accidentlOrder(orderId));
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
 
 
     }

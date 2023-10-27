@@ -14,5 +14,11 @@ namespace Services_Do_An.IServices
         bool check(string mail);
         List<OrderModel> getAllInitializedOrders();
         List<OrderItemModel> getOrder(int orderId);
+        bool contractedByDriverOrder(int driverId);
+        bool deliveringOrder(int driverId);
+        bool deliveredOrder(int driverId);
+        bool alteringOrder(int orderId);
+        bool accidentlOrder(int orderId);
+        bool alteredOrder(int orderId);
     }
 }

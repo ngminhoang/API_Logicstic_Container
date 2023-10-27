@@ -14,17 +14,17 @@ namespace Services_Do_An.IServices
         bool initOrder(OrderModel orderModel);
         bool acceptedOrder(int driverId, int orderId);
         bool contractedByCustomerOrder(int driverId);
-        bool contractedByDriverOrder(int driverId);
-        bool deliveringOrder(int driverId);
-        bool deliveredOrder(int driverId);
+        
         bool takenOrder(int orderId);
         bool unTakenOrder(int orderId);
-        bool alteringOrder(int orderId);
+        
         bool payedOrder(int orderId);
+        /*bool contractedByDriverOrder(int driverId);
+        bool deliveringOrder(int driverId);
+        bool deliveredOrder(int driverId);
+        bool alteringOrder(int orderId);
         bool accidentlOrder(int orderId);
-        bool alteredOrder(int orderId);
-
-        //bool tryy(OrderStatusModel f);
+        bool alteredOrder(int orderId);*/
     }
 }
 

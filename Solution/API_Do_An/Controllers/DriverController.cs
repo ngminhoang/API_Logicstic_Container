@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
 
@@ -42,8 +43,86 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpPost("ContractedByDriverOrder/{orderId}")]
+        public IActionResult contractedByDriverOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.contractedByDriverOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("DeliveringOrder/{orderId}")]
+        public IActionResult deliveringOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.deliveringOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
+        [HttpPost("AccidentlOrder/{orderId}")]
+        public IActionResult accidentlOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.accidentlOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("AlteringOrder/{orderId}")]
+        public IActionResult alteringOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.alteringOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("DeliveredOrder/{orderId}")]
+        public IActionResult deliveredOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.deliveredOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("AlteredOrder/{orderId}")]
+        public IActionResult alteredOrder(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.alteredOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
 
     }
 }

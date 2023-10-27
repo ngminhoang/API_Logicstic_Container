@@ -351,5 +351,18 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public int checkBeforeStatus(int orderId)
+        {
+            try
+            {
+                var rs = _dbcontext.OrderStatuss.OrderByDescending(e => e.Date).Where(entity => entity.OrderId == orderId).FirstOrDefault();
+                return rs.StatusId; 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
