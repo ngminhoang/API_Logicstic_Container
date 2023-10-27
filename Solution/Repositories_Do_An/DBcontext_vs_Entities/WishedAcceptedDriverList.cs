@@ -18,21 +18,25 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         /// ////
         /// </summary>
         [ForeignKey("Order")]
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public virtual Order order { get; set; }
 
 
         /// <summary>
         /// ////
         /// </summary>
-        [ForeignKey("OwnedVehicleInfor")]
-        public int OVIId { get; set; }
-        public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
+
+       
         
         
         /// <summary>
         /// /
         /// </summary>
         public bool? Status { get; set; }
+
+
+        [ForeignKey("OwnedVehicleInfor")]
+        public int? OVIId { get; set; }
+        public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
     }
 }
