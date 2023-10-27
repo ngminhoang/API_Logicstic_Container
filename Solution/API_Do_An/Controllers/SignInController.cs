@@ -33,7 +33,9 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(adminSV.create(admin));
+                var rs = adminSV.create(admin);
+                if (rs) return Ok(rs);
+                else return BadRequest(rs);
             }
             catch (Exception ex)
             {
@@ -47,7 +49,9 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(staffSV.create(staff));
+                var rs = staffSV.create(staff);
+                if (rs) return Ok(rs);
+                else return BadRequest(rs);
             }
             catch (Exception ex)
             {
@@ -60,7 +64,9 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(driverSV.create(driver));
+                var rs = driverSV.create(driver);
+                if (rs) return Ok(rs);
+                else return BadRequest(rs);
             }
             catch (Exception ex)
             {
@@ -73,7 +79,9 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(customerSV.create(customer));
+                var rs = customerSV.create(customer);
+                if (rs) return Ok(rs);
+                else return BadRequest(rs);
             }
             catch (Exception ex)
             {
@@ -86,7 +94,9 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(bussinessSV.create(bussiness));
+                var rs = bussinessSV.create(bussiness);
+                if (rs) return Ok(rs);
+                else return BadRequest(rs);
             }
             catch (Exception ex)
             {
