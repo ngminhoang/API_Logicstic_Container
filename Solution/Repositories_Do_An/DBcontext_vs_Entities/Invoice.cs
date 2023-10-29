@@ -14,7 +14,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int InvoiceId { get; set; }
         [ForeignKey("Order")]
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public virtual Order order { get; set; }
         public bool? Status { get; set; }
         [StringLength(250)]

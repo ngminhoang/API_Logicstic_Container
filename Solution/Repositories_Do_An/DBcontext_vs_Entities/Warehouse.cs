@@ -18,7 +18,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [StringLength(250)]
         public string? WarehouseDescription { get; set; }
         [ForeignKey("Bussiness")]
-        public int BussinessId { get; set; }
+        public int? BussinessId { get; set; }
         public virtual Bussiness bussiness { get; set; }
         [StringLength(50)]
         public string? Province {  get; set; }

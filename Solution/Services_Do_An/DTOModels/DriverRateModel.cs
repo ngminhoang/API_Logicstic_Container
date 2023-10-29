@@ -16,7 +16,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public String? Commnent { get; set; }
         public int DriverId { get; set; }
         public DateTime? CommentDate { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public bool? Status { get; set; }
+        public int? OrderId { get; set; }
     }
 }

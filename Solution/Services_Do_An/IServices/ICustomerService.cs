@@ -18,6 +18,8 @@ namespace Services_Do_An.IServices
         bool unTakenOrder(int orderId);
         bool payedOrder(int orderId);
         bool addOrderItem(OrderItemModel item);
+        bool onListOrder(int orderId);
+        bool rateDriver(DriverRateModel rate);
         /*bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);

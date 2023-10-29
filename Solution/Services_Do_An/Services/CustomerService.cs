@@ -24,7 +24,10 @@ namespace Services_Do_An.Services
         private readonly IOrderItemRepository orderItemDB;
         private readonly IOrderStatusRepository orderStatusDB;
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
-        public CustomerService(IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
+        private readonly IContractRepository contractRepositoryDB;
+        private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
+        private readonly IDriverRateRepository driverRateDB;
+        public CustomerService(IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IContractRepository contractRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
         {
             this.mapper = _mapper;
             this.customerDB = _customer;
@@ -32,6 +35,9 @@ namespace Services_Do_An.Services
             this.orderItemDB = _orderItem;
             this.orderStatusDB = _orderStatus;
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
+            this.contractRepositoryDB = contractRepositoryDB;
+            this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
+            this.driverRateDB = driverRateDB;
         }
 
 
@@ -40,7 +46,7 @@ namespace Services_Do_An.Services
             try
             {
                 OrderItem orderItem = mapper.Map<OrderItem>(item);
-                if (orderStatusDB.checkInitOrder(orderItem.OrderId) == true && orderStatusDB.checkAcceptedOrder(orderItem.OrderId) == false)
+                if (orderStatusDB.checkInitOrder((int)orderItem.OrderId) == true && orderStatusDB.checkAcceptedOrder((int)orderItem.OrderId) == false)
                 {
                     return orderItemDB.create(orderItem);
                 }
@@ -151,6 +157,11 @@ namespace Services_Do_An.Services
             try
             {
                 Order order = mapper.Map<Order>(orderModel);
+                //Console.WriteLine(order.OVIId);
+                //Console.WriteLine(order.BussinessId);
+                //Order e = order;
+                //e.OVIId = null;
+                //e.BussinessId = null;
                 try
                 {
                     orderDB.create(order);
@@ -169,6 +180,45 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
+        public bool onListOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkInitOrder(orderId) == true && orderStatusDB.checkBeforeStatus(orderId) == 1 && orderStatusDB.checkAcceptedOrder(orderId)==false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 19, Status = true });
+                        List<OrderItem> list = orderItemDB.getAll(orderId);
+                        double total = 0;
+                        foreach(OrderItem e in list){
+                            total += ((double)e.PricePerUnit * (double)e.Quantity) * 0.01;// + (giá thành quãng đường đi =. phải tính thông quâ địaa dsdieerm đi);
+                        }
+                        Order order = orderDB.read(orderId);
+                        order.TotalAmount = total;
+                        orderDB.update(order);//them cap nhat thong tin gia don hang
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public bool acceptedOrder(int orderId, int oVIId)
         {
             try
@@ -177,7 +227,7 @@ namespace Services_Do_An.Services
                 order.OVIId = oVIId;
                 try
                 {
-                    if (orderStatusDB.checkInitOrder(orderId) == true && orderStatusDB.checkAcceptedOrder(orderId) == false)
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == false && orderStatusDB.checkOnListOrder(orderId)==true /*&& oVIId co trong danh sach*/ )
                     {
                         orderDB.update(order);
                         wishedAcceptedDriverListDB.choosenDriver(oVIId, orderId);
@@ -219,6 +269,17 @@ namespace Services_Do_An.Services
                         {
                             ///LenhUpDate
                             orderDB.update(order);
+                            int cusId = (int)order.CustomerId;
+                            int driverId= (int)ownedVehicleInforRepositoryDB.read((int)order.OVIId).DriverId;
+                            try
+                            {
+                                contractRepositoryDB.createDriverContract(cusId, driverId, orderId);
+                            }
+                            catch 
+                            { 
+                                return false; 
+                            }
+
                         }
                         return true;
                     }
@@ -308,12 +369,56 @@ namespace Services_Do_An.Services
             {
                 try
                 {
-                    if (orderStatusDB.checkFinishedOrder(orderId) == true && (orderStatusDB.checkTakenOrder(orderId) == true/* || orderStatusDB.checkAlteredOrder(orderId) == true*/) && orderStatusDB.checkPayedOrder(orderId) == false)
+                    if (orderStatusDB.checkFinishedOrder(orderId) == true && (orderStatusDB.checkTakenOrder(orderId) == true /* || orderStatusDB.checkAlteredOrder(orderId) == true*/))
                     {
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
                         //cap nhat lai gia tien
                         //tao mot order khac
+                        return true;
+                    }
+                    else if (orderStatusDB.checkBeforeStatus(orderId) == 14 && orderStatusDB.checkPayedOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
+                        // tính toán tìm ra kho của bussiness nào gần nhất địa điểm của khác hàng => trả ra id kho warehouseId => trả ra bussinessId
+                        //Order order = orderDB.read(orderId);
+                        //order.BussinessId = bussinessId;
+                        /* tạo contract với bussiness: *///contractRepositoryDB.createBussinessContract(order.CustomerId, bussinessId, orderId);
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 15, Status = true, WarehouseId = warehouseId  });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 15, Status = true });
+                        return true;
+                    }    
+                    else 
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public bool rateDriver(DriverRateModel rateModel)
+        {
+            try
+            {
+                DriverRate rate = mapper.Map<DriverRate>(rateModel);
+                try
+                {
+                    if (orderStatusDB.checkRateDriver((int)rate.OrderId)==false && orderStatusDB.checkBeforeStatus((int)rate.OrderId)==12 && rate.DriverId == ownedVehicleInforRepositoryDB.read((int)orderDB.read((int)rate.OrderId).OVIId).DriverId)
+                    {
+
+                        driverRateDB.create(rate);
+                        orderStatusDB.create(new OrderStatus { OrderId = rate.OrderId, Date = DateTime.UtcNow, StatusId = 129, Status = true });
                         return true;
                     }
                     else

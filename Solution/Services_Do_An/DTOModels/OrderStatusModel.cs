@@ -16,5 +16,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateTime Date { get; set; }
         public int StatusId { get; set;}
         public bool Status { get; set; }
+        public int WarehouseId { get; set; }
     }
 }

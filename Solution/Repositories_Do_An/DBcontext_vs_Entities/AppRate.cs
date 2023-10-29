@@ -19,7 +19,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int? UserId { get; set; }
         public DateTime? CommentDate { get; set; }
         [ForeignKey("Role")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public virtual Role role { get; set; }
         public bool? Status { get; set; }
     }

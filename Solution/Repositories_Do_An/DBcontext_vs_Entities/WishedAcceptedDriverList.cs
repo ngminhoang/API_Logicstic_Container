@@ -13,30 +13,14 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int WADLId { get; set; }
-
-        /// <summary>
-        /// ////
         /// </summary>
         [ForeignKey("Order")]
         public int? OrderId { get; set; }
         public virtual Order order { get; set; }
-
-
-        /// <summary>
-        /// ////
-        /// </summary>
-
-       
-        
-        
-        /// <summary>
-        /// /
-        /// </summary>
         public bool? Status { get; set; }
-
-
         [ForeignKey("OwnedVehicleInfor")]
         public int? OVIId { get; set; }
-        public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
+        public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }  //=> lỗi không taọ đươc khóa ngoai jtheo ý phải dùng one creating
+
     }
 }

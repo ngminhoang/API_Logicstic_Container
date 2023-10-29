@@ -11,8 +11,8 @@ namespace Services_Do_An.DTOModels
     public class WishedAcceptedDriverListModel
     {
         public int WADLId { get; set; }
-        public int OrderId { get; set; }
-        public int OVIId { get; set; }
-        public bool Status { get; set; }
+        public int? OrderId { get; set; }
+        public int? OVIId { get; set; }
+        public bool? Status { get; set; }
     }
 }

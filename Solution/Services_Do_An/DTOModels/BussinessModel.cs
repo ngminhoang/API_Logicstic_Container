@@ -12,7 +12,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
 
     public class BussinessModel
     {
-        public int? BussinessId { get; set; }
+        public int BussinessId { get; set; }
         public string? BusinessName { get; set; }
         public string? BusinessLicenseNumber {  get; set; }
         public string? BussinessPassword { get; set; }

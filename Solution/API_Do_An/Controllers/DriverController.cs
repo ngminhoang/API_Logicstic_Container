@@ -122,7 +122,20 @@ namespace API_Do_An.Controllers
             }
         }
 
-        
+        [HttpPost("ApplyOrder/{oVIId}/{orderId}")]
+        public IActionResult applyOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.applyOrder(oVIId, orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
 
     }
 }

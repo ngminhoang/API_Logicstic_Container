@@ -3,6 +3,7 @@ using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Others;
 using Repositories_Do_An.IRepositories.Users;
+using Repositories_Do_An.Repositories;
 using Services_Do_An.APIFunctions;
 using Services_Do_An.IServices;
 using System;
@@ -22,7 +23,9 @@ namespace Services_Do_An.Services
         private readonly IOrderStatusRepository orderStatusDB;
         private readonly IOrderItemRepository orderItemDB;
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
-        public DriverService(IMapper mapper, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
+        private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
+        private readonly IContractRepository contractRepositoryDB;
+        public DriverService(IMapper mapper, IContractRepository contractRepositoryDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
@@ -30,6 +33,8 @@ namespace Services_Do_An.Services
             this.orderStatusDB = orderStatusDB;
             this.orderItemDB = orderItemDB;
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
+            this.contractRepositoryDB = contractRepositoryDB;
+            this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
         }
 
         public bool applyOrder(int oVIId, int orderId)
@@ -37,7 +42,7 @@ namespace Services_Do_An.Services
             try
             {
                 WishedAcceptedDriverList data = new WishedAcceptedDriverList() { OrderId = orderId, OVIId = oVIId, Status = true };
-                if (wishedAcceptedDriverListDB.checkDupplicate(oVIId, orderId) == false)
+                if (wishedAcceptedDriverListDB.checkDupplicate(oVIId, orderId) == false && orderStatusDB.checkAcceptedOrder(orderId)==false)
                 {
                     return wishedAcceptedDriverListDB.create(data);
                 }
@@ -63,6 +68,16 @@ namespace Services_Do_An.Services
                         {
                             ///LenhUpDate
                             orderDB.update(order);
+                            int cusId = (int)order.CustomerId;
+                            int driverId = (int)ownedVehicleInforRepositoryDB.read((int)order.OVIId).DriverId;
+                            try
+                            {
+                                contractRepositoryDB.createDriverContract(cusId, driverId, orderId);
+                            }
+                            catch
+                            {
+                                return false;
+                            }
                         }
                         return true;
                     }
@@ -91,7 +106,7 @@ namespace Services_Do_An.Services
             {
                 try
                 {
-                    if (orderStatusDB.checkContractedByDriverOrder(orderId) == true && orderStatusDB.checkContractedByCustomerOrder(orderId) == true && ((orderStatusDB.checkDeliveringOrder(orderId) == false || orderStatusDB.checkBeforeStatus(orderId) == 9) || orderStatusDB.checkBeforeStatus(orderId) == 13))
+                    if (orderStatusDB.checkContractedByDriverOrder(orderId) == true && orderStatusDB.checkContractedByCustomerOrder(orderId) == true && ((orderStatusDB.checkDeliveringOrder(orderId) == false || orderStatusDB.checkBeforeStatus(orderId) == 9) || orderStatusDB.checkBeforeStatus(orderId) == 13 || orderStatusDB.checkBeforeStatus(orderId) == 15 || (orderStatusDB.checkBeforeStatus(orderId) == 14 && orderStatusDB.checkPayedOrder(orderId) == true)))
                     {
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 5, Status = true });
                         return true;
@@ -150,7 +165,7 @@ namespace Services_Do_An.Services
             {
                 try
                 {
-                    if ((orderStatusDB.checkBeforeStatus(orderId) == 6 || orderStatusDB.checkBeforeStatus(orderId) == 8) && (orderStatusDB.checkUnTakenOrder(orderId) == true || orderStatusDB.checkTakenOrder(orderId) == false))//&& orderStatusDB.checkAlteringOrder(orderId) == false)
+                    if ((orderStatusDB.checkBeforeStatus(orderId) == 6 || orderStatusDB.checkBeforeStatus(orderId) == 8 /*|| orderStatusDB.checkBeforeStatus(orderId) == 14*/) && (orderStatusDB.checkUnTakenOrder(orderId) == true || orderStatusDB.checkTakenOrder(orderId) == false))//&& orderStatusDB.checkAlteringOrder(orderId) == false)
                     {
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 9, Status = true });
                         //cap nhat lai gia tien
@@ -184,8 +199,9 @@ namespace Services_Do_An.Services
                 {
                     if (orderStatusDB.checkBeforeStatus(orderId) == 9 && orderStatusDB.checkTakenOrder(orderId) == false)
                     {
-                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 14, Status = true });
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 10, Status = true });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 14, Status = true });
+                        
                         //cap nhat lai gia tien
                         //tao mot order khac
                         return true;

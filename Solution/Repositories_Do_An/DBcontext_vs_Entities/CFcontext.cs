@@ -13,6 +13,21 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public CFcontext(DbContextOptions<CFcontext> options) : base(options)  { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //thay the annotation trong WishedAcceptedDriverList //day la loi
+
+
+            modelBuilder.Entity<WishedAcceptedDriverList>()
+       .HasOne(w => w.ownedVehicleInfor)
+       .WithMany()
+       .HasForeignKey(w => w.OVIId)
+       .HasPrincipalKey(ovi => ovi.OVIId);
+            modelBuilder.Entity<Order>()
+       .HasOne(o => o.ownedVehicleInfor)
+       .WithMany()
+       .HasForeignKey(o => o.OVIId)
+       .HasPrincipalKey(ovi => ovi.OVIId);
+
+
             // modelBuilder.Entity<Huyen>()
             //   .HasKey(h => new { h.Tid, h.Hid }); // Composite key configuration
         }

@@ -15,7 +15,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderItemId { get; set; }
         [ForeignKey("Order")]
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public Order order { get; set; }
         [StringLength(50)]
         public string? ItemName { get; set; }

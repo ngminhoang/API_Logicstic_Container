@@ -124,6 +124,25 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public bool checkOnListOrder(int orderId)
+        {
+            try
+            {
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 19 && entity.Status == true).ToList();
+                if (rs.Count == 0)
+                {
+                    return false;
+                }
+                else { return true; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         public bool checkAcceptedOrder(int orderId)
         {
             try
@@ -338,7 +357,24 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.Status == true).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 9 && entity.Status == true).ToList();
+                if (rs.Count == 0)
+                {
+                    return false;
+                }
+                else { return true; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool checkRateDriver(int orderId)
+        {
+            try
+            {
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.StatusId == 129 && entity.Status == true).ToList();
                 if (rs.Count == 0)
                 {
                     return false;
@@ -356,7 +392,7 @@ namespace Repositories_Do_An.Repositories
             try
             {
                 var rs = _dbcontext.OrderStatuss.OrderByDescending(e => e.Date).Where(entity => entity.OrderId == orderId && entity.Status == true).FirstOrDefault();
-                return rs.StatusId; 
+                return (int)rs.StatusId; 
             }
             catch (Exception ex)
             {

@@ -152,7 +152,7 @@ namespace Repositories_Do_An.Repositories.Others
         {
             try
             {
-                List<WishedAcceptedDriverList> list = _dbcontext.WishedAcceptedDriverLists.Where(e => e.OrderId != orderId && e.OVIId != oVIId).ToList();
+                List<WishedAcceptedDriverList> list = _dbcontext.WishedAcceptedDriverLists.Where(e => e.OrderId == orderId && e.OVIId != oVIId).ToList();
                 foreach (WishedAcceptedDriverList e in list)
                 {
                     delete(e.WADLId);

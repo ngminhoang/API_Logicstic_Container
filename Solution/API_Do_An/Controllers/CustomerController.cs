@@ -37,6 +37,28 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpPost("OnListOrder/{orderId}")]
+        public IActionResult onListOrder(int orderId)
+        {
+            try
+            {
+                if (customerSV.onListOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         [HttpPost("AcceptedOrder/{orderId}/{oVIId}")]
         public IActionResult AcceptedOrder(int orderId, int oVIId)
         {
@@ -152,6 +174,26 @@ namespace API_Do_An.Controllers
                     return Ok(true); 
                 }
                 else 
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("RateDriver")]
+        public IActionResult rateDriver(DriverRateModel rate)
+        {
+            try
+            {
+                if (customerSV.rateDriver(rate))
+                {
+                    return Ok(true);
+                }
+                else
                 {
                     return BadRequest(false);
                 }

@@ -15,10 +15,10 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OVIId { get; set; }
         [ForeignKey("Driver")]
-        public int DriverId { get; set; }
+        public int? DriverId { get; set; }
         public virtual Driver driver{ get; set; }
         [ForeignKey("Vihcle")]
-        public int VehicleId { get; set; }
+        public int? VehicleId { get; set; }
         public virtual Vehicle vehicle { get; set; }
         public string? LicenceImageLink { get; set; }
         [StringLength(250)]

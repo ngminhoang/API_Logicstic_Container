@@ -13,16 +13,19 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ContractId { get; set; }
+        [ForeignKey("Order")]
+        public int? OrderId { get; set; }
+        public virtual Order order { get; set; }
         public string? ContractFileLink {  get; set; }
         [ForeignKey("Cusustomer")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public virtual Customer customer { get; set; }
-        public int DeliveryId { get; set; }
+        public int? DeliveryId { get; set; }
         [ForeignKey("Role")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public virtual Role role { get; set; }
         [ForeignKey("ContractType")]
-        public int ContractTypeId { get; set; }
+        public int? ContractTypeId { get; set; }
         public virtual ContractType contractType { get; set; }
         public bool? Status { get; set; }
     }

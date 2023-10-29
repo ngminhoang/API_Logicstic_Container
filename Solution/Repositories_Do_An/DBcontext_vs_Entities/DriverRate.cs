@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,12 +18,15 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [StringLength(250)]
         public String? Commnent { get; set; }
         [ForeignKey("Driver")]
-        public int DriverId { get; set; }
+        public int? DriverId { get; set; }
         public virtual Driver driver { get; set; }
         public DateTime? CommentDate { get; set; }
         [ForeignKey("Customer")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
         public virtual Customer customer { get; set; }
         public bool? Status { get; set; }
+        [ForeignKey("Order")]
+        public int? OrderId { get; set; }
+        public virtual Order order { get; set; }
     }
 }

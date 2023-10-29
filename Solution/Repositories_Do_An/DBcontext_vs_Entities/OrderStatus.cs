@@ -14,12 +14,15 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderStatusId { get; set; }
         [ForeignKey("Order")]
-        public int OrderId { get; set; }
+        public int? OrderId { get; set; }
         public virtual Order order { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime? Date { get; set; }
         [ForeignKey("Status")]
-        public int StatusId { get; set;}
+        public int? StatusId { get; set;}
         public virtual Status status { get; set; }
-        public bool Status { get; set; }
+        public bool? Status { get; set; }
+        [ForeignKey("Warehouse")]
+        public int? WarehouseId { get; set; }
+        public virtual Warehouse warehouse { get; set; }
     }
 }

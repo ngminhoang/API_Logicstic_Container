@@ -11,6 +11,7 @@ namespace Repositories_Do_An.IRepositories
     public interface IOrderStatusRepository : IRepository<OrderStatus>
     {
         bool checkInitOrder(int id);
+        bool checkOnListOrder(int orderId);
         bool checkAcceptedOrder(int id);
         bool checkContractedByDriverOrder(int orderId);
         bool checkContractedByCustomerOrder(int orderId);
@@ -22,6 +23,7 @@ namespace Repositories_Do_An.IRepositories
         bool checkFinishedOrder(int orderId);
         bool checkPayedOrder(int orderId);
         bool checkEndOrder(int orderId);
+        bool checkRateDriver(int orderId);
         bool checkProblemOrder(int orderId);
         bool checkAlteringOrder(int orderId);
         int checkBeforeStatus(int orderId);

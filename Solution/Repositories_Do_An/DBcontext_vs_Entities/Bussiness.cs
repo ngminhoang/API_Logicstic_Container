@@ -32,7 +32,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateTime? DateUpdatedAccount { get; set; }
         public bool? Status { get; set; }
         [ForeignKey("Role")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public virtual Role role { get; set; }
     }
 }

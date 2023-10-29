@@ -16,11 +16,11 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string? Content { get; set; }
         public int? UserId { get; set; }
         [ForeignKey("Role")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public virtual Role role { get; set; }
         public DateTime? Date { get; set; }
         [ForeignKey("Staff")]
-        public int StaffId { get; set; }
+        public int? StaffId { get; set; }
         public virtual Staff staff { get; set; }
         public bool? Status { get; set; }
     }

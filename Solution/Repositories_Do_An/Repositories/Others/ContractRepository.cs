@@ -15,6 +15,32 @@ namespace Repositories_Do_An.Repositories
         {
             _dbcontext = dbcontext;
         }
+
+        public bool createDriverContract(int cusId, int driverId, int orderId) 
+        {
+            try
+            {
+                Contract contract = new Contract() { ContractTypeId = 1, CustomerId = cusId, DeliveryId = driverId, RoleId = 3, OrderId = orderId, Status = true};
+                return create(contract);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool createBussinessContract(int cusId, int bussinessId, int orderId)
+        {
+            try
+            {
+                Contract contract = new Contract() { ContractTypeId = 2, CustomerId = cusId, DeliveryId = bussinessId, RoleId = 5, OrderId = orderId, Status = true };
+                return create(contract);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool create(Contract entity)
         {
             try
