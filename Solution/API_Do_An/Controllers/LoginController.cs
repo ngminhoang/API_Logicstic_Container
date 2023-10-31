@@ -52,16 +52,16 @@ namespace API_Do_An.Controllers
         {
             var email = account.email;
             var password = account.password;
-            var roleId = account.roleId;
+            //var roleId = account.roleId;
 
             //var roleName = roleSV.read(roleId).RoleName;
             var pass_md5 = MD5Functions.GenerateMD5(password);
 
-            var driverCheck = driverSV.checkAccount(email, pass_md5, roleId);
-            var adminCheck = adminSV.checkAccount(email, pass_md5, roleId);
-            var staffCheck = staffSV.checkAccount(email, pass_md5, roleId);
-            var bussinessCheck = bussinessSV.checkAccount(email, pass_md5, roleId);
-            var customerCheck = customerSV.checkAccount(email, pass_md5, roleId);
+            var driverCheck = driverSV.checkAccount(email, pass_md5, 3);
+            var adminCheck = adminSV.checkAccount(email, pass_md5, 1);
+            var staffCheck = staffSV.checkAccount(email, pass_md5, 2);
+            var bussinessCheck = bussinessSV.checkAccount(email, pass_md5, 4);
+            var customerCheck = customerSV.checkAccount(email, pass_md5, 5);
             string name;
             string role;
             int time;
