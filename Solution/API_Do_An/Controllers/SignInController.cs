@@ -28,7 +28,7 @@ namespace API_Do_An.Controllers
         }
         // GET: api/<ValuesController>
         [HttpPost("admin")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult SignInAdmin(AdminModel admin)
         {
             try
@@ -44,7 +44,7 @@ namespace API_Do_An.Controllers
         }
 
         [HttpPost("staff")]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult SignInStaff(StaffModel staff)
         {
             try

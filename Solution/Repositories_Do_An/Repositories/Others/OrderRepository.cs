@@ -1,4 +1,5 @@
-﻿using Repositories_Do_An.DBcontext_vs_Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).ToList();
                 return rs;
             }
             catch (Exception ex)

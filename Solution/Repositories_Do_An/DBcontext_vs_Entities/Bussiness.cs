@@ -14,15 +14,15 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BussinessId { get; set; }
-        [StringLength(50),Required]
+        [StringLength(50)]
         public string? BusinessName { get; set; }
-        [StringLength(20),Required]
+        [StringLength(20)]
         public string? BusinessLicenseNumber {  get; set; }
-        [StringLength(50), Required]
+        [StringLength(50)]
         public string? BussinessPassword { get; set; }
-        [StringLength(50),Required]
+        [StringLength(50)]
         public string? Address { get; set; }
-        [StringLength(30), Required]
+        [StringLength(30)]
         public string? ContactEmail { get; set; }
         [StringLength(10), RegularExpression(@"\d")]
         public string? PhoneNumber { get; set; }

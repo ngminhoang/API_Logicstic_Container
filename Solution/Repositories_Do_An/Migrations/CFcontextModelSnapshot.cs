@@ -121,17 +121,14 @@ namespace Repositories_Do_An.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BussinessId"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("BusinessLicenseNumber")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
                     b.Property<string>("BusinessName")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
@@ -139,12 +136,10 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("BussinessPassword")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
                     b.Property<string>("ContactEmail")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
@@ -227,7 +222,7 @@ namespace Repositories_Do_An.Migrations
                     b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("text")
+                    b.Property<string>("Text")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 

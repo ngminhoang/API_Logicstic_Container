@@ -130,3 +130,13 @@ C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\ru
 C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Microsoft.Practices.ServiceLocation.dll
 C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\XAct.Core.PCL.dll
 C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\NodaTime.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.AspNetCore.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Extensions.Logging.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Formatting.Compact.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Settings.Configuration.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
+C:\Users\HOANG\Documents\GitHub\API_Do_An\Solution\API_Do_An\bin\Debug\net6.0\Serilog.Sinks.File.dll

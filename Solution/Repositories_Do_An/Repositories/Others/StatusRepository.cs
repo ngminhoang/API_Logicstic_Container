@@ -1,4 +1,5 @@
-﻿using Repositories_Do_An.DBcontext_vs_Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using System;
 using System.Collections.Generic;

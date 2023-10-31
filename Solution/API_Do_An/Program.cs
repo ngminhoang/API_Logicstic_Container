@@ -10,6 +10,8 @@ using Repositories_Do_An.IRepositories.Others;
 using Repositories_Do_An.IRepositories.Users;
 using Repositories_Do_An.Repositories;
 using Repositories_Do_An.Repositories.Others;
+using Serilog;
+using Serilog.Formatting.Json;
 using Services_Do_An.AutoMapper;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
@@ -145,7 +147,21 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+
+builder.Host.UseSerilog((ttx, config) =>
+{
+    config.WriteTo.Console().MinimumLevel.Information();
+    config.WriteTo.File(
+        path: AppDomain.CurrentDomain.BaseDirectory + "/logs/log-.txt",
+        rollingInterval: RollingInterval.Day,
+        rollOnFileSizeLimit: true,
+        formatter: new JsonFormatter()
+        ).MinimumLevel.Information();
+}
+);
+
 var app = builder.Build();
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
