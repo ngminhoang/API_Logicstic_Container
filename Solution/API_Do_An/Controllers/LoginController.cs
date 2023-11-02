@@ -60,8 +60,8 @@ namespace API_Do_An.Controllers
             var driverCheck = driverSV.checkAccount(email, pass_md5, 3);
             var adminCheck = adminSV.checkAccount(email, pass_md5, 1);
             var staffCheck = staffSV.checkAccount(email, pass_md5, 2);
-            var bussinessCheck = bussinessSV.checkAccount(email, pass_md5, 4);
-            var customerCheck = customerSV.checkAccount(email, pass_md5, 5);
+            var bussinessCheck = bussinessSV.checkAccount(email, pass_md5, 5);
+            var customerCheck = customerSV.checkAccount(email, pass_md5, 4);
             string name;
             string role;
             int time;
