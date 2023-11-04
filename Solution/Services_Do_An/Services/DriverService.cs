@@ -287,7 +287,7 @@ namespace Services_Do_An.Services
                 //}
                 foreach (var order in list)
                 {
-                    if (orderStatusDB.checkInitOrder(order.OrderId)==true && orderStatusDB.checkOnListOrder(order.OrderId) ==true)
+                    if (orderStatusDB.checkInitOrder(order.OrderId)==true )//&& orderStatusDB.checkOnListOrder(order.OrderId) ==true)
                     {
                         rs.Add(mapper.Map<OrderModel>(order));
                     }

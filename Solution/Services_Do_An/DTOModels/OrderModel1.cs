@@ -21,8 +21,8 @@ namespace Services_Do_An.DTOModels
         public Double? TotalAmount { get; set; }
         public int? PostionComeId { get; set; }
         public int? PostionGoId { get; set; }
-        [ForeignKey("Bussiness")]
-
+        public virtual Position PositionCome { get; set; }
+        public virtual Position PositionGo { get; set; }
         public int? BussinessId { get; set; }
         public virtual Bussiness bussiness { get; set; }
         public bool? Status { get; set; }

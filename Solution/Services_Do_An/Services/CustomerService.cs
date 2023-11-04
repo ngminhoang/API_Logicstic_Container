@@ -165,8 +165,9 @@ namespace Services_Do_An.Services
                 try
                 {
                     orderDB.create(order);
-                    OrderStatus orderStatus = new OrderStatus { OrderStatusId = 0, OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true };
+                    OrderStatus orderStatus = new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true };
                     orderStatusDB.create(orderStatus);
+                  
                     return true;
 
                 }

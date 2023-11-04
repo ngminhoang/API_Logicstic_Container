@@ -57,6 +57,10 @@ namespace Services_Do_An.AutoMapper
             CreateMap<VehicleModel, Vehicle>();
             CreateMap<WarehouseModel, Warehouse>();
             CreateMap<WishedAcceptedDriverListModel, WishedAcceptedDriverList>();
+
+
+            CreateMap<OrderModel1, Order>();
+            CreateMap<Order, OrderModel1>();
         }
     }
 }

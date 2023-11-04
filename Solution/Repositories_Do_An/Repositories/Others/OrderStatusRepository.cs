@@ -111,12 +111,12 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true).ToList();
-                if(rs.Count == 1 && rs[0].StatusId==1) 
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.StatusId == 19).ToList();
+                if(rs.Count == 0) 
                 {
-                    return true;
+                    return false;
                 }
-                else { return false; }
+                else { return true; }
             }
             catch(Exception ex)
             {
