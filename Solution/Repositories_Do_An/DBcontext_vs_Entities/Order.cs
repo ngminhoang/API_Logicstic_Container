@@ -29,8 +29,12 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateTime? OrderedDate { get; set; }
         public DateTime? ArrivedDate { get; set; }
         public Double? TotalAmount { get; set; }
+        [ForeignKey("Position")]
         public int? PostionComeId { get; set; }
+        public virtual Position PositionCome { get; set; }
+        [ForeignKey("Position")]
         public int? PostionGoId { get; set; }
+        public virtual Position PositionGo { get; set; }
         [ForeignKey("Bussiness")]
 
         public int? BussinessId {  get; set; }

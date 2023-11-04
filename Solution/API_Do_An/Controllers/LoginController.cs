@@ -53,6 +53,8 @@ namespace API_Do_An.Controllers
             var email = account.email;
             var password = account.password;
             //var roleId = account.roleId;
+            int roleId;
+
 
             //var roleName = roleSV.read(roleId).RoleName;
             var pass_md5 = MD5Functions.GenerateMD5(password);
@@ -75,6 +77,7 @@ namespace API_Do_An.Controllers
                 role = "driver";
                 name = driverSV.read(driverCheck).FullName;
                 time = 1;
+                roleId = 3;
             }
             else if (adminCheck != 0)
             {
@@ -82,6 +85,7 @@ namespace API_Do_An.Controllers
                 role = "admin";
                 name = adminSV.read(adminCheck).FullName;
                 time = 4;
+                roleId = 1;
             }
             else if (staffCheck != 0)
             {
@@ -89,6 +93,7 @@ namespace API_Do_An.Controllers
                 role = "staff";
                 name = staffSV.read(staffCheck).FullName;
                 time = 4;
+                roleId = 2;
             }
             else if (bussinessCheck != 0)
             {
@@ -96,6 +101,7 @@ namespace API_Do_An.Controllers
                 role = "bussiness";
                 name = bussinessSV.read(bussinessCheck).BusinessName;
                 time = 1;
+                roleId = 5;
             }
             else if (customerCheck != 0)
             {
@@ -103,6 +109,7 @@ namespace API_Do_An.Controllers
                 role = "customer";
                 name = customerSV.read(customerCheck).FullName;
                 time = 1;
+                roleId = 4;
             }
             else { return new JsonResult(new { message = 0 }); } 
 
@@ -129,7 +136,7 @@ namespace API_Do_An.Controllers
                     );
                 //sinh chuoi token
                 var usingToken = new JwtSecurityTokenHandler().WriteToken(token);
-                return new JsonResult(new { username = name, id = id, token = usingToken });
+                return new JsonResult(new { username = name, id = id, roleId = roleId, token = usingToken });
             
         }
         

@@ -582,6 +582,10 @@ namespace Repositories_Do_An.Migrations
 
                     b.HasIndex("OVIId");
 
+                    b.HasIndex("PostionComeId");
+
+                    b.HasIndex("PostionGoId");
+
                     b.ToTable("Order");
                 });
 
@@ -1075,6 +1079,18 @@ namespace Repositories_Do_An.Migrations
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.OwnedVehicleInfor", "ownedVehicleInfor")
                         .WithMany()
                         .HasForeignKey("OVIId");
+
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Position", "PositionCome")
+                        .WithMany()
+                        .HasForeignKey("PostionComeId");
+
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Position", "PositionGo")
+                        .WithMany()
+                        .HasForeignKey("PostionGoId");
+
+                    b.Navigation("PositionCome");
+
+                    b.Navigation("PositionGo");
 
                     b.Navigation("bussiness");
 

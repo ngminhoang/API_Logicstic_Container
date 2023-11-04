@@ -26,6 +26,16 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
        .WithMany()
        .HasForeignKey(o => o.OVIId)
        .HasPrincipalKey(ovi => ovi.OVIId);
+            modelBuilder.Entity<Order>()
+       .HasOne(o => o.PositionCome)
+       .WithMany()
+       .HasForeignKey(o => o.PostionComeId)
+       .HasPrincipalKey(ovi => ovi.PositionId);
+            modelBuilder.Entity<Order>()
+       .HasOne(o => o.PositionGo)
+       .WithMany()
+       .HasForeignKey(o => o.PostionGoId)
+       .HasPrincipalKey(ovi => ovi.PositionId);
 
 
             // modelBuilder.Entity<Huyen>()
