@@ -33,6 +33,7 @@ builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
 builder.Services.AddScoped<IBussinessService, BussinessService>();
+builder.Services.AddScoped<IPublicService, PublicService>();
 
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IAppRateRepository, AppRateRepository>();
@@ -58,7 +59,7 @@ builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IVehicleRepository, VehicleRepository>();
 builder.Services.AddScoped<IWarehouseRepository, WarehouseRepository>();
 builder.Services.AddScoped<IWishedAcceptedDriverListRepository, WishedAcceptedDriverListRepository>();
-
+builder.Services.AddScoped<IContactionRepository, ContactionRepository>();
 
 //authen vs author
 

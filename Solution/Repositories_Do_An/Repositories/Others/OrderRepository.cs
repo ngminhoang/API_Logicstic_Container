@@ -63,7 +63,22 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).Include(x=> x.PositionCome).Include(x => x.PositionGo).ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        public List<Order> getAll(string DisGo, string ProGo, string DisCome, string ProCome)
+        {
+            try
+            {
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Include(x => x.PositionCome).Include(x => x.PositionGo).Where(x => x.PositionGo.District==DisGo && x.PositionGo.Province == ProGo && x.PositionCome.District == DisCome && x.PositionCome.Province == ProCome).ToList();
                 return rs;
             }
             catch (Exception ex)

@@ -169,6 +169,25 @@ namespace Repositories_Do_An.Migrations
                     b.ToTable("Bussiness");
                 });
 
+            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Contaction", b =>
+                {
+                    b.Property<int>("ContactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContactionId"));
+
+                    b.Property<string>("Comntent")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.HasKey("ContactionId");
+
+                    b.ToTable("Contaction");
+                });
+
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Contract", b =>
                 {
                     b.Property<int>("ContractId")

@@ -5,6 +5,7 @@ using Repositories_Do_An.IRepositories.Others;
 using Repositories_Do_An.IRepositories.Users;
 using Repositories_Do_An.Repositories;
 using Services_Do_An.APIFunctions;
+using Services_Do_An.DTOModels;
 using Services_Do_An.IServices;
 using System;
 using System.Collections.Generic;
@@ -275,21 +276,26 @@ namespace Services_Do_An.Services
             }
         }
 
-        public List<OrderModel> getAllInitializedOrders()
+        public List<OrderModel1> getAllInitializedOrders()
         {
             try 
             {
-                List<OrderModel> rs = new List<OrderModel>();
+                List<OrderModel1> rs = new List<OrderModel1>();
                 List<Order> list = orderDB.getAll();
+                OrderModel1 order1;
                 //foreach (var order in list)
                 //{
                 //    rs.Add(mapper.Map<OrderModel>(order));
                 //}
                 foreach (var order in list)
                 {
-                    if (orderStatusDB.checkInitOrder(order.OrderId)==true )//&& orderStatusDB.checkOnListOrder(order.OrderId) ==true)
+                    if (orderStatusDB.checkInitOrder(order.OrderId)==true && orderStatusDB.checkOnListOrder(order.OrderId) ==true)
                     {
-                        rs.Add(mapper.Map<OrderModel>(order));
+                        order1 = mapper.Map<OrderModel1>(order);
+                        order1.CustomerName = order.customer.FullName;
+                       //order1.DriverId = order.ownedVehicleInfor.DriverId;
+                        //order1.BussinessName = order.bussiness.BusinessName;
+                        rs.Add(order1);
                     }
                 }
                 return rs;
@@ -405,6 +411,45 @@ namespace Services_Do_An.Services
                     return check.UserId;
                 }
                 else return 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        public List<OrderModel1> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome)
+        {
+            try
+            {
+                OwnedVehicleInfor OVI = ownedVehicleInforRepositoryDB.read(OVIId);
+                double cargo = (double)OVI.Cargo;
+                List<OrderModel1> rs = new List<OrderModel1>();
+                List<Order> list = orderDB.getAll(DisGo,ProGo,DisCome,ProCome);
+                OrderModel1 order1;
+                //foreach (var order in list)
+                //{
+                //    rs.Add(mapper.Map<OrderModel>(order));
+                //}
+                foreach (var order in list)
+                {
+
+                   if (orderStatusDB.checkInitOrder(order.OrderId) == true && orderStatusDB.checkAcceptedOrder(order.OrderId) == false && orderStatusDB.checkOnListOrder(order.OrderId) == true && cargo >= orderItemDB.sumMass(order.OrderId))
+                    {
+                        order1 = mapper.Map<OrderModel1>(order);
+                        order1.CustomerName = order.customer.FullName;
+                        //order1.DriverId = order.ownedVehicleInfor.DriverId;
+                        //order1.BussinessName = order.bussiness.BusinessName;
+                        rs.Add(order1);
+                    }
+                }
+                return rs;
+
+
+
+
             }
             catch (Exception ex)
             {

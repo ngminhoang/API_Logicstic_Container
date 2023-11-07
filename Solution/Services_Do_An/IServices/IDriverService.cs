@@ -1,4 +1,5 @@
 ﻿using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.DTOModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Services_Do_An.IServices
     {
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
-        List<OrderModel> getAllInitializedOrders();
+        List<OrderModel1> getAllInitializedOrders();
         List<OrderItemModel> getOrder(int orderId);
         bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
@@ -21,5 +22,6 @@ namespace Services_Do_An.IServices
         bool accidentlOrder(int orderId);
         bool alteredOrder(int orderId);
         bool applyOrder(int OVIId, int orderId);
+        List<OrderModel1> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome);
     }
 }

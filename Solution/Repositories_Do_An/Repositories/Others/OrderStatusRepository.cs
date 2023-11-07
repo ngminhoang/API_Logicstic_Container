@@ -111,7 +111,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.StatusId == 19).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.StatusId == 1).ToList();
                 if(rs.Count == 0) 
                 {
                     return false;

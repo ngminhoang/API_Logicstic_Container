@@ -12,6 +12,8 @@ using System.Security.Principal;
 using System.Text;
 using XAct;
 using XSystem.Security.Cryptography;
+using Microsoft.JSInterop.Implementation;
+using Serilog.Formatting.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,6 +46,29 @@ namespace API_Do_An.Controllers
             }
             catch (Exception ex) { throw ex; }
         }
+
+
+
+
+        [HttpPut]
+        public IActionResult PasswordToMail([FromBody] Email mail )
+        {
+            try
+            {
+                if (adminSV.check(mail.email) || staffSV.check(mail.email) || driverSV.check(mail.email) || customerSV.check(mail.email) || bussinessSV.check(mail.email))
+                {
+                    //lam cai gi do
+                    return Ok(true);
+
+                }
+                else return Ok(false);
+            }
+            catch (Exception ex) 
+            {
+                throw ex; 
+            }  
+        }
+
 
 
 

@@ -64,6 +64,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DbSet<Counting> Countings { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Position> Positions { get; set; }
-        public DbSet<WishedAcceptedDriverList> WishedAcceptedDriverLists { get; set; } 
+        public DbSet<WishedAcceptedDriverList> WishedAcceptedDriverLists { get; set; }
+        public DbSet<Contaction> Contactions { get; set; }
     }
 }

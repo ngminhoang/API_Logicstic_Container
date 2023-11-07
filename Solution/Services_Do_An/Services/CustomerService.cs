@@ -46,7 +46,7 @@ namespace Services_Do_An.Services
             try
             {
                 OrderItem orderItem = mapper.Map<OrderItem>(item);
-                if (orderStatusDB.checkInitOrder((int)orderItem.OrderId) == true && orderStatusDB.checkAcceptedOrder((int)orderItem.OrderId) == false)
+                if (orderStatusDB.checkInitOrder(item.OrderId) == true && orderStatusDB.checkOnListOrder(item.OrderId) == false)
                 {
                     return orderItemDB.create(orderItem);
                 }
@@ -164,10 +164,7 @@ namespace Services_Do_An.Services
                 //e.BussinessId = null;
                 try
                 {
-                    orderDB.create(order);
-                    OrderStatus orderStatus = new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true };
-                    orderStatusDB.create(orderStatus);
-                  
+                    orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true });
                     return true;
 
                 }
@@ -439,6 +436,10 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
+
+
+
 
         /*
         public bool contractedByDriverOrder(int orderId)

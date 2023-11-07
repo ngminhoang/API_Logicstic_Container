@@ -72,6 +72,43 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+
+        public double sumWeight(int orderId)
+        {
+            try
+            {
+                List<OrderItem> rs = _dbcontext.OrderItems.Where(entity => entity.OrderId == orderId).ToList();
+                double sum = 0;
+                foreach (OrderItem item in rs)
+                {
+                    sum += (double)item.WeightPerUnit * (double)item.Quantity;
+                }
+                return sum;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public double sumMass(int orderId)
+        {
+            try
+            {
+                List<OrderItem> rs = _dbcontext.OrderItems.Where(entity => entity.OrderId == orderId).ToList();
+                double sum=0;
+                foreach(OrderItem item in rs)
+                {
+                    sum += (double)item.MassPerUnit * (double)item.Quantity;
+                }
+                return sum;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<OrderItem> getAll()
         {
             try

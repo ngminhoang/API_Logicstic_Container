@@ -10,6 +10,6 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IOrderRepository : IRepository<Order>
     {
-        
+        List<Order> getAll(string DisGo, string ProGo, string DisCome,string ProCome);
     }
 }

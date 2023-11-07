@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API_Do_An.APIModels;
+using Microsoft.AspNetCore.Mvc;
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
@@ -16,9 +17,25 @@ namespace API_Do_An.Controllers
         {
             this.driverSV = driverSV;
         }
+
+        [HttpPost("FilteredOrdersList")]
+        public IActionResult GetFilteredOrdersList([FromBody] SearchFilter search)
+        {
+            try
+            {
+                //return Ok();
+                return Ok(driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo, search.DisCome, search.ProCome));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         // GET: api/<DriverController>
-        [HttpGet("OrdersList")]
-        public IActionResult GetOrderList()
+        [HttpGet("AllInitedOrdersList")]
+        public IActionResult getOrderList()
         {
             try 
             {
@@ -29,6 +46,9 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
+
+
 
         [HttpGet("OrdersList/{orderId}")]
         public IActionResult GetOrder(int orderId)

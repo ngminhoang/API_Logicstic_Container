@@ -61,6 +61,9 @@ namespace Services_Do_An.AutoMapper
 
             CreateMap<OrderModel1, Order>();
             CreateMap<Order, OrderModel1>();
+
+            CreateMap<ContactionModel, Contaction>();
+            CreateMap<Contaction, ContactionModel>();
         }
     }
 }
