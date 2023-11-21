@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -27,10 +28,9 @@ namespace Services_Do_An.Services
         private readonly IOrderItemRepository orderItemDB;
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
-        private readonly IContractRepository contractRepositoryDB;
         private readonly ICustomerRepository customerDB;
         private readonly IMessageRepository messageDB;
-        public DriverService(IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB,IContractRepository contractRepositoryDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
+        public DriverService(IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
@@ -38,7 +38,6 @@ namespace Services_Do_An.Services
             this.orderStatusDB = orderStatusDB;
             this.orderItemDB = orderItemDB;
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
-            this.contractRepositoryDB = contractRepositoryDB;
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
             this.customerDB = customerDB;
             this.messageDB = messageDB;
@@ -220,7 +219,7 @@ namespace Services_Do_An.Services
                             int driverId = (int)ownedVehicleInforRepositoryDB.read((int)order.OVIId).DriverId;
                             try
                             {
-                                contractRepositoryDB.createDriverContract(cusId, driverId, orderId);
+                                //them contract
                             }
                             catch
                             {
@@ -424,13 +423,13 @@ namespace Services_Do_An.Services
             }
         }
 
-        public List<OrderModel1> getAllInitializedOrders()
+        public List<OrderModel> getAllInitializedOrders()
         {
             try 
             {
-                List<OrderModel1> rs = new List<OrderModel1>();
+                List<OrderModel> rs = new List<OrderModel>();
                 List<Order> list = orderDB.getAll();
-                OrderModel1 order1;
+                OrderModel order1;
                 //foreach (var order in list)
                 //{
                 //    rs.Add(mapper.Map<OrderModel>(order));
@@ -439,8 +438,7 @@ namespace Services_Do_An.Services
                 {
                     if (orderStatusDB.checkInitOrder(order.OrderId)==true && orderStatusDB.checkOnListOrder(order.OrderId) ==true)
                     {
-                        order1 = mapper.Map<OrderModel1>(order);
-                        order1.CustomerName = order.customer.FullName;
+                        order1 = mapper.Map<OrderModel>(order);
                        //order1.DriverId = order.ownedVehicleInfor.DriverId;
                         //order1.BussinessName = order.bussiness.BusinessName;
                         rs.Add(order1);
@@ -580,15 +578,15 @@ namespace Services_Do_An.Services
 
 
 
-        public List<OrderModel1> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome)
+        public List<OrderModel> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome)
         {
             try
             {
                 OwnedVehicleInfor OVI = ownedVehicleInforRepositoryDB.read(OVIId);
                 double cargo = (double)OVI.Cargo;
-                List<OrderModel1> rs = new List<OrderModel1>();
+                List<OrderModel> rs = new List<OrderModel>();
                 List<Order> list = orderDB.getAll(DisGo,ProGo,DisCome,ProCome);
-                OrderModel1 order1;
+                OrderModel order1;
                 //foreach (var order in list)
                 //{
                 //    rs.Add(mapper.Map<OrderModel>(order));
@@ -598,8 +596,7 @@ namespace Services_Do_An.Services
 
                    if (orderStatusDB.checkInitOrder(order.OrderId) == true && orderStatusDB.checkAcceptedOrder(order.OrderId) == false && orderStatusDB.checkOnListOrder(order.OrderId) == true && cargo >= orderItemDB.sumMass(order.OrderId))
                     {
-                        order1 = mapper.Map<OrderModel1>(order);
-                        order1.CustomerName = order.customer.FullName;
+                        order1 = mapper.Map<OrderModel>(order);
                         //order1.DriverId = order.ownedVehicleInfor.DriverId;
                         //order1.BussinessName = order.bussiness.BusinessName;
                         rs.Add(order1);
@@ -610,6 +607,24 @@ namespace Services_Do_An.Services
 
 
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<OwnedVehicleInforModel> getDriverOwnedVehicle(int driverId)
+        {
+            try
+            { 
+                List<OwnedVehicleInfor> ls = ownedVehicleInforRepositoryDB.getAll(driverId);
+                List<OwnedVehicleInforModel> rs = new List<OwnedVehicleInforModel>();
+                foreach (OwnedVehicleInfor model in ls)
+                {
+                    rs.Add(mapper.Map<OwnedVehicleInforModel>(model));
+                }
+                return rs;
             }
             catch (Exception ex)
             {

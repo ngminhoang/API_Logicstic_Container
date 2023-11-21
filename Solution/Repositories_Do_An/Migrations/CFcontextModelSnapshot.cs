@@ -194,68 +194,6 @@ namespace Repositories_Do_An.Migrations
                     b.ToTable("Contaction");
                 });
 
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Contract", b =>
-                {
-                    b.Property<int>("ContractId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContractId"));
-
-                    b.Property<string>("ContractFileLink")
-                        .HasColumnType("text");
-
-                    b.Property<int?>("ContractTypeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("DeliveryId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("ContractId");
-
-                    b.HasIndex("ContractTypeId");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Contract");
-                });
-
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.ContractType", b =>
-                {
-                    b.Property<int>("ContractTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContractTypeId"));
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Text")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("ContractTypeId");
-
-                    b.ToTable("ContractType");
-                });
-
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Counting", b =>
                 {
                     b.Property<int>("CountingId")
@@ -482,6 +420,9 @@ namespace Repositories_Do_An.Migrations
                     b.Property<string>("Answer")
                         .HasColumnType("text");
 
+                    b.Property<bool?>("CheckRead")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
 
@@ -509,70 +450,6 @@ namespace Repositories_Do_An.Migrations
                     b.ToTable("Message");
                 });
 
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Notification", b =>
-                {
-                    b.Property<int>("NotificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotificationId"));
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("NotifTypeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("NotificationId");
-
-                    b.HasIndex("NotifTypeId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Notification");
-                });
-
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.NotifType", b =>
-                {
-                    b.Property<int>("NotifTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NotifTypeId"));
-
-                    b.Property<string>("NotifDescription")
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<string>("NotifName")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("NotifTypeId");
-
-                    b.ToTable("NotifType");
-                });
-
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -590,23 +467,44 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("DetailPositionCome")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DetailPositionGo")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DistrictCome")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DistrictGo")
+                        .HasColumnType("text");
+
                     b.Property<int?>("OVIId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("OrderName")
+                        .HasColumnType("text");
 
                     b.Property<DateOnly?>("OrderedDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("PostionComeId")
-                        .HasColumnType("integer");
+                    b.Property<string>("ProvinceCome")
+                        .HasColumnType("text");
 
-                    b.Property<int?>("PostionGoId")
-                        .HasColumnType("integer");
+                    b.Property<string>("ProvinceGo")
+                        .HasColumnType("text");
 
                     b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
                     b.Property<double?>("TotalAmount")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("WardCome")
+                        .HasColumnType("text");
+
+                    b.Property<string>("WardGo")
+                        .HasColumnType("text");
 
                     b.HasKey("OrderId");
 
@@ -615,10 +513,6 @@ namespace Repositories_Do_An.Migrations
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("OVIId");
-
-                    b.HasIndex("PostionComeId");
-
-                    b.HasIndex("PostionGoId");
 
                     b.ToTable("Order");
                 });
@@ -998,33 +892,6 @@ namespace Repositories_Do_An.Migrations
                     b.Navigation("role");
                 });
 
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Contract", b =>
-                {
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.ContractType", "contractType")
-                        .WithMany()
-                        .HasForeignKey("ContractTypeId");
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Customer", "customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Order", "order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Role", "role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("contractType");
-
-                    b.Navigation("customer");
-
-                    b.Navigation("order");
-
-                    b.Navigation("role");
-                });
-
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Customer", b =>
                 {
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Role", "role")
@@ -1088,21 +955,6 @@ namespace Repositories_Do_An.Migrations
                     b.Navigation("staff");
                 });
 
-            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Notification", b =>
-                {
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.NotifType", "notifType")
-                        .WithMany()
-                        .HasForeignKey("NotifTypeId");
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Role", "role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
-                    b.Navigation("notifType");
-
-                    b.Navigation("role");
-                });
-
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Order", b =>
                 {
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Bussiness", "bussiness")
@@ -1116,18 +968,6 @@ namespace Repositories_Do_An.Migrations
                     b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.OwnedVehicleInfor", "ownedVehicleInfor")
                         .WithMany()
                         .HasForeignKey("OVIId");
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Position", "PositionCome")
-                        .WithMany()
-                        .HasForeignKey("PostionComeId");
-
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Position", "PositionGo")
-                        .WithMany()
-                        .HasForeignKey("PostionGoId");
-
-                    b.Navigation("PositionCome");
-
-                    b.Navigation("PositionGo");
 
                     b.Navigation("bussiness");
 

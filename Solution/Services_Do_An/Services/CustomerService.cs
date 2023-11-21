@@ -24,10 +24,9 @@ namespace Services_Do_An.Services
         private readonly IOrderItemRepository orderItemDB;
         private readonly IOrderStatusRepository orderStatusDB;
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
-        private readonly IContractRepository contractRepositoryDB;
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
         private readonly IDriverRateRepository driverRateDB;
-        public CustomerService(IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IContractRepository contractRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
+        public CustomerService(IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
         {
             this.mapper = _mapper;
             this.customerDB = _customer;
@@ -35,7 +34,6 @@ namespace Services_Do_An.Services
             this.orderItemDB = _orderItem;
             this.orderStatusDB = _orderStatus;
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
-            this.contractRepositoryDB = contractRepositoryDB;
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
             this.driverRateDB = driverRateDB;
         }
@@ -162,8 +160,10 @@ namespace Services_Do_An.Services
                 //Order e = order;
                 //e.OVIId = null;
                 //e.BussinessId = null;
+
                 try
                 {
+                    orderDB.create(order);
                     orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true });
                     return true;
 
@@ -271,7 +271,7 @@ namespace Services_Do_An.Services
                             int driverId= (int)ownedVehicleInforRepositoryDB.read((int)order.OVIId).DriverId;
                             try
                             {
-                                contractRepositoryDB.createDriverContract(cusId, driverId, orderId);
+                                //taocontract
                             }
                             catch 
                             { 

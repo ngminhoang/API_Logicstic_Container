@@ -18,6 +18,7 @@ namespace API_Do_An.Controllers
             this.driverSV = driverSV;
         }
 
+
         [HttpGet("DriverInfor")]
         public IActionResult getDriverInfor(int driverId)
         {
@@ -38,6 +39,18 @@ namespace API_Do_An.Controllers
             try
             {
                 return Ok(driverSV.update(entity));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet("GetVehicleList")]
+        public IActionResult getVehicleList(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.getDriverOwnedVehicle(driverId));
             }
             catch (Exception ex)
             {

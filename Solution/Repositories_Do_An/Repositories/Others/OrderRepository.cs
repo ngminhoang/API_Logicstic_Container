@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Repositories_Do_An.Migrations;
 
 namespace Repositories_Do_An.Repositories
 {
@@ -63,7 +64,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).Include(x=> x.PositionCome).Include(x => x.PositionGo).ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).ToList();
                 return rs;
             }
             catch (Exception ex)
@@ -78,7 +79,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Include(x => x.PositionCome).Include(x => x.PositionGo).Where(x => x.PositionGo.District==DisGo && x.PositionGo.Province == ProGo && x.PositionCome.District == DisCome && x.PositionCome.Province == ProCome).ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Where(x=>x.DistrictCome==DisCome && x.ProvinceCome==ProCome && x.DistrictGo==DisGo && x.ProvinceGo==ProGo).ToList();
                 return rs;
             }
             catch (Exception ex)
@@ -91,7 +92,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                var rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.customer).Include(x => x.PositionCome).Include(x => x.PositionGo).Include(x => x.customer).Include(x => x.bussiness).FirstOrDefault(t => t.OrderId == id);
+                var rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.customer).Include(x => x.customer).Include(x => x.bussiness).FirstOrDefault(t => t.OrderId == id);
                 return rs;
             }
             catch (Exception ex)
