@@ -70,6 +70,19 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public List<OrderStatus> getAll(int orderId)
+        {
+            try
+            {
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(x=> x.OrderId==orderId && x.Status==true).ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public OrderStatus read(int id)
         {
             try

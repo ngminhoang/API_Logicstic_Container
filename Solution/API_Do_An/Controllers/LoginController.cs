@@ -6,6 +6,7 @@ using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq.Expressions;
 using System.Runtime.ConstrainedExecution;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -14,6 +15,7 @@ using XAct;
 using XSystem.Security.Cryptography;
 using Microsoft.JSInterop.Implementation;
 using Serilog.Formatting.Json;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,29 +52,42 @@ namespace API_Do_An.Controllers
 
 
 
-        [HttpPut]
-        public IActionResult PasswordToMail([FromBody] Email mail )
+        //[HttpPut]
+        //public IActionResult PasswordToMail([FromBody] Email mail )
+        //{
+        //    try
+        //    {
+        //        if (adminSV.check(mail.email) || staffSV.check(mail.email) || driverSV.check(mail.email) || customerSV.check(mail.email) || bussinessSV.check(mail.email))
+        //        {
+        //            //lam cai gi do
+        //            return Ok(true);
+
+        //        }
+        //        else return Ok(false);
+        //    }
+        //    catch (Exception ex) 
+        //    {
+        //        throw ex; 
+        //    }  
+        //}
+
+
+        [HttpGet("Check")]
+        [Authorize(Roles = "admin,staff,driver,customer,bussiness")]
+        public IActionResult checkToken()
         {
             try
             {
-                if (adminSV.check(mail.email) || staffSV.check(mail.email) || driverSV.check(mail.email) || customerSV.check(mail.email) || bussinessSV.check(mail.email))
-                {
-                    //lam cai gi do
-                    return Ok(true);
-
-                }
-                else return Ok(false);
+                return Ok(true);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
-                throw ex; 
-            }  
+                return BadRequest(false);
+            }
+
         }
 
-
-
-
-        [HttpPost]
+        [HttpPost("Loggingin")]
         public IActionResult Login([FromBody] Account account)
         {
             var email = account.email;

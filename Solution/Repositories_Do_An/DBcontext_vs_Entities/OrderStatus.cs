@@ -19,7 +19,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateTime? Date { get; set; }
         [ForeignKey("Status")]
         public int? StatusId { get; set;}
-        public virtual Status status { get; set; }
+        public virtual Status StatusType { get; set; }
         public bool? Status { get; set; }
         [ForeignKey("Warehouse")]
         public int? WarehouseId { get; set; }

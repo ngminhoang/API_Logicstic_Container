@@ -13,7 +13,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int MessId { get; set; }
-        public string? Content { get; set; }
+        public string? Question { get; set; }
+        public string? Answer { get; set; }
         public int? UserId { get; set; }
         [ForeignKey("Role")]
         public int? RoleId { get; set; }
@@ -23,5 +24,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int? StaffId { get; set; }
         public virtual Staff staff { get; set; }
         public bool? Status { get; set; }
+        public bool? CheckRead { get; set; }
     }
 }

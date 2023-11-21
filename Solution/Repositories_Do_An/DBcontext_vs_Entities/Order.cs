@@ -14,6 +14,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
+        public string? orderName { get; set; }
         [ForeignKey("Customer")]
         public int? CustomerId { get; set; }
         public virtual Customer customer { get; set; }
@@ -26,8 +27,8 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public int? OVIId { get; set; }
         public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
 
-        public DateTime? OrderedDate { get; set; }
-        public DateTime? ArrivedDate { get; set; }
+        public DateOnly? OrderedDate { get; set; }
+        public DateOnly? ArrivedDate { get; set; }
         public Double? TotalAmount { get; set; }
         [ForeignKey("Position")]
         public int? PostionComeId { get; set; }

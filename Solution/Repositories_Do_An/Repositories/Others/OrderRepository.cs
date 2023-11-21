@@ -91,7 +91,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                var rs = _dbcontext.Orders.FirstOrDefault(t => t.OrderId == id);
+                var rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.customer).Include(x => x.PositionCome).Include(x => x.PositionGo).Include(x => x.customer).Include(x => x.bussiness).FirstOrDefault(t => t.OrderId == id);
                 return rs;
             }
             catch (Exception ex)

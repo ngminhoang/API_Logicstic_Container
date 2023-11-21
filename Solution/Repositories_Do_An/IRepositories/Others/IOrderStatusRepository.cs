@@ -10,6 +10,7 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IOrderStatusRepository : IRepository<OrderStatus>
     {
+        List<OrderStatus> getAll(int orderId);
         bool checkInitOrder(int id);
         bool checkOnListOrder(int orderId);
         bool checkAcceptedOrder(int id);

@@ -63,7 +63,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderItem> rs = _dbcontext.OrderItems.Where(entity => entity.OrderId == orderId).ToList();
+                List<OrderItem> rs = _dbcontext.OrderItems.Where(entity => entity.OrderId == orderId && entity.order.Status==true).ToList();
                 return rs;
             }
             catch (Exception ex)

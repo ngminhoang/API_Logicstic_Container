@@ -13,6 +13,8 @@ using System.Linq;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+
 
 namespace Services_Do_An.Services
 {
@@ -26,7 +28,9 @@ namespace Services_Do_An.Services
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
         private readonly IContractRepository contractRepositoryDB;
-        public DriverService(IMapper mapper, IContractRepository contractRepositoryDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
+        private readonly ICustomerRepository customerDB;
+        private readonly IMessageRepository messageDB;
+        public DriverService(IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB,IContractRepository contractRepositoryDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
@@ -36,7 +40,150 @@ namespace Services_Do_An.Services
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
             this.contractRepositoryDB = contractRepositoryDB;
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
+            this.customerDB = customerDB;
+            this.messageDB = messageDB;
         }
+
+        public bool updateMessage(int messId, MessageModel mess)
+        {
+            try
+            {
+                Message mes = mapper.Map<Message>(mess);
+                mes.MessId = messId;
+                return messageDB.update(mes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<MessageModel> getMessageList(int driverId)
+        {
+            try
+            {
+                List<Message> ls = messageDB.getAll(driverId, 3);
+                List<MessageModel> rs = new List<MessageModel>();
+                foreach (Message mess in ls)
+                {
+                    rs.Add(mapper.Map<MessageModel>(mess));
+                }
+
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool update(DriverModel entity)
+        {
+            try
+            {
+                DriverModel driver = entity;
+                driver.DateUpdatedAccount = DateTime.Now;
+                Driver e = mapper.Map<Driver>(driver);
+                return driverDB.update(e);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool createVehicle(OwnedVehicleInforModel entity)
+        {
+            try
+            {
+                OwnedVehicleInfor e = mapper.Map<OwnedVehicleInfor>(entity);
+                return ownedVehicleInforRepositoryDB.create(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool updateVehicle(OwnedVehicleInforModel entity)
+        {
+            try
+            {
+                OwnedVehicleInfor e = mapper.Map<OwnedVehicleInfor>(entity);
+                return ownedVehicleInforRepositoryDB.update(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool deleteVehicle(int id)
+        {
+            try
+            {
+
+                var e = ownedVehicleInforRepositoryDB.read(id);
+                return ownedVehicleInforRepositoryDB.delete(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<OrderItemModel> getItemList(int orderId)
+        {
+            try
+            {
+                List<OrderItem> orderItemList = orderItemDB.getAll(orderId);
+                List<OrderItemModel> orderItemModelList = new List<OrderItemModel>();
+                foreach (OrderItem item in orderItemList)
+                {
+                    orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
+                }
+                return orderItemModelList;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public CustomerModel getCustomer(int customerId)
+        {
+            try
+            {
+                Customer customer = customerDB.read(customerId);
+                CustomerModel customerModel = mapper.Map<CustomerModel>(customer);
+                return customerModel;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public Object getStatusList(int orderId)
+        {
+            try
+            {
+                Order order = orderDB.read(orderId);
+                List<OrderStatus> orderStatusList = orderStatusDB.getAll(orderId );
+                List<OrderStatusModel> orderStatusModelList = new List<OrderStatusModel>();
+                foreach (OrderStatus item in orderStatusList)
+                {
+                    orderStatusModelList.Add(mapper.Map<OrderStatusModel>(item));
+                }
+                return new {  order= order,statusList= orderStatusModelList };
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public bool applyOrder(int oVIId, int orderId)
         {
@@ -257,7 +404,7 @@ namespace Services_Do_An.Services
         }
 
 
-        public List<OrderItemModel> getOrder(int orderId) 
+        public Object getOrder(int orderId) 
         {
             try 
             {
@@ -268,7 +415,8 @@ namespace Services_Do_An.Services
                 {
                     orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
                 }
-                return orderItemModelList;
+                return new { order = order, orderItem = orderItemModelList };
+                
             }
             catch (Exception ex) 
             {
@@ -318,6 +466,21 @@ namespace Services_Do_An.Services
             }
         }
 
+
+        public Object readDriver(int id)
+        {
+            try
+            {
+                Driver driver = driverDB.read(id);
+                DriverModel driverModel = mapper.Map<DriverModel>(driver);
+                List<OwnedVehicleInfor> OVIList = ownedVehicleInforRepositoryDB.getAll(id);
+                return new { driver = driver, vehicle = OVIList };
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public DriverModel read(int id)
         {
@@ -392,10 +555,7 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-        public bool update(DriverModel entity)
-        {
-            return true;
-        }
+        
         public bool delete(DriverModel entity)
         {
             return true;

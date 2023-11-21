@@ -13,11 +13,12 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class OrderModel
     {
         public int OrderId { get; set; }
+        public string? orderName { get; set; }
         public int CustomerId { get; set; }
         //public int StaffIdId { get; set; }
         public int? OVIId { get; set; }
-        public DateTime? OrderedDate { get; set; }
-        public DateTime? ArrivedDate { get; set; }
+        public DateOnly? OrderedDate { get; set; }
+        public DateOnly? ArrivedDate { get; set; }
         public Double? TotalAmount { get; set; }
         public int? PostionComeId { get; set; }
         public int? PostionGoId { get; set; }

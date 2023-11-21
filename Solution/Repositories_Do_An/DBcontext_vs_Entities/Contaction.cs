@@ -13,6 +13,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ContactionId { get; set; }
+        public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? Comntent { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using Repositories_Do_An.DBcontext_vs_Entities;
+﻿using AutoMapper;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.DTOModels;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace Services_Do_An.IServices
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
         List<OrderModel1> getAllInitializedOrders();
-        List<OrderItemModel> getOrder(int orderId);
+        Object getOrder(int orderId);
         bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);
@@ -23,5 +24,15 @@ namespace Services_Do_An.IServices
         bool alteredOrder(int orderId);
         bool applyOrder(int OVIId, int orderId);
         List<OrderModel1> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome);
+        Object readDriver(int id);
+        bool createVehicle(OwnedVehicleInforModel entity);
+        bool updateVehicle(OwnedVehicleInforModel entity);
+        bool deleteVehicle(int id);
+        List<OrderItemModel> getItemList(int orderId);
+        Object getStatusList(int orderId);
+        CustomerModel getCustomer(int customerId);
+        List<MessageModel> getMessageList(int driverId);
+        bool updateMessage(int messId, MessageModel mess);
+
     }
 }

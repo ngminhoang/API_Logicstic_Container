@@ -10,6 +10,6 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IMessageRepository : IRepository<Message>
     {
-       
+        List<Message> getAll(int userId, int roleId);
     }
 }

@@ -18,6 +18,75 @@ namespace API_Do_An.Controllers
             this.driverSV = driverSV;
         }
 
+        [HttpGet("DriverInfor")]
+        public IActionResult getDriverInfor(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.readDriver(driverId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPut("UpdateDriver")]
+
+        public IActionResult updateDriver(DriverModel entity)
+        {
+            try
+            {
+                return Ok(driverSV.update(entity));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPut("CreateVehicle")]
+
+        public IActionResult createVehicle(OwnedVehicleInforModel entity)
+        {
+            try
+            {
+                return Ok(driverSV.createVehicle(entity));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpPut("UpdateVehicle")]
+
+        public IActionResult updateVehicle(OwnedVehicleInforModel entity)
+        {
+            try
+            {
+                return Ok(driverSV.updateVehicle(entity));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpPut("DeleteVehicle")]
+
+        public IActionResult deleteVehicle(int id)
+        {
+            try
+            {
+                return Ok(driverSV.deleteVehicle(id));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
         [HttpPost("FilteredOrdersList")]
         public IActionResult GetFilteredOrdersList([FromBody] SearchFilter search)
         {
@@ -56,6 +125,45 @@ namespace API_Do_An.Controllers
             try
             {
                 return Ok(driverSV.getOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("OrdersList/{orderId}/Status")]
+        public IActionResult GetOrderStatusList(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.getStatusList(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("OrdersList/{orderId}/Items")]
+        public IActionResult GetOrderItemList(int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.getItemList(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("CustomerInfor")]
+        public IActionResult GetCustomerInfor(int customerId)
+        {
+            try
+            {
+                return Ok(driverSV.getCustomer(customerId));
             }
             catch (Exception ex)
             {
@@ -155,6 +263,30 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpGet("Message")]
+        public IActionResult getMessageList(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.getMessageList(driverId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpPut("Message/{messId}")]
+        public IActionResult updateMessage(int messId,[FromBody] MessageModel message)
+        {
+            try
+            {
+                return Ok(driverSV.updateMessage(messId,message));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }

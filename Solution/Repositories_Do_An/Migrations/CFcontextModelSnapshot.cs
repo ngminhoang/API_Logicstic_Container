@@ -71,6 +71,9 @@ namespace Repositories_Do_An.Migrations
                     b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
+                    b.Property<bool?>("able")
+                        .HasColumnType("boolean");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("RoleId");
@@ -181,6 +184,9 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FullName")
                         .HasColumnType("text");
 
                     b.HasKey("ContactionId");
@@ -321,6 +327,9 @@ namespace Repositories_Do_An.Migrations
                     b.Property<bool?>("Status")
                         .HasColumnType("boolean");
 
+                    b.Property<bool?>("able")
+                        .HasColumnType("boolean");
+
                     b.HasKey("UserId");
 
                     b.HasIndex("RoleId");
@@ -381,6 +390,9 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("integer");
 
                     b.Property<bool?>("Status")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("able")
                         .HasColumnType("boolean");
 
                     b.HasKey("UserId");
@@ -467,11 +479,14 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MessId"));
 
-                    b.Property<string>("Content")
+                    b.Property<string>("Answer")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("Date")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Question")
+                        .HasColumnType("text");
 
                     b.Property<int?>("RoleId")
                         .HasColumnType("integer");
@@ -566,8 +581,8 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("OrderId"));
 
-                    b.Property<DateTime?>("ArrivedDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("ArrivedDate")
+                        .HasColumnType("date");
 
                     b.Property<int?>("BussinessId")
                         .HasColumnType("integer");
@@ -578,8 +593,8 @@ namespace Repositories_Do_An.Migrations
                     b.Property<int?>("OVIId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("OrderedDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<DateOnly?>("OrderedDate")
+                        .HasColumnType("date");
 
                     b.Property<int?>("PostionComeId")
                         .HasColumnType("integer");
@@ -829,6 +844,9 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("integer");
 
                     b.Property<bool?>("Status")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("able")
                         .HasColumnType("boolean");
 
                     b.HasKey("UserId");
@@ -1133,7 +1151,7 @@ namespace Repositories_Do_An.Migrations
                         .WithMany()
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Status", "status")
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Status", "StatusType")
                         .WithMany()
                         .HasForeignKey("StatusId");
 
@@ -1141,9 +1159,9 @@ namespace Repositories_Do_An.Migrations
                         .WithMany()
                         .HasForeignKey("WarehouseId");
 
-                    b.Navigation("order");
+                    b.Navigation("StatusType");
 
-                    b.Navigation("status");
+                    b.Navigation("order");
 
                     b.Navigation("warehouse");
                 });

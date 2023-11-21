@@ -31,6 +31,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         [ForeignKey("Role")]
         public int? RoleId { get; set; }
         public virtual Role role { get; set; }
+        public bool? able { get; set; }
         public bool? Status { get; set; }
     }
 }

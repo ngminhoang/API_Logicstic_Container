@@ -12,11 +12,13 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     public class MessageModel
     {
         public int MessId { get; set; }
-        public string? Content { get; set; }
+        public string? Question { get; set; }
+        public string? Answer { get; set; }
         public int UserId { get; set; }
         public int RoleId { get; set; }
         public DateTime? Date { get; set; }
         public int StaffId { get; set; }
         public bool? Status { get; set; }
+        public bool? CheckRead { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace Services_Do_An.DTOModels
         public int? OVIId { get; set; }
         public int DriverId { get; set; }
         public string DriverName { get; set; }
-        public DateTime? OrderedDate { get; set; }
-        public DateTime? ArrivedDate { get; set; }
+        public DateOnly? OrderedDate { get; set; }
+        public DateOnly? ArrivedDate { get; set; }
         public Double? TotalAmount { get; set; }
         public int? PostionComeId { get; set; }
         //public string PositionCome { get; set; }

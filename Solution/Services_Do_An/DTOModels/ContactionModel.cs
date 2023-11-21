@@ -9,6 +9,7 @@ namespace Services_Do_An.DTOModels
     public class ContactionModel
     {
         public int ContactionId { get; set; }
+        public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? Comntent { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using Repositories_Do_An.DBcontext_vs_Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Repositories_Do_An.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,18 @@ namespace Repositories_Do_An.Repositories
         public OwnedVehicleInforRepository(CFcontext dbcontext)
         {
             _dbcontext = dbcontext;
+        }
+        public List<OwnedVehicleInfor> getAll(int driverId)
+        {
+            try
+            {
+                List<OwnedVehicleInfor> list = _dbcontext.OwnedVehicleInfors.Include(x => x.vehicle).Where(x=> x.DriverId == driverId && x.Status==true).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public bool create(OwnedVehicleInfor entity)
         {
@@ -40,7 +53,9 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                _dbcontext.OwnedVehicleInfors.Remove(entity);
+                var e = entity;
+                e.Status = false;
+                _dbcontext.OwnedVehicleInfors.Update(e);
                 _dbcontext.SaveChanges();
                 try
                 {
@@ -61,7 +76,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OwnedVehicleInfor> rs = _dbcontext.OwnedVehicleInfors.ToList();
+                List<OwnedVehicleInfor> rs = _dbcontext.OwnedVehicleInfors.Where(x=>x.Status == true).ToList();
                 return rs;
             }
             catch (Exception ex)
@@ -74,7 +89,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                var rs = _dbcontext.OwnedVehicleInfors.FirstOrDefault(t => t.OVIId == id);
+                var rs = _dbcontext.OwnedVehicleInfors.Where(x => x.Status == true).FirstOrDefault(t => t.OVIId == id);
                 return rs;
             }
             catch (Exception ex)

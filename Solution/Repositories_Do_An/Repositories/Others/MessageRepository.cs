@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Design;
 
 namespace Repositories_Do_An.Repositories
 {
@@ -62,6 +63,19 @@ namespace Repositories_Do_An.Repositories
             try
             {
                 List<Message> rs = _dbcontext.Messages.ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Message> getAll(int userId, int roleId)
+        {
+            try
+            {
+                List<Message> rs = _dbcontext.Messages.Where(x=> x.UserId == roleId && x.RoleId ==roleId).ToList();
                 return rs;
             }
             catch (Exception ex)

@@ -10,6 +10,6 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IOwnedVehicleInforRepository : IRepository<OwnedVehicleInfor>
     {
-       
+        List<OwnedVehicleInfor> getAll(int driverId);
     }
 }
