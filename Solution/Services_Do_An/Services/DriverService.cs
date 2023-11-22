@@ -74,6 +74,22 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
+        public bool update(int driverId, DriverModel entity)
+        {
+            try
+            {
+                DriverModel driver = entity;
+                driver.DateUpdatedAccount = DateTime.UtcNow;
+                driver.UserId= driverId;
+                Driver e = mapper.Map<Driver>(driver);
+                return driverDB.update(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public bool update(DriverModel entity)
         {
             try

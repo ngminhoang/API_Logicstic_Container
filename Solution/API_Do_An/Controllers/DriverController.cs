@@ -34,11 +34,11 @@ namespace API_Do_An.Controllers
 
         [HttpPut("UpdateDriver")]
 
-        public IActionResult updateDriver(DriverModel entity)
+        public IActionResult updateDriver(int driverId, DriverModel entity)
         {
             try
             {
-                return Ok(driverSV.update(entity));
+                return Ok(driverSV.update(driverId, entity));
             }
             catch (Exception ex)
             {

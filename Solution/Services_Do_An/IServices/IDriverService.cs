@@ -34,6 +34,7 @@ namespace Services_Do_An.IServices
         CustomerModel getCustomer(int customerId);
         List<MessageModel> getMessageList(int driverId);
         bool updateMessage(int messId, MessageModel mess);
+        bool update(int driverId, DriverModel driver);
 
     }
 }
