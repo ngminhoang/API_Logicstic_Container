@@ -2,6 +2,7 @@
 using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;
 using System.Diagnostics.Eventing.Reader;
+using XAct;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,9 +23,10 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                if (customerSV.initOrder(orderModel))
+                int orderId = customerSV.initOrder(orderModel);
+                if (!orderId.IsNull())
                 {
-                    return Ok(true);
+                    return Ok(orderId);
                 }
                 else
                 {

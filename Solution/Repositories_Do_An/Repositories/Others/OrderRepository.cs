@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Repositories_Do_An.Migrations;
 
 namespace Repositories_Do_An.Repositories
@@ -21,7 +22,6 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                
                 _dbcontext.Orders.Add(entity);
                 _dbcontext.SaveChanges();
                 try
@@ -31,6 +31,27 @@ namespace Repositories_Do_An.Repositories
                 catch
                 {
                     return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public EntityEntry<Order> create_2(Order entity)
+        {
+            try
+            {
+                var data = _dbcontext.Orders.Add(entity);
+                _dbcontext.SaveChanges();
+                try
+                {
+                    return data;
+                }
+                catch
+                {
+                    return null;
                 }
             }
             catch (Exception ex)

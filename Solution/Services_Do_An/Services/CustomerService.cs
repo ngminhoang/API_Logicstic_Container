@@ -97,6 +97,7 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
         public bool create(CustomerModel entity)
         {
             try
@@ -150,7 +151,7 @@ namespace Services_Do_An.Services
         }
     
 
-        public bool initOrder(OrderModel orderModel)
+        public int initOrder(OrderModel orderModel)
         {
             try
             {
@@ -163,9 +164,11 @@ namespace Services_Do_An.Services
 
                 try
                 {
-                    orderDB.create(order);
+                    //orderDB.create(order);
+                    var data = orderDB.create_2(order);
+                    int orderId = data.Entity.OrderId;
                     orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 1, Status = true });
-                    return true;
+                    return orderId;
 
                 }
                 catch (Exception ex)

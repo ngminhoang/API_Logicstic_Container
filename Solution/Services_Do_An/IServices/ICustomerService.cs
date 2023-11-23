@@ -11,7 +11,7 @@ namespace Services_Do_An.IServices
     {
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
-        bool initOrder(OrderModel orderModel);
+        int initOrder(OrderModel orderModel);
         bool acceptedOrder(int driverId, int orderId);
         bool contractedByCustomerOrder(int driverId);
         bool takenOrder(int orderId);

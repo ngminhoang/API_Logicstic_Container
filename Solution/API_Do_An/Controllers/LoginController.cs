@@ -116,7 +116,7 @@ namespace API_Do_An.Controllers
                 id = driverCheck;
                 role = "driver";
                 name = driverSV.read(driverCheck).FullName;
-                time = 1;
+                time = 4;
                 roleId = 3;
             }
             else if (adminCheck != 0)
@@ -140,7 +140,7 @@ namespace API_Do_An.Controllers
                 id = bussinessCheck;
                 role = "bussiness";
                 name = bussinessSV.read(bussinessCheck).BusinessName;
-                time = 1;
+                time = 4;
                 roleId = 5;
             }
             else if (customerCheck != 0)
@@ -148,7 +148,7 @@ namespace API_Do_An.Controllers
                 id = customerCheck;
                 role = "customer";
                 name = customerSV.read(customerCheck).FullName;
-                time = 1;
+                time = 4;
                 roleId = 4;
             }
             else { return new JsonResult(new { message = 0 }); } 
