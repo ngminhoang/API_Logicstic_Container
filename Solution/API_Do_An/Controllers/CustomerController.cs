@@ -19,7 +19,7 @@ namespace API_Do_An.Controllers
         }
         // GET: api/<DriverController>
 
-        [HttpPost("updateCustomer")]
+        [HttpPut("updateCustomer")]
         public IActionResult updateCustomer(int customerId, CustomerModel entity)
         {
             try
