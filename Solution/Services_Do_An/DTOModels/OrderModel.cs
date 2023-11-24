@@ -20,6 +20,9 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateOnly? OrderedDate { get; set; }
         public DateOnly? ArrivedDate { get; set; }
         public Double? TotalAmount { get; set; }
+        public Double? TotalWeight { get; set; }
+        public Double? TotalMass { get; set; }
+        public Double? Distance { get; set; }
         public string? ProvinceGo { get; set; }
         public string? DistrictGo { get; set; }
         public string? WardGo { get; set; }

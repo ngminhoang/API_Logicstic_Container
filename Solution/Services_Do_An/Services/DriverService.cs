@@ -82,6 +82,8 @@ namespace Services_Do_An.Services
                 DriverModel driver = entity;
                 driver.DateUpdatedAccount = DateTime.UtcNow;
                 driver.UserId= driverId;
+                string pass_md5 = MD5Functions.GenerateMD5(driver.Password);
+                driver.Password = pass_md5;
                 Driver e = mapper.Map<Driver>(driver);
                 return driverDB.update(e);
             }

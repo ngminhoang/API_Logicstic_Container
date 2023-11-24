@@ -122,9 +122,27 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-        public bool update(CustomerModel entity)
+
+        public bool update( CustomerModel entity)
         {
             return true;
+        }
+        public bool update(int customerId, CustomerModel entity)
+        {
+            try
+            {
+                CustomerModel customer = entity;
+                customer.DateUpdatedAccount = DateTime.UtcNow;
+                customer.UserId = customerId;
+                string pass_md5 = MD5Functions.GenerateMD5(customer.Password);
+                customer.Password = pass_md5;
+                Customer e = mapper.Map<Customer>(customer);
+                return customerDB.update(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public bool delete(CustomerModel entity)
         {
@@ -192,12 +210,18 @@ namespace Services_Do_An.Services
                     {
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 19, Status = true });
                         List<OrderItem> list = orderItemDB.getAll(orderId);
-                        double total = 0;
-                        foreach(OrderItem e in list){
-                            total += ((double)e.PricePerUnit * (double)e.Quantity) * 0.01;// + (giá thành quãng đường đi =. phải tính thông quâ địaa dsdieerm đi);
+                        double totalAmount = 0;
+                        double totalWeight = 0;
+                        double totalMass = 0;
+                        foreach (OrderItem e in list){
+                            totalAmount += ((double)e.PricePerUnit * (double)e.Quantity) * 0.01;// + (giá thành quãng đường đi =. phải tính thông quâ địaa dsdieerm đi);
+                            totalWeight += (double)e.WeightPerUnit * (double)e.Quantity;
+                            totalMass += (double)e.MassPerUnit * (double)e.Quantity;
                         }
                         Order order = orderDB.read(orderId);
-                        order.TotalAmount = total;
+                        order.TotalAmount = totalAmount;
+                        order.TotalMass = totalMass;
+                        order.TotalWeight = totalWeight;
                         orderDB.update(order);//them cap nhat thong tin gia don hang
                         return true;
                     }

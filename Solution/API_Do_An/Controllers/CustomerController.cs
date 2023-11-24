@@ -18,6 +18,20 @@ namespace API_Do_An.Controllers
             this.customerSV = customerSV;
         }
         // GET: api/<DriverController>
+
+        [HttpPost("updateCustomer")]
+        public IActionResult updateCustomer(int customerId, CustomerModel entity)
+        {
+            try
+            {
+                return Ok(customerSV.update(customerId, entity));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         [HttpPost("initOrder")]
         public IActionResult initOrder(OrderModel orderModel)
         {

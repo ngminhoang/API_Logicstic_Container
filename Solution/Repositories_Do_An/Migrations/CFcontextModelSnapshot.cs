@@ -473,6 +473,9 @@ namespace Repositories_Do_An.Migrations
                     b.Property<string>("DetailPositionGo")
                         .HasColumnType("text");
 
+                    b.Property<double?>("Distance")
+                        .HasColumnType("double precision");
+
                     b.Property<string>("DistrictCome")
                         .HasColumnType("text");
 
@@ -498,6 +501,12 @@ namespace Repositories_Do_An.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<double?>("TotalAmount")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TotalMass")
+                        .HasColumnType("double precision");
+
+                    b.Property<double?>("TotalWeight")
                         .HasColumnType("double precision");
 
                     b.Property<string>("WardCome")

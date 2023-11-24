@@ -9,6 +9,7 @@ namespace Services_Do_An.IServices
 {
     public interface ICustomerService : IServices<CustomerModel>
     {
+        bool update(int customerId, CustomerModel entity);
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
         int initOrder(OrderModel orderModel);
