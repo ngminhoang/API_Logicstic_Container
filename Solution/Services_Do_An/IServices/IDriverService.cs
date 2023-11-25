@@ -27,7 +27,7 @@ namespace Services_Do_An.IServices
         List<OrderModel> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome);
         Object readDriver(int id);
         bool createVehicle(OwnedVehicleInforModel entity);
-        bool updateVehicle(OwnedVehicleInforModel entity);
+        bool updateVehicle(int oVIId, OwnedVehicleInforModel entity);
         bool deleteVehicle(int id);
         List<OrderItemModel> getItemList(int orderId);
         Object getStatusList(int orderId);

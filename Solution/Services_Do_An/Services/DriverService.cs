@@ -120,11 +120,12 @@ namespace Services_Do_An.Services
             }
         }
 
-        public bool updateVehicle(OwnedVehicleInforModel entity)
+        public bool updateVehicle(int oVIId, OwnedVehicleInforModel entity)
         {
             try
             {
                 OwnedVehicleInfor e = mapper.Map<OwnedVehicleInfor>(entity);
+                e.OVIId = oVIId;
                 return ownedVehicleInforRepositoryDB.update(e);
             }
             catch (Exception ex)
@@ -489,6 +490,7 @@ namespace Services_Do_An.Services
             {
                 Driver driver = driverDB.read(id);
                 DriverModel driverModel = mapper.Map<DriverModel>(driver);
+
                 List<OwnedVehicleInfor> OVIList = ownedVehicleInforRepositoryDB.getAll(id);
                 return new { driver = driver, vehicle = OVIList };
             }

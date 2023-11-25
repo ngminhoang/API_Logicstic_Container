@@ -73,11 +73,11 @@ namespace API_Do_An.Controllers
         }
         [HttpPut("UpdateVehicle")]
 
-        public IActionResult updateVehicle(OwnedVehicleInforModel entity)
+        public IActionResult updateVehicle(int oVIId, OwnedVehicleInforModel entity)
         {
             try
             {
-                return Ok(driverSV.updateVehicle(entity));
+                return Ok(driverSV.updateVehicle(oVIId, entity));
             }
             catch (Exception ex)
             {
