@@ -219,6 +219,21 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
+        public bool deleteApplyOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                WishedAcceptedDriverList data = wishedAcceptedDriverListDB.read(oVIId,orderId);
+                return wishedAcceptedDriverListDB.delete(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public bool contractedByDriverOrder(int orderId)
         {
             try
@@ -442,6 +457,26 @@ namespace Services_Do_An.Services
             }
         }
 
+        public Object getOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                Order order = orderDB.read(orderId);
+                List<OrderItem> orderItemList = orderItemDB.getAll(orderId);
+                List<OrderItemModel> orderItemModelList = new List<OrderItemModel>();
+                foreach (OrderItem item in orderItemList)
+                {
+                    orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
+                }
+                return new { order = order, orderItem = orderItemModelList, checkWAL = wishedAcceptedDriverListDB.checkDupplicate(oVIId,orderId) };
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<OrderModel> getAllInitializedOrders()
         {
             try 
@@ -482,7 +517,6 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-
 
         public Object readDriver(int id)
         {
@@ -596,7 +630,17 @@ namespace Services_Do_An.Services
             }
         }
 
-
+        public bool checkWAL(int oVIId, int orderId)
+        {
+            try
+            {
+                return wishedAcceptedDriverListDB.checkDupplicate(oVIId, orderId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public List<OrderModel> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome)
         {

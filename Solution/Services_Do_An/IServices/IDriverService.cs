@@ -16,6 +16,7 @@ namespace Services_Do_An.IServices
         bool check(string mail);
         List<OrderModel> getAllInitializedOrders();
         Object getOrder(int orderId);
+        Object getOrder(int oVIId, int orderId);
         bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);
@@ -23,7 +24,9 @@ namespace Services_Do_An.IServices
         bool accidentlOrder(int orderId);
         bool alteredOrder(int orderId);
         bool applyOrder(int OVIId, int orderId);
+        bool deleteApplyOrder(int OVIId, int orderId);
         List<OwnedVehicleInforModel> getDriverOwnedVehicle(int driverId);
+        bool checkWAL(int oVIId,int orderId);
         List<OrderModel> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome);
         Object readDriver(int id);
         bool createVehicle(OwnedVehicleInforModel entity);

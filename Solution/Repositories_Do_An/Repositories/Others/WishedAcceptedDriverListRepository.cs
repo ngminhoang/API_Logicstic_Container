@@ -125,6 +125,19 @@ namespace Repositories_Do_An.Repositories.Others
             }
         }
 
+        public WishedAcceptedDriverList read(int oVIId, int orderId)
+        {
+            try
+            {
+                var rs = _dbcontext.WishedAcceptedDriverLists.FirstOrDefault(t => t.OVIId==oVIId && t.OrderId==orderId);
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public WishedAcceptedDriverList read(string name) => null;
 
         public bool update(WishedAcceptedDriverList entity)

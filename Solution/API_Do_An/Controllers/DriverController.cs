@@ -105,8 +105,16 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                //return Ok();
-                return Ok(driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo, search.DisCome, search.ProCome));
+                List<OrderModel> ls = driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo,search.DisCome, search.ProCome);
+                
+                List<FilteredOrdersResult> rs = new List<FilteredOrdersResult>();
+                foreach (var each in ls )
+                {
+                    var check = driverSV.checkWAL(search.OVIId, each.OrderId);
+                    rs.Add(new FilteredOrdersResult() { order=each, checkWAL=check });
+                }
+                return Ok(rs);
+                //return Ok(driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo, search.DisCome, search.ProCome));
             }
             catch (Exception ex)
             {
@@ -144,6 +152,20 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("OrdersList/{orderId}/{oVIId}")]
+        public IActionResult GetOrder(int oVIId,int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.getOrder(oVIId,orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpGet("OrdersList/{orderId}/Status")]
         public IActionResult GetOrderStatusList(int orderId)
@@ -268,11 +290,29 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(driverSV.applyOrder(oVIId, orderId));
+                if (driverSV.applyOrder(oVIId, orderId))
+                    return Ok(driverSV.applyOrder(oVIId, orderId));
+                else return BadRequest(false);
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        [HttpDelete("DeleteApplyOrder/{oVIId}/{orderId}")]
+        public IActionResult deleteApplyOrder(int oVIId, int orderId)
+        {
+            //return Ok(driverSV.x(oVIId, orderId));
+            try
+            {
+                var rs = driverSV.deleteApplyOrder(oVIId, orderId);
+                if (rs==true)
+                    return Ok(rs);
+                else return BadRequest(rs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
             }
         }
 
