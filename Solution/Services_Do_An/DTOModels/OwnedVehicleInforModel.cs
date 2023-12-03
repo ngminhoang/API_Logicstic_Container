@@ -14,7 +14,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         public int OVIId { get; set; }
         public int DriverId { get; set; }
-        public int VihcleId { get; set; }
+        public int VehicleId { get; set; }
         public string? LicenceImageLink { get; set; }
         public string? Description { get; set; }
         public bool? Status { get; set; }

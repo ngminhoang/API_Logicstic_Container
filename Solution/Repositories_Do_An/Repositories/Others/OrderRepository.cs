@@ -39,6 +39,7 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        
         public EntityEntry<Order> create_2(Order entity)
         {
             try
@@ -95,6 +96,33 @@ namespace Repositories_Do_An.Repositories
         }
 
 
+        public List<Order> getAll(int driverId,string subject)
+        {
+            try
+            {
+                    List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x=>x.customer)
+                        .Where(x => x.ownedVehicleInfor.DriverId == driverId).ToList();
+                    return rs;
+                
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<Order> getAll(int customerId)
+        {
+            try
+            {
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.ownedVehicleInfor.vehicle).Include(x => x.customer).Where(x=> x.CustomerId == customerId).ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public List<Order> getAll(string DisGo, string ProGo, string DisCome, string ProCome)
         {
@@ -105,7 +133,7 @@ namespace Repositories_Do_An.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -144,6 +172,8 @@ namespace Repositories_Do_An.Repositories
                 throw ex;
             }
         }
+
+
 
     }
 }

@@ -316,6 +316,9 @@ namespace Repositories_Do_An.Migrations
                     b.Property<bool?>("Gender")
                         .HasColumnType("boolean");
 
+                    b.Property<bool?>("IsWorked")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Password")
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");

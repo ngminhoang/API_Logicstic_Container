@@ -17,6 +17,7 @@ namespace Services_Do_An.IServices
         List<OrderModel> getAllInitializedOrders();
         Object getOrder(int orderId);
         Object getOrder(int oVIId, int orderId);
+        bool payedOrder(int orderId);
         bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);
@@ -38,6 +39,12 @@ namespace Services_Do_An.IServices
         List<MessageModel> getMessageList(int driverId);
         bool updateMessage(int messId, MessageModel mess);
         bool update(int driverId, DriverModel driver);
-
+        bool changeToNotWorked(int driverId);
+        bool changeToWorked(int driverId);
+        List<AppliedOrderModel> getAllAppliedOrders(int driverId);
+        bool deleteAcceptedOrder(int orderId);
+        bool deleteContractedByCustomerOrder(int orderId);
+        List<Order> x();
+        OnWorkedOrderModel getOnWorkedOrder(int driverId);
     }
 }

@@ -14,5 +14,7 @@ namespace Services_Do_An.DTOModels
         public int? OrderId { get; set; }
         public int? OVIId { get; set; }
         public bool? Status { get; set; }
+        OwnedVehicleInfor ownedVehicleInfor { get; set; }
+        Vehicle Vehicle { get; set; }
     }
 }

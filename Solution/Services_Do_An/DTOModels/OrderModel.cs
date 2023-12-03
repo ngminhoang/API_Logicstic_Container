@@ -33,5 +33,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string? DetailPositionCome { get; set; }
         public int? BussinessId { get; set; }
         public bool? Status { get; set; }
+        public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
     }
 }

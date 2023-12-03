@@ -11,6 +11,9 @@ namespace Repositories_Do_An.IRepositories.Others
     {
         bool checkDupplicate(int oVIId, int orderId);
         bool choosenDriver(int oVIId, int orderId);
+        bool deleteAll(int orderId);
         WishedAcceptedDriverList read(int oVIId, int orderId);
+        List<WishedAcceptedDriverList> getAll(int orderId);
+        List<WishedAcceptedDriverList> getAll(int orderId,string sublect);
     }
 }

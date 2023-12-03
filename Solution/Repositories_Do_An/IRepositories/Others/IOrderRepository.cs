@@ -12,6 +12,8 @@ namespace Repositories_Do_An.IRepositories
     public interface IOrderRepository : IRepository<Order>
     {
         List<Order> getAll(string DisGo, string ProGo, string DisCome,string ProCome);
+        List<Order> getAll(int customerId);
+        List<Order> getAll(int customerId, string subject);
         EntityEntry<Order> create_2(Order entity);
     }
 }

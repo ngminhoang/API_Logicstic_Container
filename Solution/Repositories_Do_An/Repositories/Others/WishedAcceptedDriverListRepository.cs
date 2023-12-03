@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories_Do_An.Repositories.Others
 {
@@ -112,6 +113,40 @@ namespace Repositories_Do_An.Repositories.Others
             }
         }
 
+
+        public List<WishedAcceptedDriverList> getAll(int orderId)
+        {
+            try
+            {
+                List<WishedAcceptedDriverList> rs = _dbcontext.WishedAcceptedDriverLists.Include(x=> x.ownedVehicleInfor.driver).Include(x=> x.ownedVehicleInfor.vehicle).Where(x=> x.OrderId == orderId).ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<WishedAcceptedDriverList> getAll(int driverId,string subject)
+        {
+            try
+            {
+                if (subject == "driverId")
+                {
+                    List<WishedAcceptedDriverList> rs = _dbcontext.WishedAcceptedDriverLists
+                        .Include(x => x.ownedVehicleInfor.driver).Include(x => x.order)
+                        .Include(x => x.ownedVehicleInfor.vehicle).Where(x => x.ownedVehicleInfor.driver.UserId == driverId && x.ownedVehicleInfor.Status!=false).ToList();
+                    return rs;
+                }
+                else return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public WishedAcceptedDriverList read(int id)
         {
             try
@@ -161,14 +196,14 @@ namespace Repositories_Do_An.Repositories.Others
             }
         }
 
-        bool IWishedAcceptedDriverListRepository.choosenDriver(int oVIId, int orderId)
+        public bool choosenDriver(int oVIId, int orderId)
         {
             try
             {
                 List<WishedAcceptedDriverList> list = _dbcontext.WishedAcceptedDriverLists.Where(e => e.OrderId == orderId && e.OVIId != oVIId).ToList();
                 foreach (WishedAcceptedDriverList e in list)
                 {
-                    delete(e.WADLId);
+                    delete(e);
                 }
                 return true;
             }
@@ -177,5 +212,23 @@ namespace Repositories_Do_An.Repositories.Others
                 throw ex;
             }
         }
+
+        public bool deleteAll(int orderId)
+        {
+            try
+            {
+                List<WishedAcceptedDriverList> list = _dbcontext.WishedAcceptedDriverLists.Where(e => e.OrderId == orderId).ToList();
+                foreach (WishedAcceptedDriverList e in list)
+                {
+                    delete(e);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
     }
 }

@@ -1,6 +1,7 @@
 ﻿using API_Do_An.APIModels;
 using Microsoft.AspNetCore.Mvc;
 using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.DTOModels;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
 
@@ -19,12 +20,86 @@ namespace API_Do_An.Controllers
         }
 
 
+        [HttpGet("GetOnWorkedOrder/{driverId}")]
+        public OnWorkedOrderModel getOnWorkedOrder(int driverId)
+        {
+            try
+            {
+                return driverSV.getOnWorkedOrder(driverId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("TurnToBeWorked")]
+
+        public IActionResult turnToBeWorked(int driverId)
+        {
+            try
+            {
+                bool rs = driverSV.changeToWorked(driverId);
+                if (rs)
+                {
+                    return Ok(rs);
+                }
+                else
+                {
+                    return BadRequest(rs);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("TurnToNotBeWorked")]
+
+        public IActionResult turnToNotBeWorked(int driverId)
+        {
+            try
+            {
+                bool rs = driverSV.changeToNotWorked(driverId);
+                if (rs)
+                {
+                    return Ok(rs);
+                }
+                else
+                {
+                    return BadRequest(rs);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         [HttpGet("DriverInfor")]
         public IActionResult getDriverInfor(int driverId)
         {
             try
             {
                 return Ok(driverSV.readDriver(driverId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpGet("x")]
+        public IActionResult x(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.x());
             }
             catch (Exception ex)
             {
@@ -71,6 +146,7 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
         [HttpPut("UpdateVehicle")]
 
         public IActionResult updateVehicle(int oVIId, OwnedVehicleInforModel entity)
@@ -118,7 +194,7 @@ namespace API_Do_An.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
 
@@ -206,6 +282,21 @@ namespace API_Do_An.Controllers
             }
         }
 
+
+        [HttpGet("GetAllAppliedOrders/{driverId}")]
+        public IActionResult getAllAppliedOrders(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.getAllAppliedOrders(driverId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         [HttpPost("ContractedByDriverOrder/{orderId}")]
         public IActionResult contractedByDriverOrder(int orderId)
         {
@@ -233,7 +324,7 @@ namespace API_Do_An.Controllers
         }
 
 
-        [HttpPost("AccidentlOrder/{orderId}")]
+        [HttpPost("AccidentOrder/{orderId}")]
         public IActionResult accidentlOrder(int orderId)
         {
             try
@@ -315,6 +406,70 @@ namespace API_Do_An.Controllers
                 return BadRequest(false);
             }
         }
+
+
+        [HttpDelete("DeleteAcceptedOrder/{orderId}")]
+        public IActionResult DeleteAcceptedOrder(int orderId, int oVIId)
+        {
+            try
+            {
+                if (driverSV.deleteAcceptedOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpDelete("DeleteContractedByCustomerOrder/{orderId}")]
+        public IActionResult DeleteContractedByCustomerOrder(int orderId)
+        {
+            try
+            {
+                if (driverSV.deleteContractedByCustomerOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        [HttpPost("PayedOrder/{orderId}")]
+        public IActionResult payedOrder(int orderId)
+        {
+            try
+            {
+                if (driverSV.payedOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpGet("Message")]
         public IActionResult getMessageList(int driverId)

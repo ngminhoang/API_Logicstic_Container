@@ -43,6 +43,93 @@ namespace Services_Do_An.Services
             this.messageDB = messageDB;
         }
 
+
+        public OnWorkedOrderModel getOnWorkedOrder(int driverId)
+        {
+            var order = new Order(); 
+            try
+            {
+                List<Order> ls = orderDB.getAll(driverId,"driverId");
+                foreach (var each in ls)
+                {
+                    if (orderStatusDB.checkInitOrder(each.OrderId) == true
+                        && orderStatusDB.checkContractedByDriverOrder(each.OrderId) == true
+                        && orderStatusDB.checkEndOrder(each.OrderId) == false)
+                    {
+                        order = each;
+                        break;
+                    }
+                }
+
+                if (order == null)
+                {
+                    return null;}
+                else
+                {
+                    List<OrderStatus> status = orderStatusDB.getAll(order.OrderId);
+                    var index = status.Count - 1;
+                    int newStatus = (int)status[index].StatusId;
+                    return new OnWorkedOrderModel() { order = order, status = status, newStatus = newStatus };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<AppliedOrderModel> getAllAppliedOrders(int driverId)
+        {
+            try
+            {
+                List<AppliedOrderModel> rs = new List<AppliedOrderModel>();
+                List<WishedAcceptedDriverList> listWAL = wishedAcceptedDriverListDB.getAll(driverId,"driverId"); 
+                foreach (var each in listWAL)
+                {
+                    bool check;
+                    if (each.OVIId == each.order.OVIId)
+                        check = true;
+                    else
+                    {
+                        check = false;
+                    }
+                    if (orderStatusDB.checkContractedByDriverOrder((int)each.OrderId)==false)
+                    rs.Add(  new AppliedOrderModel(){order = each.order , oVI = each.ownedVehicleInfor, isChoosen = check });
+                }
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool changeToNotWorked(int driverId)
+        {
+            try
+            {
+                Driver driver = driverDB.read(driverId);
+                driver.IsWorked = false;
+                return driverDB.update(driver);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool changeToWorked(int driverId)
+        {
+            try
+            {
+                Driver driver = driverDB.read(driverId);
+                driver.IsWorked = true;
+                return driverDB.update(driver);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public bool updateMessage(int messId, MessageModel mess)
         {
             try
@@ -233,6 +320,71 @@ namespace Services_Do_An.Services
             }
         }
 
+        public bool deleteContractedByCustomerOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    ;
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == true &&
+                        orderStatusDB.checkContractedByCustomerOrder(orderId) == true)
+                    {
+                        orderStatusDB.delete(4, orderId);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool deleteAcceptedOrder(int orderId)
+        {
+            try
+            {
+
+                try
+                {
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == true &&
+                        orderStatusDB.checkOnListOrder(orderId) == true)
+                    {
+                        orderStatusDB.delete(2, orderId);
+                        var order = orderDB.read(orderId);
+                        order.OVIId = null;
+                        orderDB.update(order);
+                        wishedAcceptedDriverListDB.deleteAll(orderId);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public bool contractedByDriverOrder(int orderId)
         {
@@ -251,6 +403,19 @@ namespace Services_Do_An.Services
                             orderDB.update(order);
                             int cusId = (int)order.CustomerId;
                             int driverId = (int)ownedVehicleInforRepositoryDB.read((int)order.OVIId).DriverId;
+                            List<Order> ls = orderDB.getAll(driverId, "driverId");
+                            foreach (var each in ls)
+                            {
+                                if (orderStatusDB.checkContractedByDriverOrder(each.OrderId) == false)
+                                {
+                                    
+                                    try { each.OVIId = null; orderDB.update(each); } catch { }
+                                    try { orderStatusDB.delete(2, each.OrderId); } catch { }
+                                    try { orderStatusDB.delete(4, each.OrderId); } catch { }
+                                }
+                            }
+
+
                             try
                             {
                                 //them contract
@@ -380,7 +545,7 @@ namespace Services_Do_An.Services
                 {
                     if (orderStatusDB.checkBeforeStatus(orderId) == 9 && orderStatusDB.checkTakenOrder(orderId) == false)
                     {
-                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 10, Status = true });
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 10, Status = true });
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 14, Status = true });
                         
                         //cap nhat lai gia tien
@@ -436,6 +601,51 @@ namespace Services_Do_An.Services
             }
         }
 
+
+
+        public bool payedOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    if (orderStatusDB.checkBeforeStatus(orderId) == 6 && (orderStatusDB.checkTakenOrder(orderId) == false /* || orderStatusDB.checkAlteredOrder(orderId) == true*/))
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                        //cap nhat lai gia tien
+                        //tao mot order khac
+                        return true;
+                    }
+                    else if (orderStatusDB.checkBeforeStatus(orderId) == 14 && orderStatusDB.checkPayedOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
+                        // tính toán tìm ra kho của bussiness nào gần nhất địa điểm của khác hàng => trả ra id kho warehouseId => trả ra bussinessId
+                        //Order order = orderDB.read(orderId);
+                        //order.BussinessId = bussinessId;
+                        /* tạo contract với bussiness: *///contractRepositoryDB.createBussinessContract(order.CustomerId, bussinessId, orderId);
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 15, Status = true, WarehouseId = warehouseId  });
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 15, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         public Object getOrder(int orderId) 
         {
@@ -648,22 +858,15 @@ namespace Services_Do_An.Services
             {
                 OwnedVehicleInfor OVI = ownedVehicleInforRepositoryDB.read(OVIId);
                 double cargo = (double)OVI.Cargo;
+                
                 List<OrderModel> rs = new List<OrderModel>();
                 List<Order> list = orderDB.getAll(DisGo,ProGo,DisCome,ProCome);
-                OrderModel order1;
-                //foreach (var order in list)
-                //{
-                //    rs.Add(mapper.Map<OrderModel>(order));
-                //}
                 foreach (var order in list)
                 {
-
-                   if (orderStatusDB.checkInitOrder(order.OrderId) == true && orderStatusDB.checkAcceptedOrder(order.OrderId) == false && orderStatusDB.checkOnListOrder(order.OrderId) == true && cargo >= orderItemDB.sumMass(order.OrderId))
+                    
+                    if (orderStatusDB.checkInitOrder(order.OrderId) == true && orderStatusDB.checkAcceptedOrder(order.OrderId) == false && orderStatusDB.checkOnListOrder(order.OrderId) == true && cargo >= order.TotalMass)
                     {
-                        order1 = mapper.Map<OrderModel>(order);
-                        //order1.DriverId = order.ownedVehicleInfor.DriverId;
-                        //order1.BussinessName = order.bussiness.BusinessName;
-                        rs.Add(order1);
+                        rs.Add(mapper.Map<OrderModel>(order));
                     }
                 }
                 return rs;
@@ -674,7 +877,7 @@ namespace Services_Do_An.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
 
@@ -694,6 +897,13 @@ namespace Services_Do_An.Services
             {
                 throw ex;
             }
+        }
+
+
+        public List<Order> x()
+        {
+            return orderDB.getAll(1, "driverId");
+
         }
     }
 }

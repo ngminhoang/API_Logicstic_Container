@@ -28,5 +28,7 @@ namespace Repositories_Do_An.IRepositories
         bool checkProblemOrder(int orderId);
         bool checkAlteringOrder(int orderId);
         int checkBeforeStatus(int orderId);
+        bool delete(int status, int orderId);
+        OrderStatus getRecentStatus(int orderId);
     }
 }
