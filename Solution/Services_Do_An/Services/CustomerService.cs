@@ -602,7 +602,7 @@ namespace Services_Do_An.Services
                 {
                     if (orderStatusDB.checkRateDriver((int)rate.OrderId)==false && orderStatusDB.checkBeforeStatus((int)rate.OrderId)==12 && rate.DriverId == ownedVehicleInforRepositoryDB.read((int)orderDB.read((int)rate.OrderId).OVIId).DriverId)
                     {
-
+                        rate.CommentDate = DateTime.UtcNow;
                         driverRateDB.create(rate);
                         orderStatusDB.create(new OrderStatus { OrderId = rate.OrderId, Date = DateTime.UtcNow, StatusId = 129, Status = true });
                         return true;

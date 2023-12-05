@@ -10,6 +10,6 @@ namespace Repositories_Do_An.IRepositories
 {
     public interface IDriverRateRepository : IRepository<DriverRate>
     {
-        
+        List<DriverRate> getAll(int driverId);
     }
 }

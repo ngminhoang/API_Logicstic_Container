@@ -10,5 +10,7 @@ namespace Services_Do_An.IServices
     public interface IPublicService: IServices<Object>
     {
         bool createContaction(Contaction contaction);
+        CustomerModel getCustomer(int customerId);
+        Comment_DriverModel getDriver(int driverId);
     }
 }
