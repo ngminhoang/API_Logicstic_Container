@@ -55,7 +55,18 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
-
+        [HttpGet("StaffInfor")]
+        public IActionResult getStaffInfor(int staffId)
+        {
+            try
+            {
+                return Ok(publicSV.getStaff(staffId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

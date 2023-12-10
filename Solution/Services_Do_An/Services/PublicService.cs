@@ -21,12 +21,14 @@ namespace Services_Do_An.Services
         private readonly IDriverRepository driverDB;
         private readonly IMapper mapper;
         private readonly IDriverRateRepository driverRateDB;
-        public PublicService(IDriverRateRepository driverRateDB, IDriverRepository driverDB,ICustomerRepository customerDB,IMapper mapper, IContactionRepository contactionDB) {
+        private readonly IStaffRepository staffDB;
+        public PublicService(IStaffRepository staffDB, IDriverRateRepository driverRateDB, IDriverRepository driverDB,ICustomerRepository customerDB,IMapper mapper, IContactionRepository contactionDB) {
             this.customerDB = customerDB;
             this.contactionDB = contactionDB;
             this.mapper = mapper;
             this.driverDB = driverDB;
             this.driverRateDB = driverRateDB;
+            this.staffDB = staffDB;
         }
         public bool create(Object e) => false;
         public bool delete(Object e) => false;
@@ -42,6 +44,21 @@ namespace Services_Do_An.Services
                 Customer customer = customerDB.read(customerId);
                 CustomerModel customerModel = mapper.Map<CustomerModel>(customer);
                 return customerModel;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public StaffModel getStaff(int staffId)
+        {
+            try
+            {
+                Staff staff = staffDB.read(staffId);
+                StaffModel staffModel = mapper.Map<StaffModel>(staff);
+                return staffModel;
             }
             catch (Exception ex)
             {

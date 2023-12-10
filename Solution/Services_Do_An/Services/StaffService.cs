@@ -104,6 +104,8 @@ namespace Services_Do_An.Services
             {
                 Staff staff = mapper.Map<Staff>(entity);
                 staff.UserId = staffId;
+                string pass_md5 = MD5Functions.GenerateMD5(entity.Password);
+                staff.Password = pass_md5;
                 return staffDB.update(staff);
             }
             catch (Exception ex)
@@ -165,6 +167,50 @@ namespace Services_Do_An.Services
 
                     return rs;
                 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<MessageModel> getDriverMessageList(int staffId)
+        {
+            try
+            {
+
+
+                List<Message> ls = messageDB.getAll(staffId);
+                List<MessageModel> rs = new List<MessageModel>();
+                foreach (Message mess in ls)
+                {
+                    if (mess.RoleId == 3)
+                    rs.Add(mapper.Map<MessageModel>(mess));
+                }
+
+                return rs;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<MessageModel> getCustomerMessageList(int staffId)
+        {
+            try
+            {
+
+
+                List<Message> ls = messageDB.getAll(staffId);
+                List<MessageModel> rs = new List<MessageModel>();
+                foreach (Message mess in ls)
+                {
+                    if (mess.RoleId == 4)
+                        rs.Add(mapper.Map<MessageModel>(mess));
+                }
+
+                return rs;
+
             }
             catch (Exception ex)
             {

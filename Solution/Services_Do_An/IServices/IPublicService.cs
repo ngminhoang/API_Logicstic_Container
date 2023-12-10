@@ -13,5 +13,6 @@ namespace Services_Do_An.IServices
         bool createContaction(ContactionModel contaction);
         CustomerModel getCustomer(int customerId);
         Comment_DriverModel getDriver(int driverId);
+        StaffModel getStaff(int staffId);
     }
 }

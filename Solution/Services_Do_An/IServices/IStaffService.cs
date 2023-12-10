@@ -14,6 +14,8 @@ namespace Services_Do_An.IServices
         bool check(string mail);
         bool updateMessage(int messId, string answer);
         List<MessageModel> getMessageList(int staffId);
+        List<MessageModel> getDriverMessageList(int staffId);
+        List<MessageModel> getCustomerMessageList(int staffId);
         List<ContactionModel> getContactionList(int staffId);
         bool update(int staffId, StaffModel entity);
         bool updateContaction(int contactionId);

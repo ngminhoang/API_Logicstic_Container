@@ -76,7 +76,7 @@ namespace Repositories_Do_An.Repositories
             try
             {
                 List<Message> rs = _dbcontext.Messages
-                    .Where(x => x.StaffId==staffId && (x.Answer == "" || x.Answer == null))
+                    .Where(x => x.StaffId==staffId )//&& (x.Answer == "" || x.Answer == null))
                     .OrderByDescending(x => x.Date )
                     .ToList();
                 return rs;

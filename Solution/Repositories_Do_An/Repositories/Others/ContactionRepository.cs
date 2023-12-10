@@ -74,7 +74,7 @@ namespace Repositories_Do_An.Repositories.Others
         {
             try
             {
-                List<Contaction> rs = _dbcontext.Contactions.Where(x=> x.StaffId==staffId && x.CheckRead!= true).ToList();
+                List<Contaction> rs = _dbcontext.Contactions.Where(x=> x.StaffId==staffId).OrderBy(x => x.CheckRead).ToList();
                 return rs;
             }
             catch (Exception ex)

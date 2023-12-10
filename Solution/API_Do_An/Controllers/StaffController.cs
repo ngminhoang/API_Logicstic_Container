@@ -30,9 +30,35 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpGet("DriverMessage")]
+        public IActionResult getDriverMessageList(int staffId)
+        {
+            try
+            {
+                return Ok(staffSV.getDriverMessageList(staffId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-        [HttpPut("Message/{messId}")]
-        public IActionResult updateMessage(int messId, [FromBody] string answer)
+        [HttpGet("CustomerMessage")]
+        public IActionResult getCustomerMessageList(int staffId)
+        {
+            try
+            {
+                return Ok(staffSV.getCustomerMessageList(staffId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("Message/{messId}/{answer}")]
+        public IActionResult updateMessage(int messId, string answer)
         {
             try
             {
