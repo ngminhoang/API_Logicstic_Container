@@ -312,6 +312,46 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+        [HttpGet("Message")]
+        public IActionResult getMessageList(int customerId)
+        {
+            try
+            {
+                return Ok(customerSV.getMessageList(customerId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost("Message")]
+        public IActionResult createMessage([FromBody] MessageModel mes)
+        {
+            try
+            {
+                return Ok(customerSV.createMessage(mes));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("Message/{messId}")]
+        public IActionResult updateMessage(int messId)
+        {
+            try
+            {
+
+                return Ok(customerSV.updateMessage(messId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
     }

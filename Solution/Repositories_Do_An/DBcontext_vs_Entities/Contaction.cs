@@ -16,5 +16,10 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? Comntent { get; set; }
+        [ForeignKey("Staff")]
+        public int? StaffId { get; set; }
+        public Staff staff { get; set; }
+        public bool? Status { get; set; }
+        public bool? CheckRead { get; set; }
     }
 }

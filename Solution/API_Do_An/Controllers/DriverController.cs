@@ -483,12 +483,28 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
-        [HttpPut("Message/{messId}")]
-        public IActionResult updateMessage(int messId,[FromBody] MessageModel message)
+
+        [HttpPost("Message")]
+        public IActionResult createMessage([FromBody] MessageModel mes)
         {
             try
             {
-                return Ok(driverSV.updateMessage(messId,message));
+                return Ok(driverSV.createMessage(mes));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("Message/{messId}")]
+        public IActionResult updateMessage(int messId)
+        {
+            try
+            {
+
+                return Ok(driverSV.updateMessage(messId));
             }
             catch (Exception ex)
             {

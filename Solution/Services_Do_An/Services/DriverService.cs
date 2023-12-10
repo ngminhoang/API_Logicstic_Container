@@ -130,12 +130,32 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
-        public bool updateMessage(int messId, MessageModel mess)
+
+        public bool createMessage(MessageModel mess)
         {
             try
             {
                 Message mes = mapper.Map<Message>(mess);
+                mes.RoleId = 3;
+                Random random = new Random();
+                mes.StaffId = random.Next(1, 4);
+                mes.Date = DateTime.UtcNow;
+                mes.CheckRead = false;
+                return messageDB.create(mes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool updateMessage(int messId)
+        {
+            try
+            {
+
+                Message mes = messageDB.read(messId);
                 mes.MessId = messId;
+                mes.CheckRead = true;
                 return messageDB.update(mes);
             }
             catch (Exception e)

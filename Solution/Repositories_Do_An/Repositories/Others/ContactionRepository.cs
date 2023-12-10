@@ -70,6 +70,19 @@ namespace Repositories_Do_An.Repositories.Others
             }
         }
 
+        public List<Contaction> getAll(int staffId)
+        {
+            try
+            {
+                List<Contaction> rs = _dbcontext.Contactions.Where(x=> x.StaffId==staffId && x.CheckRead!= true).ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public Contaction read(int id)
         {
             try

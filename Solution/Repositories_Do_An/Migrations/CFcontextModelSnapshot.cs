@@ -180,6 +180,9 @@ namespace Repositories_Do_An.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ContactionId"));
 
+                    b.Property<bool?>("CheckRead")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Comntent")
                         .HasColumnType("text");
 
@@ -189,7 +192,15 @@ namespace Repositories_Do_An.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("text");
 
+                    b.Property<int?>("StaffId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("boolean");
+
                     b.HasKey("ContactionId");
+
+                    b.HasIndex("StaffId");
 
                     b.ToTable("Contaction");
                 });
@@ -902,6 +913,15 @@ namespace Repositories_Do_An.Migrations
                         .HasForeignKey("RoleId");
 
                     b.Navigation("role");
+                });
+
+            modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Contaction", b =>
+                {
+                    b.HasOne("Repositories_Do_An.DBcontext_vs_Entities.Staff", "staff")
+                        .WithMany()
+                        .HasForeignKey("StaffId");
+
+                    b.Navigation("staff");
                 });
 
             modelBuilder.Entity("Repositories_Do_An.DBcontext_vs_Entities.Customer", b =>

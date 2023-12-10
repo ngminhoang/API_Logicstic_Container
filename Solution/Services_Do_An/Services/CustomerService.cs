@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Services_Do_An.DTOModels;
 using XAct;
+using XAct.Messages;
+using Message = Repositories_Do_An.DBcontext_vs_Entities.Message;
 
 namespace Services_Do_An.Services
 {
@@ -29,7 +31,8 @@ namespace Services_Do_An.Services
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
         private readonly IDriverRateRepository driverRateDB;
-        public CustomerService(IDriverRepository driverDB, IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
+        private readonly IMessageRepository messageDB;
+        public CustomerService(IMessageRepository messageDB, IDriverRepository driverDB, IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
         {
             this.mapper = _mapper;
             this.customerDB = _customer;
@@ -40,6 +43,7 @@ namespace Services_Do_An.Services
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
             this.driverRateDB = driverRateDB;
+            this.messageDB = messageDB;
         }
 
 
@@ -152,7 +156,60 @@ namespace Services_Do_An.Services
         {
             return true;
         }
-    
+
+
+        public bool createMessage(MessageModel mess)
+        {
+            try
+            {
+                Repositories_Do_An.DBcontext_vs_Entities.Message mes = mapper.Map<Repositories_Do_An.DBcontext_vs_Entities.Message>(mess);
+                mes.RoleId = 4;
+                Random random = new Random();
+                mes.StaffId = random.Next(1, 4);
+                mes.Date = DateTime.UtcNow;
+                mes.CheckRead = false;
+                return messageDB.create(mes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool updateMessage(int messId)
+        {
+            try
+            {
+
+                Message mes = messageDB.read(messId);
+                mes.MessId = messId;
+                mes.CheckRead = true;
+                return messageDB.update(mes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<MessageModel> getMessageList(int customerId)
+        {
+            try
+            {
+                List<Message> ls = messageDB.getAll(customerId, 4);
+                List<MessageModel> rs = new List<MessageModel>();
+                foreach (Message mess in ls)
+                {
+                    rs.Add(mapper.Map<MessageModel>(mess));
+                }
+
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public int checkAccount(string mail, string password, int roleId)
         {
             try

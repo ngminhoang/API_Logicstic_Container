@@ -37,7 +37,8 @@ namespace Services_Do_An.IServices
         Object getStatusList(int orderId);
         CustomerModel getCustomer(int customerId);
         List<MessageModel> getMessageList(int driverId);
-        bool updateMessage(int messId, MessageModel mess);
+        bool createMessage(MessageModel mess);
+        bool updateMessage(int messId);
         bool update(int driverId, DriverModel driver);
         bool changeToNotWorked(int driverId);
         bool changeToWorked(int driverId);

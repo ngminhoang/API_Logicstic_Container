@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Repositories_Do_An.IRepositories;
 using Repositories_Do_An.IRepositories.Users;
+using Services_Do_An.DTOModels;
 
 namespace Services_Do_An.Services
 {
@@ -72,11 +73,14 @@ namespace Services_Do_An.Services
         }
 
 
-        public bool createContaction(Contaction contaction)
+        public bool createContaction(ContactionModel contaction)
         {
             try
             {
-                return contactionDB.create(contaction);
+                var rs = mapper.Map<Contaction>(contaction);
+                Random random = new Random();
+                rs.StaffId = random.Next(1, 4);
+                return contactionDB.create(rs);
             }
             catch (Exception ex)
             {

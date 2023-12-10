@@ -29,7 +29,9 @@ namespace Services_Do_An.IServices
         List<OrderModel> getAllWaitedDeliveredOrders(int customerId);
         List<OnWorkedOrdersModel> getAllOnWorkedOrders(int customerId);
         List<OnWorkedOrdersModel> getAllHistory(int customerId);
-
+        List<MessageModel> getMessageList(int customerId);
+        bool createMessage(MessageModel mess);
+        bool updateMessage(int messId);
         /*bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.DTOModels;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
 
@@ -18,11 +19,11 @@ namespace API_Do_An.Controllers
         }
 
         [HttpPost("CreateContaction")]
-        public IActionResult createContaction([FromBody] Contaction contaction)
+        public IActionResult createContaction([FromBody] ContactionModel contactionModel)
         {
             try
             {
-                return Ok(publicSV.createContaction(contaction));
+                return Ok(publicSV.createContaction(contactionModel));
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.DTOModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace Services_Do_An.IServices
     {
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
+        bool updateMessage(int messId, string answer);
+        List<MessageModel> getMessageList(int staffId);
+        List<ContactionModel> getContactionList(int staffId);
+        bool update(int staffId, StaffModel entity);
+        bool updateContaction(int contactionId);
 
     }
 }
