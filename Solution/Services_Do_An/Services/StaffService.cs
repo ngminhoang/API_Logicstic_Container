@@ -103,6 +103,8 @@ namespace Services_Do_An.Services
             try
             {
                 Staff staff = mapper.Map<Staff>(entity);
+                staff.DateUpdatedAccount = DateTime.UtcNow;
+                staff.AvatarImageLink = staffId.ToString() + ".png";
                 staff.UserId = staffId;
                 string pass_md5 = MD5Functions.GenerateMD5(entity.Password);
                 staff.Password = pass_md5;

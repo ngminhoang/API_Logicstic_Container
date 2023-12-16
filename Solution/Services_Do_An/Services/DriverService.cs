@@ -188,6 +188,7 @@ namespace Services_Do_An.Services
             {
                 DriverModel driver = entity;
                 driver.DateUpdatedAccount = DateTime.UtcNow;
+                driver.AvatarImageLink = driverId.ToString() + ".png";
                 driver.UserId= driverId;
                 string pass_md5 = MD5Functions.GenerateMD5(driver.Password);
                 driver.Password = pass_md5;

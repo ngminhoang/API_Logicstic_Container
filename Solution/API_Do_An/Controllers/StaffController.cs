@@ -10,11 +10,13 @@ namespace API_Do_An.Controllers
     [ApiController]
     public class StaffController : ControllerBase
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly IStaffService staffSV;
 
-        public StaffController(IStaffService staffSV)
+        public StaffController(IStaffService staffSV, IWebHostEnvironment hostingEnvironment)
         {
             this.staffSV = staffSV;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpGet("Message")]
@@ -99,7 +101,55 @@ namespace API_Do_An.Controllers
             }
         }
 
-        [HttpPut("UpdateStaff")]
+
+
+
+        [HttpPost("SaveImage")]
+        public async Task<IActionResult> SaveImage(int staffId,[FromForm] IFormFile image)
+        {
+            try
+            {
+                if (image == null || image.Length == 0)
+                {
+                    return BadRequest("Invalid image file");
+                }
+
+                // Get the path to the _assets folder next to the Controllers folder
+
+                var assetsFolderPath = Path.Combine(_hostingEnvironment.ContentRootPath, "_image", "staff");
+
+                // Create the _assets folder if it doesn't exist
+                if (!Directory.Exists(assetsFolderPath))
+                {
+                    Directory.CreateDirectory(assetsFolderPath);
+                }
+
+                // Save the image to the staff folder
+                var fileNameWithoutExtension = staffId.ToString();
+                var fileName = Path.ChangeExtension(fileNameWithoutExtension, ".png");
+                var filePath = Path.Combine(assetsFolderPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+
+      
+                    return Ok(true);
+               
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
+            }
+        }
+
+
+
+
+
+
+            [HttpPut("UpdateStaff")]
 
         public IActionResult updateStaff(int staffId, StaffModel entity)
         {

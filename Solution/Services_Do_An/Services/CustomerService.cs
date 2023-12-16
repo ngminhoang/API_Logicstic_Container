@@ -141,6 +141,7 @@ namespace Services_Do_An.Services
             {
                 CustomerModel customer = entity;
                 customer.DateUpdatedAccount = DateTime.UtcNow;
+                customer.AvatarImageLink = customerId.ToString() + ".png";
                 customer.UserId = customerId;
                 string pass_md5 = MD5Functions.GenerateMD5(customer.Password);
                 customer.Password = pass_md5;

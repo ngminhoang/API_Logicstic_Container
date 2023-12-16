@@ -93,10 +93,10 @@ namespace Repositories_Do_An.Repositories
             {
                 List<Message> rs = _dbcontext.Messages
                     .Where(x => x.UserId == userId && x.RoleId == roleId)
-                    .OrderByDescending(x => x.Date)
+                    .OrderBy(x => x.Date)
                     .OrderByDescending(x => x.Question)
                     .OrderBy(x => x.CheckRead)
-                    .ToList(); 
+                    .ToList();
                 return rs;
             }
             catch (Exception ex)

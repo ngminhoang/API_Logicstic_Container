@@ -171,8 +171,8 @@ if (app.Environment.IsDevelopment())
 // Serve static files
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "_assets")),
-    RequestPath = "/assets",
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "_image")),
+    RequestPath = "/image",
     ServeUnknownFileTypes = true
 });
 
