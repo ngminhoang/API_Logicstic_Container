@@ -14,11 +14,57 @@ namespace API_Do_An.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService customerSV;
-        public CustomerController(ICustomerService customerSV)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public CustomerController(IWebHostEnvironment hostingEnvironment,ICustomerService customerSV)
         {
             this.customerSV = customerSV;
+            _hostingEnvironment = hostingEnvironment;
         }
         // GET: api/<DriverController>
+
+
+        [HttpPost("SaveImage")]
+        public async Task<IActionResult> SaveImage(int customerId, [FromForm] IFormFile image)
+        {
+            try
+            {
+                if (image == null || image.Length == 0)
+                {
+                    return BadRequest("Invalid image file");
+                }
+
+                // Get the path to the _assets folder next to the Controllers folder
+
+                var assetsFolderPath = Path.Combine(_hostingEnvironment.ContentRootPath, "_image", "customer");
+
+                // Create the _assets folder if it doesn't exist
+                if (!Directory.Exists(assetsFolderPath))
+                {
+                    Directory.CreateDirectory(assetsFolderPath);
+                }
+
+                // Save the image to the staff folder
+                var fileNameWithoutExtension = customerId.ToString();
+                var fileName = Path.ChangeExtension(fileNameWithoutExtension, ".png");
+                var filePath = Path.Combine(assetsFolderPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+
+
+                return Ok(true);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
+            }
+        }
+
+
+
 
         [HttpPut("updateCustomer")]
         public IActionResult updateCustomer(int customerId, CustomerModel entity)

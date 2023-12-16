@@ -14,9 +14,11 @@ namespace API_Do_An.Controllers
     public class DriverController : ControllerBase
     {
         private readonly IDriverService driverSV;
-        public DriverController(IDriverService driverSV) 
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public DriverController(IWebHostEnvironment hostingEnvironment,IDriverService driverSV) 
         {
             this.driverSV = driverSV;
+            _hostingEnvironment = hostingEnvironment;
         }
 
 
@@ -106,6 +108,56 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
+
+
+
+
+        [HttpPost("SaveImage")]
+        public async Task<IActionResult> SaveImage(int driverId, [FromForm] IFormFile image)
+        {
+            try
+            {
+                if (image == null || image.Length == 0)
+                {
+                    return BadRequest("Invalid image file");
+                }
+
+                // Get the path to the _assets folder next to the Controllers folder
+
+                var assetsFolderPath = Path.Combine(_hostingEnvironment.ContentRootPath, "_image", "driver");
+
+                // Create the _assets folder if it doesn't exist
+                if (!Directory.Exists(assetsFolderPath))
+                {
+                    Directory.CreateDirectory(assetsFolderPath);
+                }
+
+                // Save the image to the staff folder
+                var fileNameWithoutExtension = driverId.ToString();
+                var fileName = Path.ChangeExtension(fileNameWithoutExtension, ".png");
+                var filePath = Path.Combine(assetsFolderPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+
+
+                return Ok(true);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
+            }
+        }
+
+
+
+
+
+
 
         [HttpPut("UpdateDriver")]
 
