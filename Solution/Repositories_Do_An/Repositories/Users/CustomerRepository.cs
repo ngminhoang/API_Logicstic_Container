@@ -81,7 +81,7 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
-        public List<Customer > getAll()
+        public List<Customer> getAll()
         {
             try
             {

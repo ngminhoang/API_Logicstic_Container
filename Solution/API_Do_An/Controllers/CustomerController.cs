@@ -65,6 +65,20 @@ namespace API_Do_An.Controllers
 
 
 
+        [HttpDelete("deleteOrder")]
+        public IActionResult deleteOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.deleteOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
+            }
+        }
+
+
 
         [HttpPut("updateCustomer")]
         public IActionResult updateCustomer(int customerId, CustomerModel entity)
@@ -392,6 +406,59 @@ namespace API_Do_An.Controllers
             {
 
                 return Ok(customerSV.updateMessage(messId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("OrdersList/{orderId}")]
+        public IActionResult GetOrder(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.getOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("OrdersList/{orderId}/{oVIId}")]
+        public IActionResult GetOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.getOrder(oVIId, orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpGet("OrdersList/{orderId}/Status")]
+        public IActionResult GetOrderStatusList(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.getStatusList(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpGet("OrdersList/{orderId}/Items")]
+        public IActionResult GetOrderItemList(int orderId)
+        {
+            try
+            {
+                return Ok(customerSV.getItemList(orderId));
             }
             catch (Exception ex)
             {

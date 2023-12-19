@@ -15,5 +15,6 @@ namespace Repositories_Do_An.IRepositories
         List<Order> getAll(int customerId);
         List<Order> getAll(int customerId, string subject);
         EntityEntry<Order> create_2(Order entity);
+        bool delete(int orderId);
     }
 }

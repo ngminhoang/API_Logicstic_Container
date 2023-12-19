@@ -182,6 +182,23 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public bool checkOutDateOrder(int orderId)
+        {
+            try
+            {
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.StatusId == 139).ToList();
+                if (rs.Count == 0)
+                {
+                    return false;
+                }
+                else { return true; }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool checkOnListOrder(int orderId)
         {
             try

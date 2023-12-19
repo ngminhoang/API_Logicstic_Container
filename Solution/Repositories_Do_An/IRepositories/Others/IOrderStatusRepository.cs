@@ -12,6 +12,7 @@ namespace Repositories_Do_An.IRepositories
     {
         List<OrderStatus> getAll(int orderId);
         bool checkInitOrder(int id);
+        bool checkOutDateOrder(int orderId);
         bool checkOnListOrder(int orderId);
         bool checkAcceptedOrder(int id);
         bool checkContractedByDriverOrder(int orderId);

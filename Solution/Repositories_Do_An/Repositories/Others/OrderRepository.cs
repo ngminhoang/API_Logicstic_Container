@@ -82,6 +82,31 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public bool delete(int orderId)
+        {
+            try
+            {
+                var order = _dbcontext.Orders.FirstOrDefault(x=>x.OrderId == orderId);
+                order.Status = false;
+                
+                try
+                {
+                    _dbcontext.Orders.Update(order);
+                    _dbcontext.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public List<Order> getAll()
         {
             try
@@ -101,7 +126,7 @@ namespace Repositories_Do_An.Repositories
             try
             {
                     List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x=>x.customer)
-                        .Where(x => x.ownedVehicleInfor.DriverId == driverId).ToList();
+                        .Where(x => x.ownedVehicleInfor.DriverId == driverId && x.Status==true).ToList();
                     return rs;
                 
             }
@@ -115,7 +140,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.ownedVehicleInfor.vehicle).Include(x => x.customer).Where(x=> x.CustomerId == customerId).ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.ownedVehicleInfor.vehicle).Include(x => x.customer).Where(x=> x.CustomerId == customerId && x.Status == true).ToList();
                 return rs;
             }
             catch (Exception ex)
@@ -128,7 +153,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Where(x=>x.DistrictCome==DisCome && x.ProvinceCome==ProCome && x.DistrictGo==DisGo && x.ProvinceGo==ProGo).ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Where(x=>x.DistrictCome==DisCome && x.ProvinceCome==ProCome && x.DistrictGo==DisGo && x.ProvinceGo== ProGo && x.Status == true).ToList();
                 return rs;
             }
             catch (Exception ex)

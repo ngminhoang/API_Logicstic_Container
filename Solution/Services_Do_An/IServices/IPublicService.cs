@@ -14,5 +14,6 @@ namespace Services_Do_An.IServices
         CustomerModel getCustomer(int customerId);
         Comment_DriverModel getDriver(int driverId);
         StaffModel getStaff(int staffId);
+        bool checkAvalbleOrder(int orderId);
     }
 }

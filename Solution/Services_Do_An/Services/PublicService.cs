@@ -22,19 +22,56 @@ namespace Services_Do_An.Services
         private readonly IMapper mapper;
         private readonly IDriverRateRepository driverRateDB;
         private readonly IStaffRepository staffDB;
-        public PublicService(IStaffRepository staffDB, IDriverRateRepository driverRateDB, IDriverRepository driverDB,ICustomerRepository customerDB,IMapper mapper, IContactionRepository contactionDB) {
+        private readonly IOrderRepository orderDB;
+        private readonly IOrderStatusRepository orderStatusDB;
+        private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
+        public PublicService(IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderStatusRepository orderStatusDB, IOrderRepository orderDB, IStaffRepository staffDB, IDriverRateRepository driverRateDB, IDriverRepository driverDB,ICustomerRepository customerDB,IMapper mapper, IContactionRepository contactionDB) {
             this.customerDB = customerDB;
             this.contactionDB = contactionDB;
             this.mapper = mapper;
             this.driverDB = driverDB;
             this.driverRateDB = driverRateDB;
             this.staffDB = staffDB;
+            this.orderDB = orderDB;
+            this.orderStatusDB = orderStatusDB;
+            this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
         }
         public bool create(Object e) => false;
         public bool delete(Object e) => false;
         public bool update(Object e) => false;
         public Object read(int id) => null;
         public Object read(string name) => null;
+
+
+        public bool checkAvalbleOrder(int orderId)
+        {
+            try
+            {
+                
+                var order = orderDB.read(orderId);
+                DateOnly utcNow = DateOnly.FromDateTime(DateTime.UtcNow.Date);
+                bool isPast = order.OrderedDate < utcNow;
+
+                if (order.Status == false)
+                {
+                    return false;
+                }
+                else if ((isPast == true) && (orderStatusDB.checkContractedByDriverOrder(orderId) == false))
+                {
+                    //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                    if(orderStatusDB.checkOutDateOrder(orderId)==false)
+                    orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 139, Status = true });
+                    wishedAcceptedDriverListDB.deleteAll(orderId);
+                    return false;
+                }
+                else { return true; }
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
 
         public CustomerModel getCustomer(int customerId)

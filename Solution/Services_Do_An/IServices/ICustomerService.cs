@@ -11,6 +11,7 @@ namespace Services_Do_An.IServices
     public interface ICustomerService : IServices<CustomerModel>
     {
         bool update(int customerId, CustomerModel entity);
+        bool deleteOrder (int orderId);
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
         int initOrder(OrderModel2 orderModel);
@@ -32,6 +33,10 @@ namespace Services_Do_An.IServices
         List<MessageModel> getMessageList(int customerId);
         bool createMessage(MessageModel mess);
         bool updateMessage(int messId);
+        Object getOrder(int orderId);
+        Object getOrder(int oVIId, int orderId);
+        List<OrderItemModel> getItemList(int orderId);
+        Object getStatusList(int orderId);
         /*bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);

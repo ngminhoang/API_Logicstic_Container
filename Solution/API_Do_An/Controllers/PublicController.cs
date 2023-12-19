@@ -68,5 +68,18 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpPut("CheckAvalbleOrder")]
+        public IActionResult checkAvalbleOrder(int orderId)
+        {
+            try
+            {
+                return Ok(publicSV.checkAvalbleOrder(orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }
