@@ -16,6 +16,19 @@ namespace API_Do_An.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
+        [HttpGet("counting")]
+        public IActionResult counting()
+        {
+            try
+            {
+                return Ok(adminSV.counting());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpPut("customer/password/{customerId}")]
         public IActionResult changeCustomerPassword(int customerId, [FromBody] Password pass)

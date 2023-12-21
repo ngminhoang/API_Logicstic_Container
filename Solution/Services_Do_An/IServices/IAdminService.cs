@@ -23,5 +23,6 @@ namespace Services_Do_An.IServices
         bool changeCustomerPassword(int customerId, string pass);
         bool changeStaffPassword(int staffId, string pass);
         bool changeBusinessPassword(int businessId, string pass);
+        Object counting();
     }
 }

@@ -132,8 +132,16 @@ namespace Services_Do_An.Services
             try
             {
                 var rs = mapper.Map<Contaction>(contaction);
+                List<int> mang = new List<int>();
+                List<Staff> staff = staffDB.getAll();
+                foreach(var each in staff)
+                {
+                    if(each.Status==true)
+                        mang.Add(each.UserId);
+                }
                 Random random = new Random();
-                rs.StaffId = random.Next(1, 4);
+                int giaTriNgauNhien = mang[random.Next(mang.Count)];
+                rs.StaffId = random.Next(1, giaTriNgauNhien);
                 return contactionDB.create(rs);
             }
             catch (Exception ex)

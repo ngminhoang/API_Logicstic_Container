@@ -30,8 +30,9 @@ namespace Services_Do_An.Services
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
         private readonly ICustomerRepository customerDB;
         private readonly IMessageRepository messageDB;
+        private readonly IStaffRepository staffDB;
 
-        public DriverService(IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
+        public DriverService(IStaffRepository staffDB, IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
@@ -42,6 +43,7 @@ namespace Services_Do_An.Services
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
             this.customerDB = customerDB;
             this.messageDB = messageDB;
+            this.staffDB = staffDB;
         }
 
 
@@ -150,8 +152,16 @@ namespace Services_Do_An.Services
             {
                 Message mes = mapper.Map<Message>(mess);
                 mes.RoleId = 3;
+                List<int> mang = new List<int>();
+                List<Staff> staff = staffDB.getAll();
+                foreach(var each in staff)
+                {
+                    if(each.Status==true)
+                        mang.Add(each.UserId);
+                }
                 Random random = new Random();
-                mes.StaffId = random.Next(1, 4);
+                int giaTriNgauNhien = mang[random.Next(mang.Count)];
+                mes.StaffId = random.Next(1, giaTriNgauNhien);
                 mes.Date = DateTime.UtcNow;
                 mes.CheckRead = false;
                 return messageDB.create(mes);

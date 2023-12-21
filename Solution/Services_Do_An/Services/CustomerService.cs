@@ -32,7 +32,8 @@ namespace Services_Do_An.Services
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
         private readonly IDriverRateRepository driverRateDB;
         private readonly IMessageRepository messageDB;
-        public CustomerService(IMessageRepository messageDB, IDriverRepository driverDB, IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
+        private readonly IStaffRepository staffDB;
+        public CustomerService(IStaffRepository staffDB, IMessageRepository messageDB, IDriverRepository driverDB, IDriverRateRepository driverRateDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB, IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IOrderItemRepository _orderItem, IOrderRepository _order, IMapper _mapper, ICustomerRepository _customer, IOrderStatusRepository _orderStatus)
         {
             this.mapper = _mapper;
             this.customerDB = _customer;
@@ -44,6 +45,7 @@ namespace Services_Do_An.Services
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
             this.driverRateDB = driverRateDB;
             this.messageDB = messageDB;
+            this.staffDB = staffDB;
         }
 
 
@@ -176,8 +178,16 @@ namespace Services_Do_An.Services
             {
                 Repositories_Do_An.DBcontext_vs_Entities.Message mes = mapper.Map<Repositories_Do_An.DBcontext_vs_Entities.Message>(mess);
                 mes.RoleId = 4;
+                List<int> mang = new List<int>();
+                List<Staff> staff = staffDB.getAll();
+                foreach (var each in staff)
+                {
+                    if (each.Status == true)
+                        mang.Add(each.UserId);
+                }
                 Random random = new Random();
-                mes.StaffId = random.Next(1, 4);
+                int giaTriNgauNhien = mang[random.Next(mang.Count)];
+                mes.StaffId = random.Next(1, giaTriNgauNhien);
                 mes.Date = DateTime.UtcNow;
                 mes.CheckRead = false;
                 return messageDB.create(mes);
@@ -478,7 +488,7 @@ namespace Services_Do_An.Services
                     if (orderStatusDB.checkAcceptedOrder(orderId) == false && orderStatusDB.checkOnListOrder(orderId)==true /*&& oVIId co trong danh sach*/ )
                     {
                         orderDB.update(order);
-                        wishedAcceptedDriverListDB.choosenDriver(oVIId, orderId);
+                        //wishedAcceptedDriverListDB.choosenDriver(oVIId, orderId);
                         orderStatusDB.create(new OrderStatus { OrderId = order.OrderId, Date = DateTime.UtcNow, StatusId = 2, Status = true });
                         return true;
                     }
