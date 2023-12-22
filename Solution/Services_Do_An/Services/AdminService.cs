@@ -408,7 +408,33 @@ namespace Services_Do_An.Services
         }
         public bool update(AdminModel entity)
         {
-            return true;
+            try
+            {
+                Admin data = mapper.Map<Admin>(entity);
+                return adminDB.update(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool update(int customerId, AdminModel entity)
+        {
+            try
+            {
+                AdminModel admin = entity;
+                admin.DateUpdatedAccount = DateTime.UtcNow;
+                admin.AvatarImageLink = customerId.ToString() + ".png";
+                admin.UserId = customerId;
+                string pass_md5 = MD5Functions.GenerateMD5(admin.Password);
+                admin.Password = pass_md5;
+                Admin e = mapper.Map<Admin>(admin);
+                return adminDB.update(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public bool delete(AdminModel entity)
         {

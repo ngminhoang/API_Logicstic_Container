@@ -1,6 +1,7 @@
 ﻿using API_Do_An.APIModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories_Do_An.DBcontext_vs_Entities;
 using Services_Do_An.IServices;
 
 namespace API_Do_An.Controllers
@@ -16,6 +17,8 @@ namespace API_Do_An.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
+
+
         [HttpGet("counting")]
         public IActionResult counting()
         {
@@ -29,6 +32,31 @@ namespace API_Do_An.Controllers
             }
         }
 
+        [HttpGet("admin/{adminId}")]
+        public IActionResult update(int adminId)
+        {
+            try
+            {
+                return Ok(adminSV.read(adminId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPut("admin/{adminId}")]
+        public IActionResult update(int adminId, [FromBody] AdminModel adminModel)
+        {
+            try
+            {
+                return Ok(adminSV.update(adminId, adminModel));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         [HttpPut("customer/password/{customerId}")]
         public IActionResult changeCustomerPassword(int customerId, [FromBody] Password pass)

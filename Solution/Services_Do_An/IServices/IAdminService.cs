@@ -24,5 +24,6 @@ namespace Services_Do_An.IServices
         bool changeStaffPassword(int staffId, string pass);
         bool changeBusinessPassword(int businessId, string pass);
         Object counting();
+        bool update(int customerId, AdminModel entity);
     }
 }
