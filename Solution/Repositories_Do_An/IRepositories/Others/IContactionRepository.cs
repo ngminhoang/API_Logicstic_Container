@@ -9,5 +9,6 @@ namespace Repositories_Do_An.IRepositories.Others
 {
     public interface IContactionRepository: IRepository<Contaction>
     {
+        List<Contaction> getAll(int staffId);
     }
 }

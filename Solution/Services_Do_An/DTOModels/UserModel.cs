@@ -11,7 +11,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     
     public class UserModel
     {
-        public String? AvatarImageLink { get; set; }
+        public string? AvatarImageLink { get; set; }
         public int UserId { get; set; }
         public string? Password { get; set; }
         public string? Email { get; set; }

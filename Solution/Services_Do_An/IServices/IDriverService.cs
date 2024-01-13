@@ -14,8 +14,10 @@ namespace Services_Do_An.IServices
     {
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
-        List<OrderModel1> getAllInitializedOrders();
+        List<OrderModel> getAllInitializedOrders();
         Object getOrder(int orderId);
+        Object getOrder(int oVIId, int orderId);
+        bool payedOrder(int orderId);
         bool contractedByDriverOrder(int driverId);
         bool deliveringOrder(int driverId);
         bool deliveredOrder(int driverId);
@@ -23,16 +25,27 @@ namespace Services_Do_An.IServices
         bool accidentlOrder(int orderId);
         bool alteredOrder(int orderId);
         bool applyOrder(int OVIId, int orderId);
-        List<OrderModel1> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome);
+        bool deleteApplyOrder(int OVIId, int orderId);
+        List<OwnedVehicleInforModel> getDriverOwnedVehicle(int driverId);
+        bool checkWAL(int oVIId,int orderId);
+        List<OrderModel> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome);
         Object readDriver(int id);
         bool createVehicle(OwnedVehicleInforModel entity);
-        bool updateVehicle(OwnedVehicleInforModel entity);
+        bool updateVehicle(int oVIId, OwnedVehicleInforModel entity);
         bool deleteVehicle(int id);
         List<OrderItemModel> getItemList(int orderId);
         Object getStatusList(int orderId);
         CustomerModel getCustomer(int customerId);
         List<MessageModel> getMessageList(int driverId);
-        bool updateMessage(int messId, MessageModel mess);
-
+        bool createMessage(MessageModel mess);
+        bool updateMessage(int messId);
+        bool update(int driverId, DriverModel driver);
+        bool changeToNotWorked(int driverId);
+        bool changeToWorked(int driverId);
+        List<AppliedOrderModel> getAllAppliedOrders(int driverId);
+        bool deleteAcceptedOrder(int orderId);
+        bool deleteContractedByCustomerOrder(int orderId);
+        List<Order> x();
+        OnWorkedOrderModel getOnWorkedOrder(int driverId);
     }
 }

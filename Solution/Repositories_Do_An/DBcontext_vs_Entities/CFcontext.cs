@@ -26,16 +26,6 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
        .WithMany()
        .HasForeignKey(o => o.OVIId)
        .HasPrincipalKey(ovi => ovi.OVIId);
-            modelBuilder.Entity<Order>()
-       .HasOne(o => o.PositionCome)
-       .WithMany()
-       .HasForeignKey(o => o.PostionComeId)
-       .HasPrincipalKey(ovi => ovi.PositionId);
-            modelBuilder.Entity<Order>()
-       .HasOne(o => o.PositionGo)
-       .WithMany()
-       .HasForeignKey(o => o.PostionGoId)
-       .HasPrincipalKey(ovi => ovi.PositionId);
 
 
             // modelBuilder.Entity<Huyen>()
@@ -55,11 +45,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<OrderStatus> OrderStatuss { get; set; }
         public DbSet<Status> Statuss { get; set; }
-        public DbSet<Contract> Contracts { get; set; }
-        public DbSet<ContractType> ContractTypes { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
-        public DbSet<Notification> Notifications { get; set; }
-        public DbSet<NotifType> NotifTypes { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Counting> Countings { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }

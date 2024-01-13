@@ -71,11 +71,32 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public List<Message> getAll(int staffId)
+        {
+            try
+            {
+                List<Message> rs = _dbcontext.Messages
+                    .Where(x => x.StaffId==staffId )//&& (x.Answer == "" || x.Answer == null))
+                    .OrderByDescending(x => x.Date )
+                    .ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<Message> getAll(int userId, int roleId)
         {
             try
             {
-                List<Message> rs = _dbcontext.Messages.Where(x=> x.UserId == roleId && x.RoleId ==roleId).ToList();
+                List<Message> rs = _dbcontext.Messages
+                    .Where(x => x.UserId == userId && x.RoleId == roleId)
+                    .OrderBy(x => x.Date)
+                    .OrderByDescending(x => x.Question)
+                    .OrderBy(x => x.CheckRead)
+                    .ToList();
                 return rs;
             }
             catch (Exception ex)

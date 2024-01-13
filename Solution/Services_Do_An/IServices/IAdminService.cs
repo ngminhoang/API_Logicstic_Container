@@ -11,5 +11,18 @@ namespace Services_Do_An.IServices
     {
         int checkAccount(string mail, string password, int roleId);
         bool check(string mail);
+        List<StaffModel> getAllStaffs();
+        List<DriverModel> getAllDrivers();
+        List<CustomerModel> getAllCustomers();
+        List<BussinessModel> getAllBussinesss();
+        bool changeDriverStatus(int driverId);
+        bool changeCustomerStatus(int customerId);
+        bool changeStaffStatus(int staffId);
+        bool changeBusinessStatus(int businessId);
+        bool changeDriverPassword(int driverId, string pass);
+        bool changeCustomerPassword(int customerId, string pass);
+        bool changeStaffPassword(int staffId, string pass);
+        bool changeBusinessPassword(int businessId, string pass);
+        Object counting();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Repositories_Do_An.DBcontext_vs_Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,8 @@ namespace Services_Do_An.DTOModels
         public string? FullName { get; set; }
         public string? Email { get; set; }
         public string? Comntent { get; set; }
+        public int? StaffId { get; set; }
+        public bool? Status { get; set; }
+        public bool? CheckRead { get; set; }
     }
 }

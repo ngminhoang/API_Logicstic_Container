@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Services_Do_An\Services_Do_An.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="_assets\" />
+  </ItemGroup>
+
 </Project>

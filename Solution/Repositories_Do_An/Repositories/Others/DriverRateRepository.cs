@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories_Do_An.Repositories
 {
@@ -62,6 +63,19 @@ namespace Repositories_Do_An.Repositories
             try
             {
                 List<DriverRate> rs = _dbcontext.DriverRates.ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<DriverRate> getAll(int driverId)
+        {
+            try
+            {
+                List<DriverRate> rs = _dbcontext.DriverRates.Include(x => x.customer).Include(x => x.customer).Where(x=>x.DriverId==driverId).ToList();
                 return rs;
             }
             catch (Exception ex)

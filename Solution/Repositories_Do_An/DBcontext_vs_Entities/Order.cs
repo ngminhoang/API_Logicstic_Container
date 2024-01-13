@@ -14,15 +14,10 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     {
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int OrderId { get; set; }
-        public string? orderName { get; set; }
+        public string? OrderName { get; set; }
         [ForeignKey("Customer")]
         public int? CustomerId { get; set; }
         public virtual Customer customer { get; set; }
-
-
-        //[ForeignKey("Staff")]
-        //public int? StaffId { get; set; }
-        //public virtual Staff staff { get; set; }
         [ForeignKey("OwnedVehicleInfor")]
         public int? OVIId { get; set; }
         public virtual OwnedVehicleInfor ownedVehicleInfor { get; set; }
@@ -30,12 +25,19 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
         public DateOnly? OrderedDate { get; set; }
         public DateOnly? ArrivedDate { get; set; }
         public Double? TotalAmount { get; set; }
-        [ForeignKey("Position")]
-        public int? PostionComeId { get; set; }
-        public virtual Position PositionCome { get; set; }
-        [ForeignKey("Position")]
-        public int? PostionGoId { get; set; }
-        public virtual Position PositionGo { get; set; }
+        public Double? TotalWeight { get; set; }
+        public Double? TotalMass { get; set; }
+        public Double? Distance { get; set; }
+
+        public string? ProvinceGo { get; set; }
+        public string? DistrictGo { get; set; }
+        public string? WardGo { get; set; }
+        public string? DetailPositionGo { get; set; }
+        public string? ProvinceCome { get; set; }
+        public string? DistrictCome { get; set; }
+        public string? WardCome { get; set; }
+        public string? DetailPositionCome { get; set; }
+
         [ForeignKey("Bussiness")]
 
         public int? BussinessId {  get; set; }

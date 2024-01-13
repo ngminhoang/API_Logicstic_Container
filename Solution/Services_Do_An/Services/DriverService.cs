@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -27,10 +28,11 @@ namespace Services_Do_An.Services
         private readonly IOrderItemRepository orderItemDB;
         private readonly IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB;
         private readonly IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB;
-        private readonly IContractRepository contractRepositoryDB;
         private readonly ICustomerRepository customerDB;
         private readonly IMessageRepository messageDB;
-        public DriverService(IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB,IContractRepository contractRepositoryDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
+        private readonly IStaffRepository staffDB;
+
+        public DriverService(IStaffRepository staffDB, IMapper mapper, IMessageRepository messageDB, ICustomerRepository customerDB, IOwnedVehicleInforRepository ownedVehicleInforRepositoryDB,  IWishedAcceptedDriverListRepository wishedAcceptedDriverListDB, IDriverRepository driverDB, IOrderRepository orderDB, IOrderStatusRepository orderStatusDB, IOrderItemRepository orderItemDB)
         {
             this.mapper = mapper;
             this.driverDB = driverDB;
@@ -38,18 +40,145 @@ namespace Services_Do_An.Services
             this.orderStatusDB = orderStatusDB;
             this.orderItemDB = orderItemDB;
             this.wishedAcceptedDriverListDB = wishedAcceptedDriverListDB;
-            this.contractRepositoryDB = contractRepositoryDB;
             this.ownedVehicleInforRepositoryDB = ownedVehicleInforRepositoryDB;
             this.customerDB = customerDB;
             this.messageDB = messageDB;
+            this.staffDB = staffDB;
         }
 
-        public bool updateMessage(int messId, MessageModel mess)
+
+        public OnWorkedOrderModel getOnWorkedOrder(int driverId)
+        {
+            var order = new Order(); 
+            try
+            {
+                List<Order> ls = orderDB.getAll(driverId,"driverId");
+                foreach (var each in ls)
+                {
+                    if (orderStatusDB.checkInitOrder(each.OrderId) == true
+                        && orderStatusDB.checkContractedByDriverOrder(each.OrderId) == true
+                        && orderStatusDB.checkEndOrder(each.OrderId) == false)
+                    {
+                        order = each;
+                        break;
+                    }
+                }
+
+                if (order == null)
+                {
+                    return null;}
+                else
+                {
+                    List<OrderStatus> status = orderStatusDB.getAll(order.OrderId);
+                    var index = status.Count - 1;
+                    int newStatus = (int)status[index].StatusId;
+                    return new OnWorkedOrderModel() { order = order, status = status, newStatus = newStatus };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<AppliedOrderModel> getAllAppliedOrders(int driverId)
+        {
+            try
+            {
+                List<AppliedOrderModel> rs = new List<AppliedOrderModel>();
+                List<WishedAcceptedDriverList> listWAL = wishedAcceptedDriverListDB.getAll(driverId,"driverId");
+                foreach (var each in listWAL)
+                {
+                    var order1 = orderDB.read((int)each.OrderId);
+                    DateOnly utcNow = DateOnly.FromDateTime(DateTime.UtcNow.Date);
+                    bool isPast = order1.OrderedDate < utcNow;
+                    if ((isPast == true) && (orderStatusDB.checkContractedByDriverOrder(order1.OrderId) == false))
+                    {
+                        if (orderStatusDB.checkOutDateOrder(order1.OrderId) == false)
+                            orderStatusDB.create(new OrderStatus { OrderId = order1.OrderId, Date = DateTime.UtcNow, StatusId = 139, Status = true });
+                        wishedAcceptedDriverListDB.deleteAll(order1.OrderId);
+                    }
+                    else
+                    {
+                        bool check;
+                        if (each.OVIId == each.order.OVIId)
+                            check = true;
+                        else
+                        {
+                            check = false;
+                        }
+                        if (orderStatusDB.checkContractedByDriverOrder((int)each.OrderId) == false)
+                            rs.Add(new AppliedOrderModel() { order = each.order, oVI = each.ownedVehicleInfor, isChoosen = check });
+                    }
+                }
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool changeToNotWorked(int driverId)
+        {
+            try
+            {
+                Driver driver = driverDB.read(driverId);
+                driver.IsWorked = false;
+                return driverDB.update(driver);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool changeToWorked(int driverId)
+        {
+            try
+            {
+                Driver driver = driverDB.read(driverId);
+                driver.IsWorked = true;
+                return driverDB.update(driver);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool createMessage(MessageModel mess)
         {
             try
             {
                 Message mes = mapper.Map<Message>(mess);
+                mes.RoleId = 3;
+                List<int> mang = new List<int>();
+                List<Staff> staff = staffDB.getAll();
+                foreach(var each in staff)
+                {
+                    if(each.Status==true)
+                        mang.Add(each.UserId);
+                }
+                Random random = new Random();
+                int giaTriNgauNhien = mang[random.Next(mang.Count)];
+                mes.StaffId = random.Next(1, giaTriNgauNhien);
+                mes.Date = DateTime.UtcNow;
+                mes.CheckRead = false;
+                return messageDB.create(mes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public bool updateMessage(int messId)
+        {
+            try
+            {
+
+                Message mes = messageDB.read(messId);
                 mes.MessId = messId;
+                mes.CheckRead = true;
                 return messageDB.update(mes);
             }
             catch (Exception e)
@@ -69,6 +198,27 @@ namespace Services_Do_An.Services
                 }
 
                 return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        public bool update(int driverId, DriverModel entity)
+        {
+            try
+            {
+                DriverModel driver = entity;
+                driver.DateUpdatedAccount = DateTime.UtcNow;
+                driver.AvatarImageLink = driverId.ToString() + ".png";
+                driver.UserId= driverId;
+                string pass_md5 = MD5Functions.GenerateMD5(driver.Password);
+                driver.Password = pass_md5;
+                Driver e = mapper.Map<Driver>(driver);
+                return driverDB.update(e);
             }
             catch (Exception ex)
             {
@@ -103,11 +253,12 @@ namespace Services_Do_An.Services
             }
         }
 
-        public bool updateVehicle(OwnedVehicleInforModel entity)
+        public bool updateVehicle(int oVIId, OwnedVehicleInforModel entity)
         {
             try
             {
                 OwnedVehicleInfor e = mapper.Map<OwnedVehicleInfor>(entity);
+                e.OVIId = oVIId;
                 return ownedVehicleInforRepositoryDB.update(e);
             }
             catch (Exception ex)
@@ -123,6 +274,63 @@ namespace Services_Do_An.Services
 
                 var e = ownedVehicleInforRepositoryDB.read(id);
                 return ownedVehicleInforRepositoryDB.delete(e);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
+
+        public CustomerModel getCustomer(int customerId)
+        {
+            try
+            {
+                Customer customer = customerDB.read(customerId);
+                CustomerModel customerModel = mapper.Map<CustomerModel>(customer);
+                return customerModel;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
+        public Object getOrder(int orderId)
+        {
+            try
+            {
+                Order order = orderDB.read(orderId);
+                List<OrderItem> orderItemList = orderItemDB.getAll(orderId);
+                List<OrderItemModel> orderItemModelList = new List<OrderItemModel>();
+                foreach (OrderItem item in orderItemList)
+                {
+                    orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
+                }
+                return new { order = order, orderItem = orderItemModelList };
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public Object getOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                Order order = orderDB.read(orderId);
+                List<OrderItem> orderItemList = orderItemDB.getAll(orderId);
+                List<OrderItemModel> orderItemModelList = new List<OrderItemModel>();
+                foreach (OrderItem item in orderItemList)
+                {
+                    orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
+                }
+                return new { order = order, orderItem = orderItemModelList, checkWAL = wishedAcceptedDriverListDB.checkDupplicate(oVIId, orderId) };
+
             }
             catch (Exception ex)
             {
@@ -147,21 +355,6 @@ namespace Services_Do_An.Services
             {
                 throw ex;
             }
-        }
-
-        public CustomerModel getCustomer(int customerId)
-        {
-            try
-            {
-                Customer customer = customerDB.read(customerId);
-                CustomerModel customerModel = mapper.Map<CustomerModel>(customer);
-                return customerModel;
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-
         }
 
         public Object getStatusList(int orderId)
@@ -201,6 +394,86 @@ namespace Services_Do_An.Services
                 throw ex;
             }
         }
+
+        public bool deleteApplyOrder(int oVIId, int orderId)
+        {
+            try
+            {
+                WishedAcceptedDriverList data = wishedAcceptedDriverListDB.read(oVIId,orderId);
+                return wishedAcceptedDriverListDB.delete(data);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool deleteContractedByCustomerOrder(int orderId)
+        {
+            try
+            {
+                try
+                {
+                    ;
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == true &&
+                        orderStatusDB.checkContractedByCustomerOrder(orderId) == true)
+                    {
+                        orderStatusDB.delete(4, orderId);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool deleteAcceptedOrder(int orderId)
+        {
+            try
+            {
+
+                try
+                {
+                    if (orderStatusDB.checkAcceptedOrder(orderId) == true &&
+                        orderStatusDB.checkOnListOrder(orderId) == true)
+                    {
+                        orderStatusDB.delete(2, orderId);
+                        var order = orderDB.read(orderId);
+                        order.OVIId = null;
+                        orderDB.update(order);
+                        wishedAcceptedDriverListDB.deleteAll(orderId);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public bool contractedByDriverOrder(int orderId)
         {
             try
@@ -218,9 +491,22 @@ namespace Services_Do_An.Services
                             orderDB.update(order);
                             int cusId = (int)order.CustomerId;
                             int driverId = (int)ownedVehicleInforRepositoryDB.read((int)order.OVIId).DriverId;
+                            List<Order> ls = orderDB.getAll(driverId, "driverId");
+                            foreach (var each in ls)
+                            {
+                                if (orderStatusDB.checkContractedByDriverOrder(each.OrderId) == false)
+                                {
+                                    
+                                    try { each.OVIId = null; orderDB.update(each); } catch { }
+                                    try { orderStatusDB.delete(2, each.OrderId); } catch { }
+                                    try { orderStatusDB.delete(4, each.OrderId); } catch { }
+                                }
+                            }
+
+
                             try
                             {
-                                contractRepositoryDB.createDriverContract(cusId, driverId, orderId);
+                                //them contract
                             }
                             catch
                             {
@@ -347,7 +633,7 @@ namespace Services_Do_An.Services
                 {
                     if (orderStatusDB.checkBeforeStatus(orderId) == 9 && orderStatusDB.checkTakenOrder(orderId) == false)
                     {
-                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 10, Status = true });
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 10, Status = true });
                         orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 14, Status = true });
                         
                         //cap nhat lai gia tien
@@ -404,33 +690,60 @@ namespace Services_Do_An.Services
         }
 
 
-        public Object getOrder(int orderId) 
+
+        public bool payedOrder(int orderId)
         {
-            try 
+            try
             {
-                Order order = orderDB.read(orderId);
-                List<OrderItem> orderItemList  = orderItemDB.getAll(orderId);
-                List<OrderItemModel> orderItemModelList =new List<OrderItemModel>();
-                foreach (OrderItem item in orderItemList)
+                try
                 {
-                    orderItemModelList.Add(mapper.Map<OrderItemModel>(item));
+                    if (orderStatusDB.checkBeforeStatus(orderId) == 6 && (orderStatusDB.checkTakenOrder(orderId) == false /* || orderStatusDB.checkAlteredOrder(orderId) == true*/))
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                        //cap nhat lai gia tien
+                        //tao mot order khac
+                        return true;
+                    }
+                    else if (orderStatusDB.checkBeforeStatus(orderId) == 14 && orderStatusDB.checkPayedOrder(orderId) == false)
+                    {
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 11, Status = true });
+                        // tính toán tìm ra kho của bussiness nào gần nhất địa điểm của khác hàng => trả ra id kho warehouseId => trả ra bussinessId
+                        //Order order = orderDB.read(orderId);
+                        //order.BussinessId = bussinessId;
+                        /* tạo contract với bussiness: *///contractRepositoryDB.createBussinessContract(order.CustomerId, bussinessId, orderId);
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 15, Status = true, WarehouseId = warehouseId  });
+                        //orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 12, Status = true });
+                        orderStatusDB.create(new OrderStatus { OrderId = orderId, Date = DateTime.UtcNow, StatusId = 15, Status = true });
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+
                 }
-                return new { order = order, orderItem = orderItemModelList };
-                
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw ex;
             }
         }
 
-        public List<OrderModel1> getAllInitializedOrders()
+        
+
+        public List<OrderModel> getAllInitializedOrders()
         {
             try 
             {
-                List<OrderModel1> rs = new List<OrderModel1>();
+                List<OrderModel> rs = new List<OrderModel>();
                 List<Order> list = orderDB.getAll();
-                OrderModel1 order1;
+                OrderModel order1;
                 //foreach (var order in list)
                 //{
                 //    rs.Add(mapper.Map<OrderModel>(order));
@@ -439,8 +752,7 @@ namespace Services_Do_An.Services
                 {
                     if (orderStatusDB.checkInitOrder(order.OrderId)==true && orderStatusDB.checkOnListOrder(order.OrderId) ==true)
                     {
-                        order1 = mapper.Map<OrderModel1>(order);
-                        order1.CustomerName = order.customer.FullName;
+                        order1 = mapper.Map<OrderModel>(order);
                        //order1.DriverId = order.ownedVehicleInfor.DriverId;
                         //order1.BussinessName = order.bussiness.BusinessName;
                         rs.Add(order1);
@@ -466,13 +778,13 @@ namespace Services_Do_An.Services
             }
         }
 
-
         public Object readDriver(int id)
         {
             try
             {
                 Driver driver = driverDB.read(id);
                 DriverModel driverModel = mapper.Map<DriverModel>(driver);
+
                 List<OwnedVehicleInfor> OVIList = ownedVehicleInforRepositoryDB.getAll(id);
                 return new { driver = driver, vehicle = OVIList };
             }
@@ -578,31 +890,33 @@ namespace Services_Do_An.Services
             }
         }
 
+        public bool checkWAL(int oVIId, int orderId)
+        {
+            try
+            {
+                return wishedAcceptedDriverListDB.checkDupplicate(oVIId, orderId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-
-        public List<OrderModel1> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome)
+        public List<OrderModel> getAllInitializedOrders(int OVIId, string DisGo, string ProGo, string DisCome, string ProCome)
         {
             try
             {
                 OwnedVehicleInfor OVI = ownedVehicleInforRepositoryDB.read(OVIId);
                 double cargo = (double)OVI.Cargo;
-                List<OrderModel1> rs = new List<OrderModel1>();
+                
+                List<OrderModel> rs = new List<OrderModel>();
                 List<Order> list = orderDB.getAll(DisGo,ProGo,DisCome,ProCome);
-                OrderModel1 order1;
-                //foreach (var order in list)
-                //{
-                //    rs.Add(mapper.Map<OrderModel>(order));
-                //}
                 foreach (var order in list)
                 {
-
-                   if (orderStatusDB.checkInitOrder(order.OrderId) == true && orderStatusDB.checkAcceptedOrder(order.OrderId) == false && orderStatusDB.checkOnListOrder(order.OrderId) == true && cargo >= orderItemDB.sumMass(order.OrderId))
+                    
+                    if (orderStatusDB.checkInitOrder(order.OrderId) == true && orderStatusDB.checkOutDateOrder(order.OrderId) == false && orderStatusDB.checkAcceptedOrder(order.OrderId) == false && orderStatusDB.checkOnListOrder(order.OrderId) == true && cargo >= order.TotalMass)
                     {
-                        order1 = mapper.Map<OrderModel1>(order);
-                        order1.CustomerName = order.customer.FullName;
-                        //order1.DriverId = order.ownedVehicleInfor.DriverId;
-                        //order1.BussinessName = order.bussiness.BusinessName;
-                        rs.Add(order1);
+                        rs.Add(mapper.Map<OrderModel>(order));
                     }
                 }
                 return rs;
@@ -613,8 +927,33 @@ namespace Services_Do_An.Services
             }
             catch (Exception ex)
             {
+                throw ;
+            }
+        }
+
+        public List<OwnedVehicleInforModel> getDriverOwnedVehicle(int driverId)
+        {
+            try
+            { 
+                List<OwnedVehicleInfor> ls = ownedVehicleInforRepositoryDB.getAll(driverId);
+                List<OwnedVehicleInforModel> rs = new List<OwnedVehicleInforModel>();
+                foreach (OwnedVehicleInfor model in ls)
+                {
+                    rs.Add(mapper.Map<OwnedVehicleInforModel>(model));
+                }
+                return rs;
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
+        }
+
+
+        public List<Order> x()
+        {
+            return orderDB.getAll(1, "driverId");
+
         }
     }
 }

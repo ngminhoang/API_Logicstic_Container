@@ -9,6 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Repositories_Do_An.IRepositories.Others;
+using Services_Do_An.DTOModels;
+using XAct.Messages;
+using Message = Repositories_Do_An.DBcontext_vs_Entities.Message;
 
 namespace Services_Do_An.Services
 {
@@ -16,10 +20,14 @@ namespace Services_Do_An.Services
     {
         private readonly IMapper mapper;
         private readonly IStaffRepository staffDB;
-        public StaffService(IMapper _mapper, IStaffRepository _staff)
+        private readonly IMessageRepository messageDB;
+        private readonly IContactionRepository contactionDB;
+        public StaffService(IContactionRepository contactionDB, IMessageRepository messageDB, IMapper _mapper, IStaffRepository _staff)
         {
+            this.messageDB = messageDB;
             this.mapper = _mapper;
             this.staffDB = _staff;
+            this.contactionDB = contactionDB;
         }
 
 
@@ -89,6 +97,24 @@ namespace Services_Do_An.Services
         {
             return true;
         }
+
+        public bool update(int staffId, StaffModel entity)
+        {
+            try
+            {
+                Staff staff = mapper.Map<Staff>(entity);
+                staff.DateUpdatedAccount = DateTime.UtcNow;
+                staff.AvatarImageLink = staffId.ToString() + ".png";
+                staff.UserId = staffId;
+                string pass_md5 = MD5Functions.GenerateMD5(entity.Password);
+                staff.Password = pass_md5;
+                return staffDB.update(staff);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public bool delete(StaffModel entity)
         {
             return true;
@@ -111,7 +137,127 @@ namespace Services_Do_An.Services
             }
         }
 
+        
 
+        public bool updateMessage(int messId, string answer)
+        {
+            try
+            {
+
+                Message mes = messageDB.read(messId);
+                mes.MessId = messId;
+                mes.Answer = answer;
+                return messageDB.update(mes);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public List<MessageModel> getMessageList(int staffId)
+        {
+            try
+            {
+
+                
+                    List<Message> ls = messageDB.getAll(staffId);
+                    List<MessageModel> rs = new List<MessageModel>();
+                    foreach (Message mess in ls)
+                    {
+                        rs.Add(mapper.Map<MessageModel>(mess));
+                    }
+
+                    return rs;
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<MessageModel> getDriverMessageList(int staffId)
+        {
+            try
+            {
+
+
+                List<Message> ls = messageDB.getAll(staffId);
+                List<MessageModel> rs = new List<MessageModel>();
+                foreach (Message mess in ls)
+                {
+                    if (mess.RoleId == 3)
+                    rs.Add(mapper.Map<MessageModel>(mess));
+                }
+
+                return rs;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<MessageModel> getCustomerMessageList(int staffId)
+        {
+            try
+            {
+
+
+                List<Message> ls = messageDB.getAll(staffId);
+                List<MessageModel> rs = new List<MessageModel>();
+                foreach (Message mess in ls)
+                {
+                    if (mess.RoleId == 4)
+                        rs.Add(mapper.Map<MessageModel>(mess));
+                }
+
+                return rs;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<ContactionModel> getContactionList(int staffId)
+        {
+            try
+            {
+
+
+                List<Contaction> ls = contactionDB.getAll(staffId);
+                List<ContactionModel> rs = new List<ContactionModel>();
+                foreach (Contaction con in ls)
+                {
+                    rs.Add(mapper.Map<ContactionModel>(con));
+                }
+
+                return rs;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool updateContaction(int contactionId)
+        {
+            try
+            {
+
+
+                var contaction = contactionDB.read(contactionId);
+                contaction.CheckRead = true;
+                return contactionDB.update(contaction);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

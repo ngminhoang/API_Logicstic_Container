@@ -12,6 +12,7 @@ namespace Repositories_Do_An.IRepositories
     {
         List<OrderStatus> getAll(int orderId);
         bool checkInitOrder(int id);
+        bool checkOutDateOrder(int orderId);
         bool checkOnListOrder(int orderId);
         bool checkAcceptedOrder(int id);
         bool checkContractedByDriverOrder(int orderId);
@@ -28,5 +29,7 @@ namespace Repositories_Do_An.IRepositories
         bool checkProblemOrder(int orderId);
         bool checkAlteringOrder(int orderId);
         int checkBeforeStatus(int orderId);
+        bool delete(int status, int orderId);
+        OrderStatus getRecentStatus(int orderId);
     }
 }

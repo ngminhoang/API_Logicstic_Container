@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repositories_Do_An.Repositories
 {
@@ -57,6 +58,50 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+
+        //public bool deleteAllAfterContractedByDriver(int driverId)
+        //{
+        //    try
+        //    {
+        //        var ls = _dbcontext.OrderStatuss.Include(x=> x.order.ownedVehicleInfor).Where(x=> x.order.ownedVehicleInfor.DriverId==driverId 
+        //        && (x.StatusId==)).ToList();
+        //        try
+        //        {
+
+        //        }
+        //        catch
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
+
+        public bool delete(int statusId, int orderId)
+        {
+            try
+            {
+                var rs=_dbcontext.OrderStatuss.FirstOrDefault(x=> x.StatusId== statusId && x.OrderId==orderId);
+                _dbcontext.OrderStatuss.Remove(rs);
+                _dbcontext.SaveChanges();
+                try
+                {
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public List<OrderStatus> getAll()
         {
             try
@@ -74,7 +119,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(x=> x.OrderId==orderId && x.Status==true).ToList();
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.OrderBy(e => e.Date).Include(x=>x.StatusType).Where(x=> x.OrderId==orderId && x.Status==true).ToList();
                 return rs;
             }
             catch (Exception ex)
@@ -132,6 +177,23 @@ namespace Repositories_Do_An.Repositories
                 else { return true; }
             }
             catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public bool checkOutDateOrder(int orderId)
+        {
+            try
+            {
+                List<OrderStatus> rs = _dbcontext.OrderStatuss.Where(entity => entity.OrderId == orderId && entity.Status == true && entity.StatusId == 139).ToList();
+                if (rs.Count == 0)
+                {
+                    return false;
+                }
+                else { return true; }
+            }
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -412,6 +474,21 @@ namespace Repositories_Do_An.Repositories
                 throw ex;
             }
         }
+
+        public OrderStatus getRecentStatus(int orderId)
+        {
+            try
+            {
+                var rs = _dbcontext.OrderStatuss.OrderByDescending(e => e.Date).Include(entity=> entity.StatusType).Where(entity => entity.OrderId == orderId && entity.Status == true).FirstOrDefault();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
 
     }
 }

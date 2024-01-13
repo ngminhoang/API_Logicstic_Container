@@ -11,7 +11,7 @@ namespace Repositories_Do_An.DBcontext_vs_Entities
     
     public class User
     {
-        public String? AvatarImageLink { get; set; }
+        public string? AvatarImageLink { get; set; }
         [Key, Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserId { get; set; }
         [StringLength(50)]

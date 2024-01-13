@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Repositories_Do_An.Migrations;
 
 namespace Repositories_Do_An.Repositories
 {
@@ -20,7 +22,6 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                
                 _dbcontext.Orders.Add(entity);
                 _dbcontext.SaveChanges();
                 try
@@ -30,6 +31,28 @@ namespace Repositories_Do_An.Repositories
                 catch
                 {
                     return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        
+        public EntityEntry<Order> create_2(Order entity)
+        {
+            try
+            {
+                var data = _dbcontext.Orders.Add(entity);
+                _dbcontext.SaveChanges();
+                try
+                {
+                    return data;
+                }
+                catch
+                {
+                    return null;
                 }
             }
             catch (Exception ex)
@@ -59,11 +82,36 @@ namespace Repositories_Do_An.Repositories
             }
         }
 
+        public bool delete(int orderId)
+        {
+            try
+            {
+                var order = _dbcontext.Orders.FirstOrDefault(x=>x.OrderId == orderId);
+                order.Status = false;
+                
+                try
+                {
+                    _dbcontext.Orders.Update(order);
+                    _dbcontext.SaveChanges();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public List<Order> getAll()
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).Include(x=> x.PositionCome).Include(x => x.PositionGo).ToList();
+                List<Order> rs = _dbcontext.Orders.Include(x=>x.ownedVehicleInfor).Include(x=>x.customer).ToList();
                 return rs;
             }
             catch (Exception ex)
@@ -73,17 +121,44 @@ namespace Repositories_Do_An.Repositories
         }
 
 
-
-        public List<Order> getAll(string DisGo, string ProGo, string DisCome, string ProCome)
+        public List<Order> getAll(int driverId,string subject)
         {
             try
             {
-                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Include(x => x.PositionCome).Include(x => x.PositionGo).Where(x => x.PositionGo.District==DisGo && x.PositionGo.Province == ProGo && x.PositionCome.District == DisCome && x.PositionCome.Province == ProCome).ToList();
+                    List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x=>x.customer)
+                        .Where(x => x.ownedVehicleInfor.DriverId == driverId && x.Status==true).ToList();
+                    return rs;
+                
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public List<Order> getAll(int customerId)
+        {
+            try
+            {
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.ownedVehicleInfor.vehicle).Include(x => x.customer).Where(x=> x.CustomerId == customerId && x.Status == true).ToList();
                 return rs;
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+
+        public List<Order> getAll(string DisGo, string ProGo, string DisCome, string ProCome)
+        {
+            try
+            {
+                List<Order> rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor).Include(x => x.customer).Where(x=>x.DistrictCome==DisCome && x.ProvinceCome==ProCome && x.DistrictGo==DisGo && x.ProvinceGo== ProGo && x.Status == true).ToList();
+                return rs;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
@@ -91,7 +166,7 @@ namespace Repositories_Do_An.Repositories
         {
             try
             {
-                var rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.customer).Include(x => x.PositionCome).Include(x => x.PositionGo).Include(x => x.customer).Include(x => x.bussiness).FirstOrDefault(t => t.OrderId == id);
+                var rs = _dbcontext.Orders.Include(x => x.ownedVehicleInfor.driver).Include(x => x.customer).Include(x => x.customer).Include(x => x.bussiness).FirstOrDefault(t => t.OrderId == id);
                 return rs;
             }
             catch (Exception ex)
@@ -122,6 +197,8 @@ namespace Repositories_Do_An.Repositories
                 throw ex;
             }
         }
+
+
 
     }
 }

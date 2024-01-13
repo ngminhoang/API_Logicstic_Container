@@ -1,6 +1,7 @@
 ﻿using API_Do_An.APIModels;
 using Microsoft.AspNetCore.Mvc;
 using Repositories_Do_An.DBcontext_vs_Entities;
+using Services_Do_An.DTOModels;
 using Services_Do_An.IServices;
 using Services_Do_An.Services;
 
@@ -13,10 +14,73 @@ namespace API_Do_An.Controllers
     public class DriverController : ControllerBase
     {
         private readonly IDriverService driverSV;
-        public DriverController(IDriverService driverSV) 
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        public DriverController(IWebHostEnvironment hostingEnvironment,IDriverService driverSV) 
         {
             this.driverSV = driverSV;
+            _hostingEnvironment = hostingEnvironment;
         }
+
+
+        [HttpGet("GetOnWorkedOrder/{driverId}")]
+        public OnWorkedOrderModel getOnWorkedOrder(int driverId)
+        {
+            try
+            {
+                return driverSV.getOnWorkedOrder(driverId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("TurnToBeWorked")]
+
+        public IActionResult turnToBeWorked(int driverId)
+        {
+            try
+            {
+                bool rs = driverSV.changeToWorked(driverId);
+                if (rs)
+                {
+                    return Ok(rs);
+                }
+                else
+                {
+                    return BadRequest(rs);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("TurnToNotBeWorked")]
+
+        public IActionResult turnToNotBeWorked(int driverId)
+        {
+            try
+            {
+                bool rs = driverSV.changeToNotWorked(driverId);
+                if (rs)
+                {
+                    return Ok(rs);
+                }
+                else
+                {
+                    return BadRequest(rs);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpGet("DriverInfor")]
         public IActionResult getDriverInfor(int driverId)
@@ -31,13 +95,89 @@ namespace API_Do_An.Controllers
             }
         }
 
-        [HttpPut("UpdateDriver")]
 
-        public IActionResult updateDriver(DriverModel entity)
+        [HttpGet("x")]
+        public IActionResult x(int driverId)
         {
             try
             {
-                return Ok(driverSV.update(entity));
+                return Ok(driverSV.x());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+
+
+        [HttpPost("SaveImage")]
+        public async Task<IActionResult> SaveImage(int driverId, [FromForm] IFormFile image)
+        {
+            try
+            {
+                if (image == null || image.Length == 0)
+                {
+                    return BadRequest("Invalid image file");
+                }
+
+                // Get the path to the _assets folder next to the Controllers folder
+
+                var assetsFolderPath = Path.Combine(_hostingEnvironment.ContentRootPath, "_image", "driver");
+
+                // Create the _assets folder if it doesn't exist
+                if (!Directory.Exists(assetsFolderPath))
+                {
+                    Directory.CreateDirectory(assetsFolderPath);
+                }
+
+                // Save the image to the staff folder
+                var fileNameWithoutExtension = driverId.ToString();
+                var fileName = Path.ChangeExtension(fileNameWithoutExtension, ".png");
+                var filePath = Path.Combine(assetsFolderPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(stream);
+                }
+
+
+                return Ok(true);
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
+            }
+        }
+
+
+
+
+
+
+
+        [HttpPut("UpdateDriver")]
+
+        public IActionResult updateDriver(int driverId, DriverModel entity)
+        {
+            try
+            {
+                return Ok(driverSV.update(driverId, entity));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        [HttpGet("GetVehicleList")]
+        public IActionResult getVehicleList(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.getDriverOwnedVehicle(driverId));
             }
             catch (Exception ex)
             {
@@ -58,13 +198,14 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
         [HttpPut("UpdateVehicle")]
 
-        public IActionResult updateVehicle(OwnedVehicleInforModel entity)
+        public IActionResult updateVehicle(int oVIId, OwnedVehicleInforModel entity)
         {
             try
             {
-                return Ok(driverSV.updateVehicle(entity));
+                return Ok(driverSV.updateVehicle(oVIId, entity));
             }
             catch (Exception ex)
             {
@@ -92,12 +233,20 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                //return Ok();
-                return Ok(driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo, search.DisCome, search.ProCome));
+                List<OrderModel> ls = driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo,search.DisCome, search.ProCome);
+                
+                List<FilteredOrdersResult> rs = new List<FilteredOrdersResult>();
+                foreach (var each in ls )
+                {
+                    var check = driverSV.checkWAL(search.OVIId, each.OrderId);
+                    rs.Add(new FilteredOrdersResult() { order=each, checkWAL=check });
+                }
+                return Ok(rs);
+                //return Ok(driverSV.getAllInitializedOrders(search.OVIId, search.DisGo, search.ProGo, search.DisCome, search.ProCome));
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw ;
             }
         }
 
@@ -131,6 +280,20 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
+
+        [HttpGet("OrdersList/{orderId}/{oVIId}")]
+        public IActionResult GetOrder(int oVIId,int orderId)
+        {
+            try
+            {
+                return Ok(driverSV.getOrder(oVIId,orderId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpGet("OrdersList/{orderId}/Status")]
         public IActionResult GetOrderStatusList(int orderId)
@@ -171,6 +334,21 @@ namespace API_Do_An.Controllers
             }
         }
 
+
+        [HttpGet("GetAllAppliedOrders/{driverId}")]
+        public IActionResult getAllAppliedOrders(int driverId)
+        {
+            try
+            {
+                return Ok(driverSV.getAllAppliedOrders(driverId));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         [HttpPost("ContractedByDriverOrder/{orderId}")]
         public IActionResult contractedByDriverOrder(int orderId)
         {
@@ -198,7 +376,7 @@ namespace API_Do_An.Controllers
         }
 
 
-        [HttpPost("AccidentlOrder/{orderId}")]
+        [HttpPost("AccidentOrder/{orderId}")]
         public IActionResult accidentlOrder(int orderId)
         {
             try
@@ -255,13 +433,95 @@ namespace API_Do_An.Controllers
         {
             try
             {
-                return Ok(driverSV.applyOrder(oVIId, orderId));
+                if (driverSV.applyOrder(oVIId, orderId))
+                    return Ok(driverSV.applyOrder(oVIId, orderId));
+                else return BadRequest(false);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+        [HttpDelete("DeleteApplyOrder/{oVIId}/{orderId}")]
+        public IActionResult deleteApplyOrder(int oVIId, int orderId)
+        {
+            //return Ok(driverSV.x(oVIId, orderId));
+            try
+            {
+                var rs = driverSV.deleteApplyOrder(oVIId, orderId);
+                if (rs==true)
+                    return Ok(rs);
+                else return BadRequest(rs);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(false);
+            }
+        }
+
+
+        [HttpDelete("DeleteAcceptedOrder/{orderId}")]
+        public IActionResult DeleteAcceptedOrder(int orderId, int oVIId)
+        {
+            try
+            {
+                if (driverSV.deleteAcceptedOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpDelete("DeleteContractedByCustomerOrder/{orderId}")]
+        public IActionResult DeleteContractedByCustomerOrder(int orderId)
+        {
+            try
+            {
+                if (driverSV.deleteContractedByCustomerOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+
+        [HttpPost("PayedOrder/{orderId}")]
+        public IActionResult payedOrder(int orderId)
+        {
+            try
+            {
+                if (driverSV.payedOrder(orderId))
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return BadRequest(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         [HttpGet("Message")]
         public IActionResult getMessageList(int driverId)
@@ -275,12 +535,28 @@ namespace API_Do_An.Controllers
                 throw ex;
             }
         }
-        [HttpPut("Message/{messId}")]
-        public IActionResult updateMessage(int messId,[FromBody] MessageModel message)
+
+        [HttpPost("Message")]
+        public IActionResult createMessage([FromBody] MessageModel mes)
         {
             try
             {
-                return Ok(driverSV.updateMessage(messId,message));
+                return Ok(driverSV.createMessage(mes));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPut("Message/{messId}")]
+        public IActionResult updateMessage(int messId)
+        {
+            try
+            {
+
+                return Ok(driverSV.updateMessage(messId));
             }
             catch (Exception ex)
             {
