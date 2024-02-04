@@ -12,17 +12,17 @@
   ```
 ### Architecture layers
 #### Controller
-* Framework used:
+* Packages used:
+  - AutoMapper.Extensions.Microsoft.DependencyInjection
   - Microsoft.EntityFrameworkCoreDesign
-  - Microsoft.EntityFrameworkCoreTool
   - Microsoft.AspNetCore.Authentication.JwtBearer
+  - Microsoft.AspNetCore.Identity.EntityFrameworkCore
+  - Serilog.AspNetCore
 #### Service
-* Framework used:
-  - Microsoft.EntityFrameworkCoreDesign
+* Packages used:
+  - AutoMapper.Extensions.Microsoft.DependencyInjection
+#### Repository
+* Packages used:
+  - Microsoft.EntityFrameworkCore.PostgreSQL
   - Microsoft.EntityFrameworkCoreTool
   - Microsoft.EntityFrameworkCore
-  - Microsoft.EntityFrameworkCore.postgreSQL
-  - Microsoft.AspNetCore.Authentication.JwtBearer
-#### Repository
-* Framework used:
-  - Microsoft.EntityFrameworkCore.postgreSQL
