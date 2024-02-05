@@ -4,6 +4,8 @@
 ### BE: .NET 7.0
 * Basic command:
   ```
+  dotnet ef migrations add <MigrationName>
+  dotnet ef database update
   dotnet new webapi -n <name> //create dotnet webapi app
   dotnet add package <packagename>
   dotnet new gitignore //create gitignore file
